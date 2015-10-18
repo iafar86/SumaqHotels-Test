@@ -1,0 +1,211 @@
+﻿<div class="row">
+   
+     <div class="col-md-3">
+
+        <br />
+        <div class="user-wrapper">
+
+            <img src="assets/img/Hotel3.jpg" class="img-responsive" />
+
+            <!--<img src="assets/img/user.jpg" class="img-responsive" />-->
+
+            <div class="description">
+                <br />
+                <a href="#" class="btn btn-info"><i class="fa fa-user-plus"></i>&nbsp;Cargar Imagen</a>
+                <hr />
+                <a href="#" class="btn btn-social btn-facebook">
+                    <i class="fa fa-facebook"></i>
+                </a>
+
+                <a href="#" class="btn btn-social btn-google">
+                    <i class="fa fa-google-plus"></i>
+                </a>
+                <a href="#" class="btn btn-social btn-twitter">
+                    <i class="fa fa-twitter"></i>
+                </a>
+                <a href="#" class="btn btn-social btn-linkedin">
+                    <i class="fa fa-linkedin"></i>
+                </a>
+                <hr />
+
+
+
+            </div><!--USER WRAPPER SECTION END-->
+        </div>
+
+    </div> <!--LEFT SIDE SECTION END-->
+
+
+
+    <div class="col-md-9">
+        <div>
+
+            <div class="row">
+
+                <div class="col-md-12">
+                    <br />
+
+                    <accordion close-others="oneAtATime">
+
+                        <accordion-group is-open="true">
+
+                            <accordion-heading>
+                                Datos Basicos<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                            </accordion-heading> <!--Encabezado-->
+
+							<!-- Datos Basicos de Hotel -->
+                            <div class="row">
+                                <div class="row">
+                                    <div class="col-xs-10 col-xs-offset-1">
+                                        <label>Nombre</label>
+                                        <input type="text" ng-model="infoHotel.Nombre" class="form-control" placeholder="Ingrese el nombre de su hotel">
+                                    </div>
+                                </div> <!--Nombre-->
+
+                                <div class="row">
+                                    <div class="col-xs-8 col-xs-offset-1">
+                                        <label>Ubicacion</label>
+                                        <input type="text" ng-model="infoHotel.DireccionComun" class="form-control" placeholder="Ubicacion Central">
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <label>C.P.</label>
+                                        <input type="text" ng-model="infoHotel.CodPostal" class="form-control" placeholder="Ejemplo: 4200">
+                                    </div>
+                                </div> <!--Ubicacion/CP-->
+
+                                <div class="row">
+                                    <div class="col-xs-4 col-xs-offset-1">
+                                        <label>Telefono</label>
+                                        <input type="text" ng-model="infoHotel.Telefono" class="form-control" placeholder="(0385) 4 999999">
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <label>Contacto Skype</label
+                                        <!--<input type="text" ng-model="Hotel.Skype" class="form-control" placeholder="SumaqSkype">-->
+                                        <input type="text" class="form-control" placeholder="SumaqSkype">
+                                    </div>
+                                </div><!--Telefono/Skype-->
+
+                                <div class="row">
+                                    <div class="col-xs-4 col-xs-offset-1">
+                                        <label>Email</label>
+                                        <!--<input type="text" ng-model="Hotel.Email" class="form-control" placeholder="MyMail@MyDomain.com">-->
+                                        <input type="text" class="form-control" placeholder="MyMail@MyDomain.com">
+                                    </div> <!--Email-->
+                                    <div class="col-xs-6">
+                                        <label>Web</label>
+                                        <input type="text" ng-model="Hotel.UrlWeb" class="form-control" placeholder="www.SumaqHotels.com.ar">
+                                    </div><!--Web-->
+                                </div><!--Email/Web-->
+                            </div>  
+							<!-- Fin Datos Basicos -->
+
+                        </accordion-group> <!--AccordionGroup1-->
+
+                        <accordion-group is-open="true">
+
+                            <accordion-heading>
+                                Configuracion <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                            </accordion-heading> <!--Encabezado-->
+
+
+							 <!-- Configuracion  -->
+                            <div class="row">
+
+                                <div class="row">
+
+                                    <div class="col-xs-3 col-xs-offset-1">
+                                        <label>Pisos</label>
+                                        <input type="number" ng-model="Hotel.Pisos" class="form-control" value="0">
+                                    </div>
+
+                                    <div class="col-xs-3 col-md-offset-1">
+                                        <label>N° de Habitaciones</label>
+                                        <!--<input type="number" ng-model="Hotel.Habitaciones" class="form-control" value="0">-->
+                                        <input type="number" class="form-control" value="0">
+                                    </div>
+
+                                </div>
+
+                                <br />
+
+                                <div class="row">
+                                    <div class="col-xs-4 col-xs-offset-1">
+                                        <label>Categoria</label>
+                                        <br />
+                                        <div class="col-xs-3">
+                                            <rating ng-model="cantEstrellas" min="1" max="5" on-hover="hoveringOver(value)" on-leave="overStar = null"></rating>
+
+                                            <label> {{cantEstrellas}} Estrellas</label>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-xs-7">
+                                        <label>Tipo de Hotel</label>
+                                        <label class="control-label col-lg-1">&nbsp;</label>
+                                        <div class="col-lg-8">
+                                            <ui-select ng-model="tipoHotelSelecionado.selected" theme="select2" style="min-width: 200px;">
+                                                <ui-select-match placeholder="Busque por Nombre">{{$select.selected.Nombre}}</ui-select-match>
+                                                <ui-select-choices repeat="tipo in listTiposHoteles | propsFilter: {Nombre: $select.search}">
+                                                    <small>
+                                                        <span ng-bind-html="tipo.Nombre | highlight: $select.search"></span>
+                                                    </small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div> <!-- Configuracion Hotel  -->
+
+							<!-- Fin Configuracion -->
+        
+                            <!-- Inicio Carrusel -->
+                            <br />
+                            <div flow-init="{target: '/upload'}"
+                                 flow-files-submitted="$flow.upload()"
+                                 flow-file-success="$file.msg = $message">
+
+                                <input type="file" flow-btn />
+                                Input OR Other element as upload button
+                                <span class="btn" flow-btn>Upload File</span>
+
+                                <table>
+                                    <tr ng-repeat="file in $flow.files">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{file.name}}</td>
+                                        <td>{{file.msg}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-10 col-xs-offset-2">
+                                    <div style="width:80% ; height:50%">
+
+                                        <carousel interval="myInterval">
+                                            <slide ng-repeat="slide in slides" active="slide.active">
+                                                <img ng-src="{{slide.image}}" style="margin:auto;">
+                                                <div class="carousel-caption">
+                                                    <h4>Slide {{$index}}</h4>
+                                                    <p>{{slide.text}}</p>
+                                                </div>
+                                            </slide>
+                                        </carousel> <!--Carousel de imagenes-->
+
+                                    </div>
+                                </div>
+                            </div> <!--Slider de imagenes-->
+						<!-- Fin Carrusel -->
+
+                        </accordion-group> <!--AccordionGroup2-->
+
+                    </accordion> <!--Seccion Acordion-->
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div><!--RIGHT SIDE SECTION END-->
+
+</div>   <!-- CONATINER END -->

@@ -1,0 +1,242 @@
+﻿<div class="row">
+
+    <div class="col-md-3 text-center">
+
+        <br />
+        <div class="user-wrapper">
+            <img src="assets/img/Hotel4.png" class="img-responsive" />
+
+
+            <div class="description">
+                <br />
+                <a href="#" class="btn btn-info"><i class="fa fa-user-plus"></i>&nbsp;Guardar Nuevo</a>
+                <hr />
+                <a href="#" class="btn btn-social btn-facebook">
+                    <i class="fa fa-facebook"></i>
+                </a>
+
+                <a href="#" class="btn btn-social btn-google">
+                    <i class="fa fa-google-plus"></i>
+                </a>
+                <a href="#" class="btn btn-social btn-twitter">
+                    <i class="fa fa-twitter"></i>
+                </a>
+                <a href="#" class="btn btn-social btn-linkedin">
+                    <i class="fa fa-linkedin"></i>
+                </a>
+                <hr />
+
+
+
+            </div>
+        </div>
+
+    </div> <!--panel izquierdo de vista-->
+
+
+
+    <div class="col-xs-8">
+        <div class="row">
+            <br />
+            <accordion>
+                <accordion-group is-open="true">
+
+                    <accordion-heading>
+                        Datos Basicos de Pasajero<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                    </accordion-heading> <!--Accordion Header-->
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="btn-group" dropdown>
+                                <button type="button" class="btn btn-primary">Tipo Documento</button>
+                                <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Split button!</span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a ng-click="">DNI</a></li>
+                                    <li><a href="#">Pasaporte</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Otros</a></li>
+                                </ul>
+                            </div> <!--dropdown Documentacion-->
+                        </div><!--Tipo Documentacion-->
+
+                        <div class="col-md-6">
+                            <!--<label>Numero</label>-->
+                            <input type="text" ng-model="Pasajero.NroDoc" class="form-control" placeholder="Ingrese Numero de identificacion">
+                        </div> <!--Numero Documentacion-->
+
+                    </div> <!--Documentacion/Numero-->
+
+                    <div class="row">
+                        <div class="col-md-9">
+                            <label>Nombre y Apellido</label>
+                            <input type="text" ng-model="Pasajero.Nombre" class="form-control" placeholder="Ingrese el nombre y Apellido de Pasajero">
+                        </div> <!--Nombre y Apellido-->
+
+                        <div class="col-md-3">
+                            <label>Nacionalidad</label>
+                            <br />
+                            <div class="btn-group" dropdown>
+                                <button type="button" class="btn btn-primary">Seleccione Pais</button>
+                                <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Split button!</span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a ng-click="">Argentina</a></li>
+                                    <li><a href="#">Bolivia</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Otros</a></li>
+                                </ul>
+                            </div> <!--dropdown Pais-->
+                        </div><!--Nacionalidad-->
+                    </div><!--Nombre y Apellido/Nacionalidad-->
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Sexo</label>
+                            <br />
+                            <div class="btn-group" role="group" aria-label="...">
+                                <button type="button" class="btn btn-primary">M</button>
+                                <button type="button" class="btn btn-primary">F</button>
+                            </div>
+                        </div> <!--Sexo-->
+                        <div class="col-md-3">
+                            <label>Estado Civil</label>
+                            <br />
+                            <div class="btn-group" role="group" aria-label="...">
+                                <button type="button" class="btn btn-primary">Soltero</button>
+                                <button type="button" class="btn btn-primary">Casado</button>
+                            </div>
+                        </div> <!--EstadoCivil-->
+
+                        <div class="col-md-7">
+                            <label>Profesion</label>
+                            <input type="text" ng-model="Pasajero.Profesion" class="form-control" placeholder="Ingrese Profesion">
+                        </div> <!--Profesion-->
+                    </div> <!--Sexo/EstadoCivil/Profesion-->
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Pais/Localidad</label>
+                            <input type="text" ng-model="Pasajero.Ubicacion" class="form-control" placeholder="Ingrese Pais, Localidad">
+                        </div> <!--Ubicacion-->
+                    </div><!--Ubicacion-->
+
+                    <div class="row">
+                        <div class="col-md-9">
+                            <label>Direccion</label>
+                            <input type="text" ng-model="Pasajero.Direccion" class="form-control" placeholder="Direccion">
+                        </div> <!--Direccion-->
+                        <div class="col-md-3">
+                            <label>C.P</label>
+                            <input type="text" ng-model="Pasajero.CodPostal" class="form-control" placeholder="Codigo Postal">
+                        </div> <!--CP-->
+                    </div> <!--Dir/CP-->
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Telefono</label>
+                            <input type="text" ng-model="Pasajero.Tel" class="form-control" placeholder="Telefono">
+                        </div> <!--Tel-->
+                        <div class="col-md-6">
+                            <label>Celular</label>
+                            <input type="text" ng-model="Pasajero.Cel" class="form-control" placeholder="Celular">
+                        </div> <!--Cel-->
+                    </div><!--Tel/Cel-->
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>E-Mail</label>
+                            <input type="text" ng-model="Pasajero.EMail" class="form-control" placeholder="E-Mail">
+                        </div> <!--Email-->
+                    </div><!--EMail-->
+
+
+                </accordion-group> <!--Datos Basicos de Pasajero-->
+
+                <accordion-group>
+                    <accordion-heading>
+                        Configuraciones<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                    </accordion-heading> <!--Accordion Header-->
+
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label>Categoria</label>
+                            <br />
+                            <div class="btn-group" dropdown>
+                                <button type="button" class="btn btn-primary">Tipo de Pasajero</button>
+                                <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Split button!</span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a ng-click="">Simple</a></li>
+                                    <li><a href="#">Premium</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Otros</a></li>
+                                </ul>
+                            </div> <!--DropDown Tipo Pasajero-->
+                        </div>  <!--Categoria-->
+                    </div><!--Categoria-->
+                    <br />
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Situacion AFIP</label>
+                            <br />
+                            <div class="btn-group" dropdown>
+                                <button type="button" class="btn btn-primary">Seleccione Tipo</button>
+                                <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Split button!</span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a ng-click="">Monotributo</a></li>
+                                    <li><a href="#">R. Inscripto</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Otros</a></li>
+                                </ul>
+                            </div> <!--DropDown Tipo Afip-->
+                        </div> <!--Situacion AFIP-->
+                        <div class="col-md-5">
+                            <label>CUIT</label>
+                            <input type="text" ng-model="Pasajero.CUIT" class="form-control" placeholder="Ingrese CUIT">
+                        </div> <!--CUIT-->
+                    </div> <!--Configuracion/AFIP-->
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Empresa</label>
+                            <input type="text" ng-model="Pasajero.Empresa" class="form-control" placeholder="Empresa a la que esta vinculado">
+                        </div> <!--Empresa-->
+                    </div><!--Empresa-->
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Familia</label>
+                            <input type="text" ng-model="Pasajero.Familia" class="form-control" placeholder="Familiares Vinculados">
+                        </div> <!--Familia-->
+                    </div> <!--Familia-->
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Observaciones</label>
+                            <input type="text" ng-model="Pasajero.Observacion" class="form-control" placeholder="Familiares Vinculados">
+                        </div> <!--observaciones-->
+                    </div> <!--Observaciones-->
+
+
+                </accordion-group> <!--Configuracion de Pasajero-->
+            </accordion>
+        </div>
+
+
+
+
+    </div> <!--Panel derecho de Vista-->
+
+
+</div>

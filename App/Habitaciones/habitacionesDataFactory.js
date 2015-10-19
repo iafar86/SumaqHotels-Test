@@ -1,5 +1,6 @@
 ﻿sumaqHotelsApp.factory('habitacionesDataFactory', function ($resource) {
-    return $resource('api/Habitaciones/:id',
+    var urlApi = "http://localhost:33140"; //fpaz: url del web api de cuentas de usuario, cambiar por el de produccion una vez implementado
+    return $resource(urlApi + '/api/Habitaciones/:id',
            { id: '@id' },
            { 'update': { method: 'PUT' } }
         );

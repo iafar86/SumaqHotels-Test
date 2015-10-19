@@ -1,5 +1,6 @@
 ﻿sumaqHotelsApp.factory('tiposHotelesDataFactory', function ($resource) {
-    return $resource('api/TiposHoteles/:id',
+    var urlApi = "http://localhost:33140"; //fpaz: url del web api de cuentas de usuario, cambiar por el de produccion una vez implementado
+    return $resource(urlApi + '/api/TiposHoteles/:id',
            { id: '@id' },
            { 'update': { method: 'PUT' } }
         );

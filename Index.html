@@ -11,22 +11,22 @@
     <!--#region Template de bloques en el home-->
 
     <!-- +++++++++++++++++++++++++++++++Blocks Template++++++++++++++++++++++++++++++++++++++++++-->
-    <link href="http://www.prepbootstrap.com/Content/css/single-page-admin/main.css" rel="stylesheet">    
+    <!--<link href="http://www.prepbootstrap.com/Content/css/single-page-admin/main.css" rel="stylesheet">    
     <link href="http://www.prepbootstrap.com/Content/css/single-page-admin/flexslider.css" rel="stylesheet">
-    <script type="text/javascript" src="http://www.prepbootstrap.com/Content/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="http://www.prepbootstrap.com/Content/js/jquery-1.10.2.min.js"></script>-->
 
     <!-- NOTY JAVASCRIPT -->
-    <script type="text/javascript" src="http://www.prepbootstrap.com/Content/js/single-page-admin/noty/jquery.noty.js"></script>
+    <!--<script type="text/javascript" src="http://www.prepbootstrap.com/Content/js/single-page-admin/noty/jquery.noty.js"></script>
     <script type="text/javascript" src="http://www.prepbootstrap.com/Content/js/single-page-admin/noty/layouts/topLeft.js"></script>
     <script type="text/javascript" src="http://www.prepbootstrap.com/Content/js/single-page-admin/noty/layouts/topRight.js"></script>
-    <script type="text/javascript" src="http://www.prepbootstrap.com/Content/js/single-page-admin/noty/layouts/topCenter.js"></script>
+    <script type="text/javascript" src="http://www.prepbootstrap.com/Content/js/single-page-admin/noty/layouts/topCenter.js"></script>-->
 
     <!-- You can add more layouts if you want -->
-    <script type="text/javascript" src="http://www.prepbootstrap.com/Content/js/single-page-admin/noty/themes/default.js"></script>
+  <!--  <script type="text/javascript" src="http://www.prepbootstrap.com/Content/js/single-page-admin/noty/themes/default.js"></script>-->
     <!-- <script type="text/javascript" src="assets/js/dash-noty.js"></script> This is a Noty bubble when you init the theme-->
-    <script type="text/javascript" src="http://code.highcharts.com/highcharts.js"></script>
+    <!--script type="text/javascript" src="http://code.highcharts.com/highcharts.js"></script>
     <script src="http://www.prepbootstrap.com/Content/js/single-page-admin/jquery.flexslider.js" type="text/javascript"></script>
-    <script type="text/javascript" src="http://www.prepbootstrap.com/Content/js/single-page-admin/admin.js"></script>
+    <script type="text/javascript" src="http://www.prepbootstrap.com/Content/js/single-page-admin/admin.js"></script>-->
     
     <!-- +++++++++++++++++++++++++++++++ End - Blocks Template++++++++++++++++++++++++++++++++++++++++++-->
 
@@ -74,11 +74,15 @@
     <link href="Scripts/ngTable/ng-table.css" rel="stylesheet" />
     <!-- end -->
     <!--#endregion-->
-        
-    <!--#region Iafar: Inicio de JS de 3ros-->
+    
+    <!--#region Iafar:Css Footer-->    
+    <link href="Content/footer.css" rel="stylesheet" />
+    <!--#endregion-->
 
+    <!--#region Iafar: Inicio de JS de 3ros-->
+  
     <!--#region Declaracion JS AngularJS-->
-    <script src="Scripts/angular.min.js"></script>
+    <script src="Scripts/angular.js"></script>
     <script src="Scripts/angular-route.min.js"></script>
     <script src="Scripts/angular-resource.min.js"></script>
     <script src="Scripts/angular-cookies.js"></script>
@@ -88,7 +92,7 @@
     <!--#endregion-->
 
     <!--#region Angular Material -->
-    <script src="Scripts/angular-material/angular-material.min.js"></script>
+    <script src="Scripts/angular-material/angular-material.js"></script>
     <!--#endregion -->
 
     <!-- Angular Local Storage-->
@@ -210,8 +214,8 @@
 
 <body ng-app="sumaqHotelsApp">
 
-    <section id="container">
-        <div ui-view="content"></div>               
+    <section id="container" ui-view="content">
+                  
     </section>
 </body>
 </html>

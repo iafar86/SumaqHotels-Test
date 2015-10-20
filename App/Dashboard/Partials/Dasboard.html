@@ -165,7 +165,9 @@ MAIN SIDEBAR MENU
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
 
-            <p class="centered"><a href="profile.html"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
+            <p class="centered"><a href="profile.html"><img src="assets/img/admin1.png" class="img-circle" width="110"></a></p>
+            <h5 class="centered">Administrador Sumaq</h5>
+
             <h5 class="centered">{{authentication.userName}}</h5>
             <h5 class="centered">{{authentication.roles[0]}}</h5>
 
@@ -206,59 +208,6 @@ MAIN SIDEBAR MENU
                     <li><a ui-sref="dashboard.pasajerosAdd">Nuevo</a></li>
                 </ul>
             </li>
-
-            <li class="sub-menu">
-                <a href="javascript:;">
-                    <i class="fa fa-cogs"></i>
-                    <span>Components</span>
-                </a>
-                <ul class="sub">
-                    <li><a href="calendar.html">Calendar</a></li>
-                    <li><a href="gallery.html">Gallery</a></li>
-                    <li><a href="todo_list.html">Todo List</a></li>
-                </ul>
-            </li>
-            <li class="sub-menu">
-                <a href="javascript:;">
-                    <i class="fa fa-book"></i>
-                    <span>Extra Pages</span>
-                </a>
-                <ul class="sub">
-                    <li><a href="blank.html">Blank Page</a></li>
-                    <li><a href="login.html">Login</a></li>
-                    <li><a href="lock_screen.html">Lock Screen</a></li>
-                </ul>
-            </li>
-            <li class="sub-menu">
-                <a href="javascript:;">
-                    <i class="fa fa-tasks"></i>
-                    <span>Forms</span>
-                </a>
-                <ul class="sub">
-                    <li><a href="form_component.html">Form Components</a></li>
-                </ul>
-            </li>
-            <li class="sub-menu">
-                <a href="javascript:;">
-                    <i class="fa fa-th"></i>
-                    <span>Data Tables</span>
-                </a>
-                <ul class="sub">
-                    <li><a href="basic_table.html">Basic Table</a></li>
-                    <li><a href="responsive_table.html">Responsive Table</a></li>
-                </ul>
-            </li>
-            <li class="sub-menu">
-                <a href="javascript:;">
-                    <i class=" fa fa-bar-chart-o"></i>
-                    <span>Charts</span>
-                </a>
-                <ul class="sub">
-                    <li><a href="morris.html">Morris</a></li>
-                    <li><a href="chartjs.html">Chartjs</a></li>
-                </ul>
-            </li>
-
         </ul>
         <!-- sidebar menu end-->
     </div>
@@ -271,14 +220,15 @@ MAIN CONTENT
 <section id="main-content">
     <section class="wrapper">
 
-        <div class="row" ui-view="content">
+        <div layout="row" ui-view="content" style="min-height:520px" layout-fill>
 
         </div> <!--/row -->
+        <div class="push"></div>
     </section>
 </section>
 <!--main content end-->
  <!--footer start-->
-<footer class="site-footer">
+<footer class="site-footer footer">
     <div class="text-center">
         <p>2015 &copy; Sumaq Hotels</p>
         <a href="index.html#" class="go-top">
@@ -297,38 +247,38 @@ MAIN CONTENT
 <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
 <script src="assets/js/jquery.sparkline.js"></script>
 
-
 <!--common script for all pages-->
 <script src="assets/js/common-scripts.js"></script>
-
 <script type="text/javascript" src="assets/js/gritter/js/jquery.gritter.js"></script>
 <script type="text/javascript" src="assets/js/gritter-conf.js"></script>
-
 <!--script for this page-->
 
 <script src="assets/js/sparkline-chart.js"></script>
 <script src="assets/js/zabuto_calendar.js"></script>
 
 <script type="text/javascript">
-        $(document).ready(function () {
-            var unique_id = $.gritter.add({
-                // (string | mandatory) the heading of the notification
-                title: 'Bienvenido a Sumaq Hotels!',
-                // (string | mandatory) the text inside the notification
-                text: 'Aqui podra acceder y administrar todos los aspectos de su hotel en cuanto a reservas y pasajeros. De una vuelta por todas sus secciones',
-                // (string | optional) the image to display on the left
-                image: 'assets/img/ui-sam.jpg',
-                // (bool | optional) if you want it to fade out on its own or just sit there
-                sticky: false,
-                // (int | optional) the time you want it to be alive for before fading out
-                time: '5000',
-                // (string | optional) the class name you want to apply to that specific message
-                class_name: 'my-sticky-class'
-            });
-
-            return false;
+    $(document).ready(function () {
+        var unique_id = $.gritter.add({
+            // (string | mandatory) the heading of the notification
+            title: 'Bienvenido a Sumaq Hotels!',
+            // (string | mandatory) the text inside the notification
+            text: 'Aqui podra acceder y administrar todos los aspectos de su hotel en cuanto a reservas y pasajeros. De una vuelta por todas sus secciones',
+            // (string | optional) the image to display on the left
+            image: 'assets/img/sumaqLogo.png',
+            // (bool | optional) if you want it to fade out on its own or just sit there
+            sticky: false,
+            // (int | optional) the time you want it to be alive for before fading out
+            time: '5000',
+            // (string | optional) the class name you want to apply to that specific message
+            class_name: 'my-sticky-class'
         });
+
+        return false;
+    });
 </script>
+
+
+
 
 <script type="application/javascript">
     $(document).ready(function () {

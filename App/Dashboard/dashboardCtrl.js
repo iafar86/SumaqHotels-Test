@@ -1,5 +1,4 @@
 ﻿sumaqHotelsApp.controller('dashboardCtrl', function ($scope, $location, authSvc) {
-
     $scope.logOut = function () {
         authSvc.logOut();
         alert("Deslogueado")

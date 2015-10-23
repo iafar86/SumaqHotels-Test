@@ -39,10 +39,7 @@
                         controller: ''
                     }
                 }
-            })
-
-        
-			
+            })			
         //#endregion  
 
         //#region Seguridad
@@ -65,6 +62,17 @@
                     }
                 }
             })
+
+            //fpaz: state con la vista que va a capturar la confirmacion por email de la cuenta de usuario
+             .state('confirmAccount', {
+                 url: "/confirm",
+                 views: {
+                     'content': {
+                         templateUrl: '/App/Seguridad/Partials/prueba.html',
+                         controller: 'loginCtrl'
+                     }
+                 }
+             })           
             //#endregion
 
         //#region Hoteles

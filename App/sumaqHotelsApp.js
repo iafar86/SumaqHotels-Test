@@ -1,213 +1,135 @@
-﻿var sumaqHotelsApp = angular.module('sumaqHotelsApp', ['ngRoute', 'ngResource', 'ui.router', 'ngCookies', 'ngTable', 'googlechart',
-  'ngSanitize', 'ngAnimate', 'ct.ui.router.extras', 'angular-loading-bar', 'daypilot', 'LocalStorageModule', 'angular-jwt', 'ngMaterial'])
+﻿var sumaqHotelsApp = angular
+    .module('sumaqHotelsApp', [
+        'ngAnimate',
+        'ngAria',
+        'ngCookies',
+        'ngMessages',
+        'ngResource',
+        'ngSanitize',
+        'ngTouch',
+        'ngMaterial',
+        'ngStorage',
+        //'ngStore',
+        'ui.router',
+        'ui.utils',
+        'ui.bootstrap',
+        //'ui.load',
+        //'ui.jp',
+        //'pascalprecht.translate',
+        'oc.lazyLoad',
+        'angular-loading-bar',
+        'ngTable',
+        'ct.ui.router.extras',        
+        'daypilot',
+        'LocalStorageModule',
+        'angular-jwt'        
+    ])
+
     .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $stickyStateProvider, cfpLoadingBarProvider) {
 
         cfpLoadingBarProvider.includeSpinner = true;
         cfpLoadingBarProvider.includeBar = true;
-        
+
 
         $urlRouterProvider.otherwise("/");
 
         $stateProvider //fpaz: defino los states que van a guiar el ruteo de las vistas parciales de la app       
-        //#region Home
-          .state('index', {
-              url: "/",              
-              views: {
-                  'content': {                      
-                      //templateUrl: '/App/Dashboard/Partials/home.html',
-                      templateUrl: '/App/Dashboard/Partials/login.html',
-                      controller: 'loginCtrl'
-                  }
-              }
-          })
+        
+        $stateProvider
+        
+        //#region index
+            .state('index', {
+                      url: "/",
+                      views: {
+                          '': {
+                              templateUrl: '/App/Dashboard/Partials/login.html',
+                              controller: 'loginCtrl',
+                              resolve: {
+                                  loadLoginCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {                                      
+                                      return $ocLazyLoad.load(['App/Seguridad/loginCtrl.js','App/Seguridad/styleLoginCss.css']);
+                                  }]
+                              }
 
-            .state('dashboard', {
-                url: "/dashboard",
-                views: {
-                    'content': {
-                        templateUrl: '/App/Dashboard/Partials/Dasboard.html',
-                        controller: 'dashboardCtrl'
-                    }
-                }
-            })
-
-            .state('dashboard.home', {
-                url: "/home",
-                views: {
-                    'content': {
-                        templateUrl: '/App/Dashboard/Partials/HomeAdmin.html',
-                        controller: ''
-                    }
-                }
-            })			
-        //#endregion  
-
-        //#region Seguridad
-            .state('login', {
-                url: "/login",
-                views: {
-                    'content': {
-                        templateUrl: '/App/Seguridad/Partials/login.html',
-                        controller: 'loginCtrl'
-                    }
-                }
-            })
-
-            .state('signup', {
-                url: "/signup",
-                views: {
-                    'content': {
-                        templateUrl: '/App/Seguridad/Partials/signup.html',
-                        controller: 'signupCtrl'
-                    }
-                }
-            })
-
-            //fpaz: state con la vista que va a capturar la confirmacion por email de la cuenta de usuario
-             .state('confirmAccount', {
-                 url: "/confirm",
-                 views: {
-                     'content': {
-                         templateUrl: '/App/Seguridad/Partials/prueba.html',
-                         controller: 'loginCtrl'
-                     }
-                 }
-             })           
-            //#endregion
-
-        //#region Hoteles
-          .state('dashboard.hotel', {
-              url: "/Hotel",
-              views: {
-                  'content': {
-                      templateUrl: '/App/Hoteles/Partials/hotelesMain.html',
-                      controller: 'hotelesCtrl',
-                      resolve: {
-                          hotelesDataFactory: 'hotelesDataFactory',
-                          infoHotel: function () {
-                              return { value: [] };
                           },
-                          tiposHotelesDataFactory: 'tiposHotelesDataFactory',
-                          listadoTiposHoteles: function (tiposHotelesDataFactory) {
-                              return tiposHotelesDataFactory.query();
+                          'aside': {
+                              templateUrl: ''
                           },
-                          categoriasDataFactory: 'categoriasDataFactory',
-                          listadoCategorias: function (categoriasDataFactory) {
-                              return categoriasDataFactory.query();
+                          'content': {
+                              templateUrl: ''
                           }
                       }
+                  })
+        //#endregion
+
+        .state('app', {
+              abstract: true,
+              url: '/app',
+              views: {
+                  '': {
+                      templateUrl: 'views/layout.html'
+                  },
+                  'aside': {
+                      templateUrl: 'views/aside.html'
+                  },
+                  'content': {
+                      templateUrl: 'views/content.html'
                   }
               }
           })
-        //#endregion  
-
-        //#region Tipos Habitacion
-          .state('dashboard.tipoHab', {
-              url: "/TipoHabitaciones",
-              views: {
-                  'content': {
-                      templateUrl: '/App/TiposHabitacion/Partials/tiposHabMain.html',
-                      controller: 'tiposHabCtrl',
-                      resolve: {
-                          tiposHabDataFactory: 'tiposHabDataFactory',                          
-                          listadoTiposHab: function (tiposHabDataFactory) {
-                              return tiposHabDataFactory.query();
-                          },
-                          tiposCamasDataFactory: 'tiposCamasDataFactory',
-                          listadoTiposCamas: function (tiposCamasDataFactory) {
-                              return tiposCamasDataFactory.query();
-                          },
-                          serviciosDataFactory: 'serviciosDataFactory',
-                          listadoServicios: function (serviciosDataFactory) {
-                              return serviciosDataFactory.query();
-                          },
-
-                      }
-                  }
-              }
-          })          
-        //#endregion  
-
-        //#region Habitaciones
-          .state('dashboard.habitaciones', {
-              url: "/Habitaciones",
-              views: {
-                  'content': {
-                      templateUrl: '/App/Habitaciones/Partials/habitacionesDetail.html',
-                      controller: 'habitacionesCtrl',
-                      resolve: {
-                          habitacionesDataFactory: 'habitacionesDataFactory',
-                          infoHabitacion: function () {
-                              return { value: [] };
-                          },
-                          listadoHabitaciones: function (habitacionesDataFactory) {
-                              return habitacionesDataFactory.query();
-                          },
-                          prmTipoHab: function () {
-                              return { value: [] };
-                          }
-                      }
-                  }
-              }
-          })
-        //#endregion  
-
-        //#region Pasajeros
-          .state('dashboard.pasajeros', {
-              url: "/PasajerosList",
-              views: {
-                  'content': {
-                      templateUrl: '/App/Pasajeros/Partials/pasajerosMain.html',
-                      controller: 'pasajerosCtrl',
-                      resolve: {
-                          //pasajerosDataFactory: 'pasajerosDataFactory',
-                          //infoPasajero: function () {
-                          //    return { value: [] };
-                          //},
-                          //listadoPasajeros: function (pasajerosDataFactory) {
-                          //    return pasajerosDataFactory.query();
-                          //}
-                      }
-                  }
-              }
-          })
-
-         .state('dashboard.pasajerosAdd', {
-             url: "/PasajerosAdd",
-             views: {
-                 'content': {
-                     templateUrl: '/App/Pasajeros/Partials/pasajerosAdd.html',
-                     controller: 'pasajerosCtrl',
-                     resolve: {
-                         //pasajerosDataFactory: 'pasajerosDataFactory',
-                         //infoPasajero: function () {
-                         //    return { value: [] };
-                     }
-                 }
+        .state('app.dashboard', {
+                url: '/dashboard',
+                templateUrl: 'views/ui/material/ngmaterial.html',
+                data: { title: 'Dashboard', folded: true },
+                resolve: { // Any property in resolve should return a promise and is executed before the view is loaded
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        // you can lazy load files for an existing module
+                        return $ocLazyLoad.load('scripts/controllers/material.js');
+                    }]
+                }                
+            })
+        .state('app.analysis', {
+             url: '/analysis',
+             templateUrl: 'views/pages/dashboard.analysis.html',
+             data: { title: 'Analysis' },
+             resolve: { // Any property in resolve should return a promise and is executed before the view is loaded
+                 loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
+                     // you can lazy load files for an existing module
+                     return $ocLazyLoad.load(['scripts/controllers/chart.js', 'scripts/controllers/vectormap.js']);
+                 }]
              }
          })
-
-
-        //#endregion  
-
-        //#region Booking
-        .state('dashboard.booking', {
-            url: "/Booking",
-            views: {
-                'content': {
-                    templateUrl: '/App/Booking/Partials/demo.html',
-                    controller: 'bookingCtrl'
-                }
+        .state('app.booking', {
+            url: '/booking',
+            templateUrl: 'App/Booking/Partials/demo.html',
+            controller: 'bookingCtrl',
+            data: { title: 'Booking' },
+            resolve: { 
+                loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    // you can lazy load files for an existing module
+                    return $ocLazyLoad.load(['App/Booking/bookingCtrl.js', '/App/Booking/demoCss.css']);
+                }]
             }
         })
-        //#endregion
-        
-    })
+       })
 
     .config(function ($httpProvider) {
         $httpProvider.interceptors.push('authInterceptorSvc');//agrego al array de interceptor el sevicio authInterceptorSvc que se encarga de mandar ,en cada peticion al web api, el token de acceso obtenido en el login y de redirigir a la pagina de logueo , en caso de que un usuario anonimo quiera agseder a un recurso privado
     })
+    .config(
+    ['$controllerProvider', '$compileProvider', '$filterProvider', '$provide',
+    function ($controllerProvider, $compileProvider, $filterProvider, $provide) {
+
+        // lazy controller, directive and service
+        sumaqHotelsApp.controller = $controllerProvider.register;
+        sumaqHotelsApp.directive = $compileProvider.directive;
+        sumaqHotelsApp.filter = $filterProvider.register;
+        sumaqHotelsApp.factory = $provide.factory;
+        sumaqHotelsApp.service = $provide.service;
+        sumaqHotelsApp.constant = $provide.constant;
+        sumaqHotelsApp.value = $provide.value;
+    }
+    ])
     .run(['authSvc', function (authSvc) { //cada ves que el usuario entra a la aplicacion ejecuto la funcion para obtener el token guardado en el storage que este vigente, en caso de que exita uno almacenado
         authSvc.fillAuthData();
-    }]);
-
+    }]) 
+;

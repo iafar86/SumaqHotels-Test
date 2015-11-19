@@ -1,4 +1,5 @@
 ﻿sumaqHotelsApp.controller('bookingCtrl', function ($scope, $timeout, $http, $stateParams, $state, $filter, ngTableParams, habitacionesDataFactory) {
+    $scope.msg = "Hola estoy en booking";
     $scope.habitaciones = [
                 { "id": "1", "name": "Habitacion 101", "capacity": "2", "status": "Dirty" },
                 { "id": "2", "name": "Habitacion 102", "capacity": "2", "status": "Cleanup" },

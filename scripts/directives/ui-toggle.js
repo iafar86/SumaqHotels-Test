@@ -1,4 +1,4 @@
-angular.module('app')
+angular.module('sumaqHotelsApp')
   .directive('uiToggleClass', ['$timeout', '$document', function($timeout, $document) {
     return {
       restrict: 'AC',

@@ -6,7 +6,7 @@
     <meta name="description" content="material, material design, angular material, app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-    
+
     <!--#region Iafar: Inicio Css de Plantilla-->
     <link rel="stylesheet" href="../libs/assets/animate.css/animate.css" type="text/css" />
     <!--<link rel="stylesheet" href="../libs/assets/font-awesome/css/font-awesome.css" type="text/css" />-->
@@ -16,70 +16,71 @@
     <link rel="stylesheet" href="styles/material-design-icons.css" type="text/css" />
     <link rel="stylesheet" href="styles/app.min.css" type="text/css" />
     <!--#endregion-->
-    
-    
     <!--#region Iafar: Inicio de JS de 3ros-->
     <!--#region Declaracion JS AngularJS-->
     <script src="libs/angular/angular/angular.js"></script>
     <script src="libs/angular/angular-resource/angular-resource.js"></script>
     <script src="libs/angular/angular-cookies/angular-cookies.js"></script>
     <script src="libs/angular/angular-sanitize/angular-sanitize.js"></script>
-    <script src="libs/angular/angular-animate/angular-animate.js"></script>    
+    <script src="libs/angular/angular-animate/angular-animate.js"></script>
     <script src="libs/angular/angular-aria/angular-aria.js"></script>
     <script src="libs/angular/angular-messages/angular-messages.js"></script>
     <script src="libs/angular/angular-touch/angular-touch.js"></script>
     <!--#endregion-->
-
     <!--#region Angular Material -->
     <link href="libs/angular/angular-material/angular-material.css" rel="stylesheet" />
     <script src="libs/angular/angular-material/angular-material.js"></script>
     <!--#endregion -->
-    
-    <!--#region Angular Local Storage-->    
+    <!--#region Angular Local Storage-->
     <script src="libs/angular/angular-local-storage/angular-local-storage.js"></script>
     <script src="libs/angular/ngstorage/ngStorage.js"></script>
     <!--#endregion -->
-    
-
     <!--#region UI Bootstrap  -->
     <script src="libs/angular/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <!--#endregion-->
-
     <!--#region Angular UI Route -->
-    <script src="libs/angular/angular-ui-router/release/angular-ui-router.min.js"></script>    
+    <script src="libs/angular/angular-ui-router/release/angular-ui-router.min.js"></script>
     <!--#endregion -->
-    
     <!--#region Loading Bar-->
     <link href="libs/angular/angular-loading-bar/build/loading-bar.min.css" rel="stylesheet" />
     <script src="libs/angular/angular-loading-bar/build/loading-bar.min.js"></script>
     <!--#endregion -->
-    
-    <!-- UI- Select -->
+    <!--#region UI- Select -->
     <link href="libs/angular/angular-ui-select/dist/select.min.css" rel="stylesheet" />
     <script src="libs/angular/angular-ui-select/dist/select.min.js"></script>
-    <!-- end -->
-    
-    <!-- daypilot-->
+    <!-- #endregion -->
+    <!--#region daypilot-->
     <script src="libs/angular/daypilot/daypilot-all.min.js"></script>
-    <!-- end -->
-    
-    <!--ngAutocomplete/Google Places-->
+    <!-- #endregion -->
+    <!--#region ngAutocomplete/Google Places-->
     <script src="libs/angular/ngAutocomplete/ngAutocomplete.js"></script>
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
-    <!-- end  -->
-
-    <!-- Angular Jwt-->
-    <script src="libs/angular/angular-jwt/angular-jwt.js"></script>    
-    <!--end-->
+    <!-- #endregion  -->
+    <!--#region Angular Jwt-->
+    <script src="libs/angular/angular-jwt/angular-jwt.js"></script>
+    <!--#endregion-->
+    <!-- #region extras -->
     <script src="libs/angular/angular-ui-router-extras/ct-ui-router-extras.js"></script>
+    <script src="libs/angular/angular-ui-utils/ui-utils.js"></script>
+    <!-- #endregion -->
+    <!--#region ngTable  -->
     <link href="libs/angular/ngTable/ng-table.css" rel="stylesheet" />
     <script src="libs/angular/ngTable/ng-table.js"></script>
-    <script src="libs/angular/angular-ui-utils/ui-utils.js"></script>
+    <!--#endregion  -->
+    <!-- #region AngularMaterial-Icons -->
+    <script src="libs/angular/angular-material-icons/angular-material-icons.min.js"></script>
+    <!-- #endregion -->
+    <!--#region material Fab button-->
+    <script src="libs/angular/ngMaterialFlotingBtn/mfb-directive.js"></script>
+    <link href="libs/angular/ngMaterialFlotingBtn/mfb.css" rel="stylesheet" />
     <!--#endregion-->
-
+    <!--#endregion-->
     <!--#region Iafar: controladores JS de vistas Parciales-->
     <!--#region Iafar: controlador JS principal-->
     <script src="App/sumaqHotelsApp.js"></script>
+    <script src="libs/angular/oclazyload/dist/ocLazyLoad.min.js"></script>
+    <!--<script src="scripts/config.lazyload.js"></script>-->
+    <script src="scripts/app.ctrl.js"></script>
     <!--#endregion-->
     <!--#region Seguridad -->
     <script src="App/Seguridad/authInterceptorSvc.js"></script>
@@ -89,49 +90,31 @@
     <script src="App/Seguridad/signupCtrl.js"></script>
     <script src="App/Seguridad/tokenDataFactory.js"></script>
     <!--#endregion-->
-    <!--#region Dashboard-->
-    <script src="App/Dashboard/dashboardCtrl.js"></script>
-    <!--#endregion-->
-    <!-- Hoteles -->
-    <script src="/App/Hoteles/hotelesCtrl.js"></script>
-    <script src="/App/Hoteles/hotelesDataFactory.js"></script>
-    <!-- end -->
-    <!-- Tipo de Habitaciones -->
-    <script src="/App/TiposHabitacion/tiposHabCtrl.js"></script>
-    <script src="/App/TiposHabitacion/tiposHabDataFactory.js"></script>
-    <!-- end -->
-    <!-- Habitaciones -->
-    <script src="/App/Habitaciones/habitacionesCtrl.js"></script>
-    <script src="/App/Habitaciones/habitacionesDataFactory.js"></script>
-    <!-- end -->
-    <!-- Pasajeros -->
-    <script src="/App/Pasajeros/pasajerosCtrl.js"></script>
-    <script src="/App/Pasajeros/pasajerosDataFactory.js"></script>
-    <!-- end -->
-    <!-- Tipos de Camas-->
-    <script src="/App/Camas/tiposCamasDataFactory.js"></script>
-    <!-- end -->
-    <!-- Servicios de Habitacion-->
-    <script src="/App/Servicios/serviciosDataFactory.js"></script>
-    <!-- end -->
-    <!-- Tipos de Hoteles-->
-    <script src="/App/TiposHoteles/tiposHotelesDataFactory.js"></script>
-    <!-- end -->
-    <!-- Categorias-->
-    <script src="/App/Categorias/categoriasDataFactory.js"></script>
-    <!-- end -->
-    <!-- Booking -->
-    <!--<script src="/App/Booking/bookingCtrl.js"></script>-->
-    <!-- end -->
-    <!--
-
-    <!--#endregion-->
-
-
-    <script src="libs/angular/oclazyload/dist/ocLazyLoad.min.js"></script>
-    <script src="scripts/app.ctrl.js"></script>
-    <!--<script src="scripts/config.lazyload.js"></script>-->
+    <!-- #region datafactory -->
+    <script src="App/Camas/tiposCamasDataFactory.js"></script>
+    <script src="App/Categorias/categoriasDataFactory.js"></script>
+    <script src="App/Habitaciones/habitacionesDataFactory.js"></script>
+    <script src="App/Hoteles/hotelesDataFactory.js"></script>
+    <script src="App/Pasajeros/pasajerosDataFactory.js"></script>
+    <!--<script src="App/Seguridad/tokenDataFactory.js"></script>-->
+    <script src="App/Servicios/serviciosDataFactory.js"></script>
+    <script src="App/TiposHabitacion/tiposHabDataFactory.js"></script>
+    <script src="App/TiposHoteles/tiposHotelesDataFactory.js"></script>
+    <!-- #endregion -->
+    <!--#region directivas Template-->
+    <script src="scripts/directives/lazyload.js"></script>
+    <script src="scripts/directives/ui-fullscreen.js"></script>
+    <script src="scripts/directives/ui-jp.js"></script>
     <script src="scripts/directives/ui-nav.js"></script>
+    <script src="scripts/directives/ui-scroll.js"></script>
+    <script src="scripts/directives/ui-toggle.js"></script>
+    <!--#endregion-->
+    <!--#region angular directive stars-->
+    <script src="scripts/directives/angular-input-stars.js"></script>
+    <!--#endregion-->
+
+
+
 
 </head>
 

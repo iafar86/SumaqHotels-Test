@@ -7,7 +7,7 @@
  * # uiScroll
  * Directive of the app
  */
-angular.module('app')
+angular.module('sumaqHotelsApp')
   .directive('uiScroll', ['$location', '$anchorScroll', function($location, $anchorScroll) {
     return {
       restrict: 'AC',

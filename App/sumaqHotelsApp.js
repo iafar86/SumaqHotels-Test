@@ -1,6 +1,6 @@
 ﻿var sumaqHotelsApp = angular.module('sumaqHotelsApp', ['ngResource', 'ngMdIcons', 'ui.router', 'ngCookies', 'ngTable',
   'ngSanitize', 'ngAnimate', 'ngAria', 'ct.ui.router.extras', 'angular-loading-bar', 'daypilot', 'LocalStorageModule', 'angular-jwt', 'ngMaterial',
-  'oc.lazyLoad','ng-mfb', 'angular-input-stars', 'ngAutocomplete']) //'ng-mfb', , 'angular-input-stars'
+  'oc.lazyLoad', 'ng-mfb', 'angular-input-stars', 'ngAutocomplete']) //'ng-mfb', , 'angular-input-stars'
     .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $stickyStateProvider, cfpLoadingBarProvider) {
 
         cfpLoadingBarProvider.includeSpinner = true;
@@ -93,10 +93,10 @@
 
             //#endregion
 
-            //#region Empleador
-            .state('empleador', {
+            //#region Hoteles
+            .state('hotel', {
                 abstract: true,
-                url: '/empleador',
+                url: '/hotel',
                 views: {
                     '': {
                         templateUrl: 'views/layout.html'
@@ -109,54 +109,36 @@
                     }
                 }
             })
-            .state('empleador.info', {
+
+            .state('hotel.info', {
                 url: '/info',
-                templateUrl: '/App/Empleador/Partials/empleadorInfo.html',
-                controller: 'empleadorCtrl',
-                data: { title: 'Info Empleador' },
+                templateUrl: '/App/Hoteles/Partials/hotelesMain.html',
+                controller: 'hotelesCtrl',
+                data: { title: 'Info Hotel' },
                 resolve: {
-                    empleadorDataFactory: 'empleadorDataFactory',
-                    infoEmpleador: function (empleadorDataFactory) {
+                    hotelesDataFactory: 'hotelesDataFactory',
+                    infoHotel: function () {
                         return { value: [] };
                     },
-                    listadoEmpleadores: function (empleadorDataFactory) {
-                        return empleadorDataFactory.query();
+                    tiposHotelesDataFactory: 'tiposHotelesDataFactory',
+                    listadoTiposHoteles: function (tiposHotelesDataFactory) {
+                        return tiposHotelesDataFactory.query();
                     },
-                    loadEmpleadorCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
-                        return $ocLazyLoad.load(['App/Empleador/empleadorCtrl.js', 'App/Empleador/empleadorDataFactory.js']);
-                    }],
-                    //infoEmpleador: [function (loadEmpleadorCtrl, empleadorDataFactory) {
-                    //    return empleadorDataFactory.get({ id: 0 });
-                    //}],
-                    //listadoEmpleadores: [function (loadEmpleadorCtrl, empleadorDataFactory) {
-                    //    return { value: [] };
-                    //}]
-                }
-            })
-            .state('empleador.add', {
-                url: '/add',
-                templateUrl: '/App/Empleador/Partials/empleadorAdd.html',
-                controller: 'empleadorCtrl',
-                data: { title: 'Alta de Empleador' },
-                resolve: {
-                    empleadorDataFactory: 'empleadorDataFactory',
-                    infoEmpleador: function (empleadorDataFactory) {
-                        return { value: [] };
+                    categoriasDataFactory: 'categoriasDataFactory',
+                    listadoCategorias: function (categoriasDataFactory) {
+                        return categoriasDataFactory.query();
                     },
-                    listadoEmpleadores: function (empleadorDataFactory) {
-                        return empleadorDataFactory.query();
-                    },
-                    loadEmpleadorCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
-                        return $ocLazyLoad.load(['App/Empleador/empleadorCtrl.js', 'App/Empleador/empleadorDataFactory.js']);
+                    loadHotelCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
+                        return $ocLazyLoad.load(['App/Hoteles/hotelesCtrl.js']);
                     }]
                 }
             })
-            //#endregion
+        //#endregion  
 
-            //#region Ofertas Empleador
-            .state('ofertas', {
+        //#region Tipos Habitacion
+            .state('tipoHab', {
                 abstract: true,
-                url: '/ofertas',
+                url: '/TiposHabitaciones',
                 views: {
                     '': {
                         templateUrl: 'views/layout.html'
@@ -169,190 +151,143 @@
                     }
                 }
             })
-            .state('ofertas.add', {
-                url: '/add',
-                templateUrl: '/App/Oferta/Partials/ofertaAdd-MD.html',
-                controller: 'ofertaCtrl',
-                data: { title: 'Nueva Oferta' },
+
+            .state('tipoHab.lista', {
+                url: "/TiposHabitaciones",
+                templateUrl: '/App/TiposHabitacion/Partials/tiposHabMain.html',
+                controller: 'tiposHabCtrl',
+                data: { title: 'Tipos de Habitaciones' },
                 resolve: {
-                    ofertaDataFactory: 'ofertaDataFactory',
-                    listadoOfertas: function (ofertaDataFactory) {
+                    tiposHabDataFactory: 'tiposHabDataFactory',
+                    listadoTiposHab: function (tiposHabDataFactory) {
+                        return tiposHabDataFactory.query();
+                    },
+                    tiposCamasDataFactory: 'tiposCamasDataFactory',
+                    listadoTiposCamas: function (tiposCamasDataFactory) {
+                        return tiposCamasDataFactory.query();
+                    },
+                    serviciosDataFactory: 'serviciosDataFactory',
+                    listadoServicios: function (serviciosDataFactory) {
+                        return serviciosDataFactory.query();
+                    },
+                    loadTiposHabitacionesCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
+                        return $ocLazyLoad.load(['App/TiposHabitacion/tiposHabCtrl.js']);
+                    }]
+                }
+            })
+        //#endregion  
+
+        //#region Habitaciones
+            .state('habitaciones', {
+                abstract: true,
+                url: '/Habitaciones',
+                views: {
+                    '': {
+                        templateUrl: 'views/layout.html'
+                    },
+                    'aside': {
+                        templateUrl: 'views/aside.html'
+                    },
+                    'content': {
+                        templateUrl: 'views/content.html'
+                    }
+                }
+            })
+
+            .state('habitaciones.lista', {
+                url: "/Listado",
+                templateUrl: '/App/Habitaciones/Partials/habitacionesDetail.html',
+                controller: 'habitacionesCtrl',
+                data: { title: 'Listado de Habitaciones' },
+                resolve: {
+                    habitacionesDataFactory: 'habitacionesDataFactory',
+                    infoHabitacion: function () {
                         return { value: [] };
                     },
-                    loadOfertasCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
-                        return $ocLazyLoad.load(['App/Oferta/ofertaCtrl.js']);
-                    }]
-                }
-            })
-            .state('ofertas.lista', {
-                url: '/ofertas',
-                templateUrl: '/App/Oferta/Partials/ofertaList-MD.html',
-                controller: 'ofertaCtrl',
-                data: { title: 'Listado de Ofertas' },
-                resolve: {
-                    ofertaDataFactory: 'ofertaDataFactory',
-                    listadoOfertas: function (ofertaDataFactory) {
-                        return ofertaDataFactory.getOfertas();
+                    listadoHabitaciones: function (habitacionesDataFactory) {
+                        return habitacionesDataFactory.query();
                     },
-                    loadOfertasCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
-                        return $ocLazyLoad.load(['App/Oferta/ofertaCtrl.js', 'App/Oferta/ofertaDataFactory.js', 'App/Oferta/ofertaFilter.js', 'App/Oferta/OfertaList.css']);
-
+                    prmTipoHab: function () {
+                        return { value: [] };
+                    },
+                    loadHabitacionesCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
+                        return $ocLazyLoad.load(['App/Habitaciones/habitacionesCtrl.js']);
                     }]
                 }
             })
-//#endregion
+        //#endregion  
 
-            //#region Empleados
-                    .state('empleado', {
-                        abstract: true,
-                        url: '/empleados',
-                        views: {
-                            '': {
-                                templateUrl: 'views/layout.html'
-                            },
-                            'aside': {
-                                templateUrl: 'views/aside.html'
-                            },
-                            'content': {
-                                templateUrl: 'views/content.html'
-                            }
-                        }
-                    })
+        //#region Pasajeros
+            .state('pasajeros', {
+                abstract: true,
+                url: '/Pasajeros',
+                views: {
+                    '': {
+                        templateUrl: 'views/layout.html'
+                    },
+                    'aside': {
+                        templateUrl: 'views/aside.html'
+                    },
+                    'content': {
+                        templateUrl: 'views/content.html'
+                    }
+                }
+            })
 
-                    .state('empleado.list', {
-                        url: '/list',
-                        templateUrl: '/App/Empleado/Partials/empleadoList.html',
-                        controller: 'empleadoCtrl',
-                        data: { title: 'Listado de empleados' },
-                        resolve: {
-                            empleadoDataFactory: 'empleadoDataFactory',
-                            infoEmpleado: function () {
-                                return { value: [] };
-                            },
-                            listadoEmpleados: function (empleadoDataFactory) {
-                                return empleadoDataFactory.getEmpleados();
-                            },
-                            listadoRubros: function () {
-                                return { value: [] };
-                            },
-                            loadEmpleadoCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
-                                return $ocLazyLoad.load(['App/Empleado/empleadoCtrl.js', 'App/Empleado/empleadoDataFactory.js']);
-                            }]
-                        }
-                    })
-                    .state('empleado.perfil', {
-                        url: '/perfil/:empleadoId',
-                        templateUrl: '/App/Empleado/Partials/empleadoDetalle.html',
-                        controller: 'empleadoCtrl',
-                        data: { title: 'Info Empleado' },
-                        resolve: {
-                            empleadoDataFactory: 'empleadoDataFactory',
-                            infoEmpleado: function (empleadoDataFactory, $stateParams) {
-                                var empleadoId = $stateParams.empleadoId;
-                                return empleadoDataFactory.getEmpleado(empleadoId);
-                            },
-                            listadoEmpleados: function (empleadoDataFactory) {
-                                return empleadoDataFactory.getEmpleados();
-                            },
-                            listadoRubros: function () {
-                                return { value: [] };
-                            },
-                            loadEmpleadoCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
-                                return $ocLazyLoad.load(['App/Empleado/empleadoCtrl.js', 'App/Empleado/empleadoDataFactory.js']);
-                            }]
-                        }
-                    })
-                    .state('empleado.perfil.datosPersonales', {
-                        url: '/datosPersonales',
-                        templateUrl: '/App/Empleado/Partials/empleadoInfoPersonal.html',
-                        controller: 'empleadoCtrl',
-                        data: { title: 'Info Empleado' },
-                        resolve: {
-                            empleadoDataFactory: 'empleadoDataFactory',
-                            infoEmpleado: function (empleadoDataFactory, $stateParams) {
-                                var empleadoId = $stateParams.empleadoId;
-                                return empleadoDataFactory.getEmpleado(empleadoId);
-                            },
-                            listadoEmpleados: function () {
-                                return { value: [] };
-                            },
-                            listadoRubros: function () {
-                                return { value: [] };
-                            },
-                            loadEmpleadoCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
-                                return $ocLazyLoad.load(['App/Empleado/empleadoCtrl.js', 'App/Empleado/empleadoDataFactory.js']);
-                            }]
-                        }
-                    })
+            .state('pasajeros.list', {
+                url: "/Listado",
+                templateUrl: '/App/Pasajeros/Partials/pasajerosMain.html',
+                controller: 'pasajerosCtrl',
+                data: { title: 'Listado de Pasajeros' },
+                resolve: {
+                    loadPasajerosCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
+                        return $ocLazyLoad.load(['App/Pasajeros/pasajerosCtrl.js']);
+                    }]
+                }
+            })
 
-                     .state('empleado.perfil.datosDeContacto', {
-                         url: '/datosDeContacto',
-                         templateUrl: '/App/Empleado/Partials/empleadoDatosDeContacto.html',
-                         controller: 'empleadoCtrl',
-                         data: { title: 'Info Empleado' },
-                         resolve: {
-                             empleadoDataFactory: 'empleadoDataFactory',
-                             infoEmpleado: function (empleadoDataFactory, $stateParams) {
-                                 var empleadoId = $stateParams.empleadoId;
-                                 return empleadoDataFactory.getEmpleado(empleadoId);
-                             },
-                             listadoEmpleados: function () {
-                                 return { value: [] };
-                             },
-                             listadoRubros: function () {
-                                 return { value: [] };
-                             },
-                             loadEmpleadoCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
-                                 return $ocLazyLoad.load(['App/Empleado/empleadoCtrl.js', 'App/Empleado/empleadoDataFactory.js']);
-                             }]
-                         }
-                     })
+         .state('pasajeros.add', {
+             url: "/add",
+             templateUrl: '/App/Pasajeros/Partials/pasajerosAdd.html',
+             controller: 'pasajerosCtrl',
+             data: { title: 'Alta de Pasajeros' },
+             resolve: {
+                 loadPasajerosCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
+                     return $ocLazyLoad.load(['App/Pasajeros/pasajerosCtrl.js']);
+                 }]
+             }
+         })
 
+        //#endregion  
 
-                     .state('empleado.perfil.calificarEmpleado', {
-                         url: '/calificar',
-                         templateUrl: '/App/Empleado/Partials/calificarEmpleado.html',
-                         controller: 'empleadoCtrl',
-                         data: { title: 'Info Empleado' },
-                         resolve: {
-                             empleadoDataFactory: 'empleadoDataFactory',
-                             infoEmpleado: function (empleadoDataFactory, $stateParams) {
-                                 var empleadoId = $stateParams.empleadoId;
-                                 return empleadoDataFactory.getEmpleado(empleadoId);
-                             },
-                             listadoEmpleados: function () {
-                                 return { value: [] };
-                             },
-                             listadoRubros: function () {
-                                 return { value: [] };
-                             },
-                             loadEmpleadoCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
-                                 return $ocLazyLoad.load(['App/Empleado/empleadoCtrl.js', 'App/Empleado/empleadoDataFactory.js', 'scripts/directives/angular-input-stars.js', 'styles/angular-input-stars.css']);
-                             }]
-                         }
-                     })
-                    .state('empleado.add', {
-                        url: '/add',
-                        templateUrl: '/App/Empleado/Partials/empleadoAdd-MD.html',
-                        controller: 'empleadoCtrl',
-                        data: { title: 'Listado de Empleados' },
-                        resolve: {
-                            empleadoDataFactory: 'empleadoDataFactory',
-                            rubroDataFactory: 'rubroDataFactory',
-                            infoEmpleado: function () {
-                                return { value: [] };
-                            },
-                            listadoEmpleados: function () {
-                                return { value: [] };
-                            },
-                            listadoRubros: function () {
-                                return { value: [] };
-                            },
-                            loadEmpleadoCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
-                                return $ocLazyLoad.load(['App/Empleado/empleadoCtrl.js', 'App/Empleado/empleadoDataFactory.js']);
-                            }]
-                        }
-                    })
+        //#region Booking
+        .state('booking', {
+            abstract: true,
+            url: '/booking',
+            views: {
+                '': {
+                    templateUrl: 'views/layout.html'
+                },
+                'aside': {
+                    templateUrl: 'views/aside.html'
+                },
+                'content': {
+                    templateUrl: 'views/content.html'
+                }
+            }
+        })
+
+            .state('booking.principal', {
+                url: "/principal",
+                templateUrl: '/App/Booking/Partials/demo.html',
+                controller: 'bookingCtrl',
+                data: { title: 'Booking' },
+                resolve: {
+                    loadBookingCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
+                        return $ocLazyLoad.load(['App/Booking/bookingCtrl.js']);
+                    }]
+                }
+            })
         //#endregion
     })
 

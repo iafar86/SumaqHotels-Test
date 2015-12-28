@@ -10,7 +10,7 @@
 
         authSvc.login($scope.loginData).then(function (response) {
             alert("Login Exitoso");
-            $location.path('/app/dashboard/');
+            $location.path('/app/dashboard');
 
         },
          function (err) {

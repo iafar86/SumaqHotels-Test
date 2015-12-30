@@ -1,0 +1,186 @@
+﻿<div layout="column" class="relative" layout-fill role="main" style="position:relative">
+    <!--#region Boton flotante-->
+    <div layout="row" layout-align="star center">
+        <nav mfb-menu position="br" effect="zoomin" label="Herramientas"
+             active-icon="mdi-content-clear" resting-icon="mdi-content-add"
+             toggling-method="hover">
+            <button mfb-button icon="mdi-image-edit" label="Editar Datos"></button>
+            <button mfb-button icon="mdi-content-save" label="Guardar Cambios"></button>
+            <button mfb-button icon="mdi-action-delete" label="Eliminar cambios"></button>
+        </nav>
+    </div>
+    <!--#endregion-->
+    <!--#region Panel de resultados-->
+    <md-content style="background-color:#eee" flex>
+
+        <div layout="row" layout-fill layout-padding>
+            <!-- #region Panel izquierdo -->
+            <md-card flex="30">
+                <md-card-content layout="column" layout-align="center center">
+                    <md-button class="inline-block animate-show" layout="row" flex>
+                        <div class="md-media-xl card-media rounded">
+                            <!--iafar:Aqui se puede poner una imagen-->
+                            <ng-md-icon icon="location_city" style="fill: #abcdef" size="200"></ng-md-icon>
+                        </div>
+                    </md-button>
+                    <md-divider></md-divider>
+
+                    <span class="md-headline" ng-show='!infoHotel.Nombre'>Mi Hotel</span>
+                    <span class="md-headline">{{infoHotel.Nombre}} </span>
+                    <div layout="row" flex layout-align="star center">
+                        <input-stars max="5" ng-model="hotel.stars"></input-stars>
+                    </div>
+                </md-card-content>
+                <div layout="row" class="md-whiteframe-z2" layout-align="center center" style="background-color:mediumturquoise">
+                    <hr />
+                    <a href="#" class="btn btn-round">
+                        <i class="fa fa-facebook"></i>
+                    </a>
+
+                    <a href="#" class="btn btn-round">
+                        <i class="fa fa-google-plus"></i>
+                    </a>
+                    <a href="#" class="btn btn-round">
+                        <i class="fa fa-twitter"></i>
+                    </a>
+                    <a href="#" class="btn btn-social btn-linkedin">
+                        <i class="fa fa-linkedin-square"></i>
+                    </a>
+                    <hr />
+                </div><!--USER WRAPPER SECTION END-->
+            </md-card>
+            <!-- #endregion -->
+            <!-- #region Panel derecho -->
+            <md-card flex>
+                <md-toolbar>
+                    <md-tabs md-stretch-tabs md-selected="data.selectedIndex">
+                        <md-tab id="tab1" estado="PENDIENTE" aria-controls="tab1-content" clickcatcher>
+                            Datos Basicos
+                        </md-tab>
+                        <md-tab id="tab2" estado="PUBLICADA" aria-controls="tab2-content" clickcatcher>
+                            Galeria de Imagenes
+                        </md-tab>
+                    </md-tabs>
+                </md-toolbar>
+                <!--#region Datos del Hotel-->
+                <!--#endregion-->
+                <!-- #region tempo -->
+
+                <ui-view layout="column" layout-fill layout-padding>
+                    <div class="inset" hide-sm></div>
+                    <ng-switch on="data.selectedIndex" class="tabpanel-container">
+                        <div role="tabpanel"
+                             id="tab1-content"
+                             aria-labelledby="tab1"
+                             ng-switch-when="0"
+                             md-swipe-left="next()"
+                             md-swipe-right="previous()"
+                             layout="row" layout-align="center center">
+                            <div flex-gt-sm="90" flex-gt-md="80">
+                                <md-content layout="row">
+                                    <md-input-container class="md-block" layout="row" layout-align="center end" flex="60">
+                                        <ng-md-icon icon="create" size="35" style="fill:green"></ng-md-icon>
+                                        <div flex>
+                                            <label>Nombre</label>
+                                            <input type="text" ng-model="infoHotel.Nombre" placeholder="Ingrese el nombre de su hotel">
+                                        </div>
+                                    </md-input-container>
+                                    <div flex="5"></div>
+                                    <md-select placeholder="Tipo de Hotel" ng-model="tipoHotel" md-on-open="loadTipoHoteles()" layout-fill>
+                                        <md-option ng-value="tipoHotel" ng-repeat="tipoHotel in listTiposHoteles" style="min-width: 200px;">{{tipoHotel.Nombre}}</md-option>
+                                    </md-select>
+
+
+                                </md-content>
+                                <md-content layout="row">
+                                    <md-input-container layout="row" layout-align="center end" flex="60">
+                                        <ng-md-icon icon="place" size="35" style="fill:#000000"></ng-md-icon>
+                                        <div flex>
+                                            <label>Ubicacion</label>
+                                            <input type="text" ng-model="infoHotel.DireccionComun" placeholder="Ubicacion Central">
+                                        </div>
+                                    </md-input-container>
+                                    <md-input-container layout="row" layout-align="center end" flex>
+                                        <ng-md-icon icon="local_phone" size="35" style="fill:darkblue"></ng-md-icon>
+                                        <div flex>
+                                            <label>Telefono</label>
+                                            <input type="text" ng-model="infoHotel.Telefono" placeholder="(0385) 4 999999">
+                                        </div>
+                                    </md-input-container>
+                                </md-content>
+                                <md-content>
+                                    <md-input-container layout="row" layout-align="center end" flex="30">
+                                        <ng-md-icon icon="email" size="35" style="fill:#808080"></ng-md-icon>
+                                        <div flex>
+                                            <label>Correo electronico</label>
+                                            <input ng-model="infoEmpleador.Mail" type="email" placeholder="Email (requerido)" ng-required="true">
+                                        </div>
+                                    </md-input-container>
+                                    <md-input-container layout="row" layout-align="center end" flex="30">
+                                        <ng-md-icon icon="language" size="35" style="fill:#808080"></ng-md-icon>
+                                        <div flex>
+                                            <label>Web</label>
+                                            <input type="text" ng-model="Hotel.UrlWeb" placeholder="www.SumaqHotels.com.ar">
+                                        </div>
+                                    </md-input-container>
+                                </md-content>
+                            </div>
+
+                        </div>
+                        <!--#endregion-->
+                        <!--#region panel Ofertas Publicadas-->
+                        <div role="tabpanel"
+                             id="tab2-content"
+                             aria-labelledby="tab2"
+                             ng-switch-when="1"
+                             md-swipe-left="next()"
+                             md-swipe-right="previous()"
+                             layout="row" layout-align="center center">
+                            <div flex-gt-sm="90" flex-gt-md="80">
+                               
+
+                                    <!--#region carousel -->
+                                    <div class="panel b-a" set-ng-animate="false">
+                                        <div class="panel-heading">
+                                            Carousel
+                                        </div>
+                                        <carousel interval="myInterval">
+                                            <slide ng-repeat="slide in slides">
+                                                <img ng-src="{{slide.image}}" class="img-full">
+                                                <div class="carousel-caption">
+                                                    <h4>Slide {{$index}}</h4>
+                                                    <p>{{slide.text}}</p>
+                                                </div>
+                                            </slide>
+                                        </carousel>
+                                        <div class="panel-footer">
+                                            <button type="button" class="btn btn-default m-r">Add Slide</button>
+                                            Interval: <input type="number" class="form-control w-auto inline" ng-model="myInterval"> ms
+                                        </div>
+                                    </div>
+                                    <!-- #endregion-->      
+
+                              
+                            </div>
+
+                        </div>
+                        <!--#endregion-->
+
+                    </ng-switch>
+                </ui-view>
+
+                <!-- #endregion -->
+
+
+
+
+
+            </md-card>
+            <!-- #endregion -->
+
+        </div>
+    </md-content>
+    <!--#endregion-->
+</div>
+
+

@@ -1,4 +1,4 @@
-﻿sumaqHotelsApp.controller('hotelesCtrl', function ($scope, $stateParams, $state, $filter, ngTableParams,
+﻿sumaqHotelsApp.controller('hotelesCtrl', function ($scope, $stateParams, $state, $filter, $timeout, ngTableParams,
     hotelesDataFactory, infoHotel, listadoTiposHoteles, listadoCategorias) {
 
     //#region Variables de Scope de Ivan
@@ -53,7 +53,17 @@
 
     //#region Inicializacion de variables de Scope
     $scope.infoHotel = infoHotel;
-    $scope.listTiposHoteles = listadoTiposHoteles;
+   
+    //#region carga tipo Hotel select
+    $scope.tipoHotel = null;
+    $scope.listTiposHoteles = null;
+    $scope.loadTipoHoteles = function () {
+        // Use timeout to simulate a 650ms request.
+        return $timeout(function () {
+            $scope.listTiposHoteles = listadoTiposHoteles;
+        }, 650);
+    };
+    //#endregion
     $scope.tipoHabSelec = {};
     $scope.tipoHabSelec.selected = {};
 

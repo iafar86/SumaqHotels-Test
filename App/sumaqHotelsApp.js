@@ -1,6 +1,6 @@
 ﻿var sumaqHotelsApp = angular.module('sumaqHotelsApp', ['ngResource', 'ngMdIcons', 'ui.router', 'ngCookies', 'ngTable',
   'ngSanitize', 'ngAnimate', 'ngAria', 'ct.ui.router.extras', 'angular-loading-bar', 'daypilot', 'LocalStorageModule', 'angular-jwt', 'ngMaterial',
-  'oc.lazyLoad', 'ng-mfb', 'angular-input-stars', 'ngAutocomplete']) //'ng-mfb', , 'angular-input-stars'
+  'oc.lazyLoad', 'ng-mfb', 'angular-input-stars', 'ngAutocomplete']) 
     .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $stickyStateProvider, cfpLoadingBarProvider) {
 
         cfpLoadingBarProvider.includeSpinner = true;
@@ -112,7 +112,7 @@
 
             .state('hotel.info', {
                 url: '/info',
-                templateUrl: '/App/Hoteles/Partials/hotelesMain.html',
+                templateUrl: '/App/Hoteles/Partials/hotelesMain_AM.html',
                 controller: 'hotelesCtrl',
                 data: { title: 'Info Hotel' },
                 resolve: {
@@ -129,7 +129,7 @@
                         return categoriasDataFactory.query();
                     },
                     loadHotelCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
-                        return $ocLazyLoad.load(['App/Hoteles/hotelesCtrl.js']);
+                        return $ocLazyLoad.load(['App/Hoteles/hotelesCtrl.js', 'styles/angular-input-stars.css']);
                     }]
                 }
             })

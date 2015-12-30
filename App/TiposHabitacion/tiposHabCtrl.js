@@ -1,4 +1,4 @@
-﻿sumaqHotelsApp.controller('tiposHabCtrl', function ($scope,$modal, $stateParams, $state, $filter, ngTableParams, tiposHabDataFactory,
+﻿sumaqHotelsApp.controller('tiposHabCtrl', function ($scope, $stateParams, $state, $filter, ngTableParams, $mdDialog,authSvc, tiposHabDataFactory,
     listadoTiposHab, listadoTiposCamas, listadoServicios, habitacionesDataFactory) {
 
     //#region Inicializacion de variables de Scope
@@ -30,14 +30,57 @@
     
     //#endregion
 
+    //#region fpaz: administracion de tabs
+    $scope.data = {
+        selectedIndex: 0,
+        secondLocked: true,
+        secondLabel: "Item Two"
+    };
+
+    $scope.next = function () {
+        $scope.data.selectedIndex = Math.min($scope.data.selectedIndex + 1, 2);
+    };
+
+    $scope.previous = function () {
+        $scope.data.selectedIndex = Math.max($scope.data.selectedIndex - 1, 0);
+    };
+
+    var tabs = [
+      { title: 'One', content: "Tabs will become paginated if there isn't enough room for them." },
+      { title: 'Two', content: "You can swipe left and right on a mobile device to change tabs." },
+      { title: 'Three', content: "You can bind the selected tab via the selected attribute on the md-tabs element." },     
+    ];
+
+    $scope.tabs = tabs;
+    $scope.selectedIndex = 2;
+
+    $scope.addTab = function (title, view) {
+        view = view || title + " Content View";
+        tabs.push({ title: title, content: view, disabled: false });
+    };
+
+    $scope.removeTab = function (tab) {
+        for (var j = 0; j < tabs.length; j++) {
+            if (tab.title == tabs[j].title) {
+                $scope.tabs.splice(j, 1);
+                break;
+            }
+        }
+    };
+    //#endregion
+
     //#region Alta de Tipos de Habitaciones
 
-    //funcion para agregar un nuevo Campos Programaticos y mostrarlo en la tabla
+    //fpaz: funcion para agregar un nuevo tab con los datos para el alta de tipo de habitacion
+    $scope.addTabTipoHab = function () {
+        tabs.push({ title:'Nuevo Tab', content: 'Contenido de Prueba', disabled: false });
+    }
+    
     $scope.obtenerTiposHab = function () {
         $scope.listTiposHab = tiposHabDataFactory.query();
     };
     
-    $scope.tipoHabAdd = function (infoTipoHab) {
+    $scope.addTipoHabitacion = function (infoTipoHab) {
 
         var tipoHab = {};
         tipoHab = infoTipoHab;

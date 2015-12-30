@@ -94,10 +94,12 @@
                                 </md-content>
                                 <md-content layout="row">
                                     <md-input-container layout="row" layout-align="center end" flex="60">
-                                        <ng-md-icon icon="place" size="35" style="fill:#000000"></ng-md-icon>
-                                        <div flex>
-                                            <label>Ubicacion</label>
-                                            <input type="text" ng-model="infoHotel.DireccionComun" placeholder="Ubicacion Central">
+                                        <!--<ng-md-icon icon="place" size="35" style="fill:#000000"></ng-md-icon>-->
+                                        <div flex>                                            
+                                            <md-input-container>                                                
+                                                <ng-md-icon icon="place" size="35" style="fill:#000000"></ng-md-icon>
+                                                <input class="md-input" type="text" ng-autocomplete ng-model="infoHotel.DireccionComun" options="options1" details="details1" />
+                                            </md-input-container>                                                                                        
                                         </div>
                                     </md-input-container>
                                     <md-input-container layout="row" layout-align="center end" flex>

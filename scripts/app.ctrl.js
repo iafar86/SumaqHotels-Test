@@ -16,7 +16,7 @@ angular.module('sumaqHotelsApp')
         isSmartDevice($window) && angular.element($window.document.body).addClass('smart');
         // config
         $scope.app = {
-            name: 'VLaboral',
+            name: 'Sumaq Hotels',
             version: '1.0.2',
             // for chart colors
             color: {

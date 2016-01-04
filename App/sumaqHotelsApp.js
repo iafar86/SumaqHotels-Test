@@ -236,7 +236,7 @@
 
             .state('pasajeros.list', {
                 url: "/Listado",
-                templateUrl: '/App/Pasajeros/Partials/pasajerosMain.html',
+                templateUrl: '/App/Pasajeros/Partials/pasajerosMain_AM.html',
                 controller: 'pasajerosCtrl',
                 data: { title: 'Listado de Pasajeros' },
                 resolve: {
@@ -248,7 +248,7 @@
 
          .state('pasajeros.add', {
              url: "/add",
-             templateUrl: '/App/Pasajeros/Partials/pasajerosAdd.html',
+             templateUrl: '/App/Pasajeros/Partials/pasajerosAdd_AM.html',
              controller: 'pasajerosCtrl',
              data: { title: 'Alta de Pasajeros' },
              resolve: {

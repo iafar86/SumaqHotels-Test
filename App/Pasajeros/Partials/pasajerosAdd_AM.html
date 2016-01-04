@@ -1,0 +1,183 @@
+﻿<div layout="column" class="relative" layout-fill role="main" style="position:relative">
+    <!--#region Boton flotante-->
+    <div layout="row" layout-align="star center">
+        <nav mfb-menu position="br" effect="zoomin" label="Herramientas"
+             active-icon="mdi-content-clear" resting-icon="mdi-content-add"
+             toggling-method="hover">
+            <button mfb-button icon="mdi-content-save" label="Guardar Cambios" ng-click="save(pasajero)"></button>
+            <button mfb-button icon="mdi-image-edit" label="Editar Datos"></button>
+            <button mfb-button icon="mdi-action-delete" label="Eliminar cambios"></button>
+        </nav>
+    </div>
+    <!--#endregion-->
+    <!--#region Panel de resultados-->
+    <md-content style="background-color:#eee" flex>
+
+        <div layout="row" layout-fill layout-padding>
+            <!-- #region Panel izquierdo -->
+            <md-card flex="30">
+                <md-card-content layout="column" layout-align="center center">
+                    <md-button class="inline-block animate-show" layout="row" flex>
+                        <div class="md-media-xl card-media rounded">
+                            <!--iafar:Aqui se puede poner una imagen-->
+                            <ng-md-icon icon="perm_contact_cal" style="fill: #abcdef" size="200"></ng-md-icon>
+                        </div>
+                    </md-button>
+                    <md-divider></md-divider>
+
+                    <span class="md-headline" ng-show='!pasajero.NomApe'>Nombre Pasajero</span>
+                    <span class="md-headline" ng-hide='!pasajero.NomApe'>{{pasajero.NomApe}}</span>
+                    <!--ng-show='!infoHotel.Nombre'-->
+                    <!--<span class="md-headline">{{ fecha | date:'shortDate'}}</span>-->
+
+                </md-card-content>
+
+            </md-card>
+            <!-- #endregion -->
+            <!-- #region Panel derecho -->
+            <md-card flex>
+                <md-toolbar>
+                    <md-tabs md-stretch-tabs md-selected="data.selectedIndex">
+                        <md-tab id="tab1" estado="DatosBasicos" aria-controls="tab1-content" clickcatcher>
+                            Datos Basicos
+                        </md-tab>
+                        <md-tab id="tab2" estado="Config" aria-controls="tab2-content" clickcatcher>
+                            Configuraciones
+                        </md-tab>
+                    </md-tabs>
+                </md-toolbar>
+                <!--#region Datos del Hotel-->
+                <!--#endregion-->
+                <!-- #region tempo -->
+
+                <ui-view layout="column" layout-fill layout-padding>
+                    <div class="inset" hide-sm></div>
+                    <ng-switch on="data.selectedIndex" class="tabpanel-container">
+                        <div role="tabpanel"
+                             id="tab1-content"
+                             aria-labelledby="tab1"
+                             ng-switch-when="0"
+                             md-swipe-left="next()"
+                             md-swipe-right="previous()"
+                             layout="row" layout-align="center center">
+                            <div flex-gt-sm="90" flex-gt-md="80">
+
+                                <md-content layout="row">
+
+                                    <md-select placeholder="Tipo de Documento" ng-model="pasajero.TipoDoc" ng-model-options="{trackBy: '$value'}" flex="20">
+                                        <md-option ng-value="TipoDoc" ng-repeat="TipoDoc in tipoDocumento" flex>{{TipoDoc}}</md-option>
+                                    </md-select>
+                                    <md-input-container class="md-block" layout="row" layout-align="center end" flex="40">
+                                        <div flex>
+                                            <label>DNI</label>
+                                            <input type="text" ng-model="pasajero.NumDoc">
+                                        </div>
+                                    </md-input-container>
+                                    <md-input-container flex layout="column">
+                                        <md-radio-group ng-model="pasajero.Sexo" layout="row">
+                                            <md-radio-button value="Masculino" class="md-primary">Masculino</md-radio-button>
+                                            <md-radio-button value="Femenino"> Femenino </md-radio-button>
+                                        </md-radio-group>
+                                    </md-input-container>
+                                </md-content>
+                                <md-content layout="row">
+                                    <md-input-container layout="row" layout-align="center end" flex="60">
+                                        <ng-md-icon icon="edit" size="35" style="fill:#004900"></ng-md-icon>
+                                        <div flex>
+                                            <label>Nombre y Apellido</label>
+                                            <input type="text" ng-model="pasajero.NomApe">
+                                        </div>
+
+                                    </md-input-container>
+                                    <md-input-container flex layout="column">
+                                        <md-radio-group ng-model="pasajero.ECivil" layout="row" class="md-primary">
+                                            <md-radio-button value="Soltero"> Soltero/a </md-radio-button>
+                                            <md-radio-button value="Casado">Casado/a</md-radio-button>
+                                        </md-radio-group>
+                                    </md-input-container>
+                                </md-content>
+                                <md-content layout="row">
+                                    <md-input-container layout="row" layout-align="center end" flex="75">
+                                        <ng-md-icon icon="place" size="35" style="fill:#004900"></ng-md-icon>
+                                        <div flex>
+                                            <label>Direccion</label>
+                                            <input type="text" ng-model="pasajero.Dir">
+                                        </div>
+                                    </md-input-container>
+                                    <md-input-container layout="row" layout-align="center end" flex>
+                                        <div flex>
+                                            <label>Codigo Postal</label>
+                                            <input type="text" ng-model="pasajero.CodPostal">
+                                        </div>
+                                    </md-input-container>
+                                </md-content>
+                                <md-content layout="row">
+                                    <md-input-container layout="row" layout-align="center end" flex="50">
+                                        <ng-md-icon icon="local_phone" size="35" style="fill:#004900"></ng-md-icon>
+                                        <div flex>
+                                            <label>Telefono fijo</label>
+                                            <input ng-model="pasajero.Tel" type="text">
+                                        </div>
+                                    </md-input-container>
+                                    <md-input-container layout="row" layout-align="center end" flex="50">
+                                        <div flex>
+                                            <label>Telefono celular</label>
+                                            <input type="text" ng-model="pasajero.Cel">
+                                        </div>
+                                    </md-input-container>
+                                </md-content>
+                                <md-content layout="row">
+                                    <md-input-container layout="row" layout-align="center end" flex>
+                                        <ng-md-icon icon="quick_contacts_mail" size="35" style="fill:#004900"></ng-md-icon>
+                                        <div flex>
+                                            <label>Correo electronico</label>
+                                            <input ng-model="pasajero.EMail" type="email" ng-required="true">
+                                        </div>
+                                    </md-input-container>
+                                </md-content>
+                            </div>
+
+                        </div>
+                        <!--#endregion-->
+                        <!--#region panel Ofertas Publicadas-->
+                        <div role="tabpanel"
+                             id="tab2-content"
+                             aria-labelledby="tab2"
+                             ng-switch-when="1"
+                             md-swipe-left="next()"
+                             md-swipe-right="previous()"
+                             layout="row" layout-align="center center">
+                            <div flex-gt-sm="90" flex-gt-md="80">
+
+
+                                <!--#region carousel -->
+                                <md-input-container>
+                                    <label>Observaciones</label>
+                                    <textarea ng-model="user.biography" columns="1" md-maxlength="150" rows="1"></textarea>
+                                </md-input-container>
+                                <!-- #endregion-->
+
+
+                            </div>
+
+                        </div>
+                        <!--#endregion-->
+
+                    </ng-switch>
+                </ui-view>
+
+                <!-- #endregion -->
+
+
+
+
+
+            </md-card>
+            <!-- #endregion -->
+
+        </div>
+    </md-content>
+    <!--#endregion-->
+</div>
+
+

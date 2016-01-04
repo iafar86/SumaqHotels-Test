@@ -1,10 +1,11 @@
-﻿/**
+﻿/// <reference path="basicSearchFilter.js" />
+/**
  * AngularJS default filter with the following expression:
  * "person in people | filter: {name: $select.search, age: $select.search}"
  * performs a AND between 'name: $select.search' and 'age: $select.search'.
  * We want to perform a OR.
  */
-vLaboralApp.filter('propsFilter', function () {
+sumaqHotelsApp.filter('propsFilter', function () {
     return function (items, props) {
         var out = [];
 

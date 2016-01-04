@@ -91,6 +91,30 @@
     };
     //#endregion
 
+    //#region Modificacion de Hotel
+
+    $scope.edit = function () {//fpaz: activa el modo de edicion de los campos        
+        $scope.editValue = true;
+    };
+
+    $scope.save = function (infoHotel) {//fpaz: guarda los cambios y llama a la funcion put de la api  
+        infoHotel.Id = 1;
+        infoHotel.CategoriaId = 1;
+        hotelesDataFactory.putHotel(1, infoHotel).then(function (response) {
+            $scope.editValue = false;
+            alert("Cambios Guardados Correctamente");
+        },
+         function (err) {
+             if (err) {
+                 $scope.error = err;
+                 $scope.cancel();
+                 alert("Error al Modificar la Información: " + $scope.error.Message);
+                 //$scope.message = err.error_description;
+             }
+         });
+    };
+    //#endregion
+
     //#region limpieza
     $scope.clear = function () { // limpia los campos de admin. y los deja listo para agregar un nuevo registro o limpiar los datos q actualmente estoy escribiendo
         $scope.cantEstrellas = 0;

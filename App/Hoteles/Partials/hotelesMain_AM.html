@@ -86,30 +86,34 @@
                                         </div>
                                     </md-input-container>
                                     <div flex="5"></div>
-                                    <md-select placeholder="Tipo de Hotel" ng-model="tipoHotel" md-on-open="loadTipoHoteles()" layout-fill>
-                                        <md-option ng-value="tipoHotel" ng-repeat="tipoHotel in listTiposHoteles" style="min-width: 200px;">{{tipoHotel.Nombre}}</md-option>
+                                    <md-select placeholder="Tipo de Hotel" ng-model="infoHotel.TipoHotelId" md-on-open="loadTipoHoteles()" layout-fill>
+                                        <md-option ng-value="tipoHotel.Id" ng-repeat="tipoHotel in listTiposHoteles" style="min-width: 200px;">{{tipoHotel.Nombre}}</md-option>
                                     </md-select>
-
-
                                 </md-content>
-                                <md-content layout="row">
-                                    <md-input-container layout="row" layout-align="center end" flex="60">
-                                        <!--<ng-md-icon icon="place" size="35" style="fill:#000000"></ng-md-icon>-->
-                                        <div flex>                                            
-                                            <md-input-container>                                                
-                                                <ng-md-icon icon="place" size="35" style="fill:#000000"></ng-md-icon>
-                                                <input class="md-input" type="text" ng-autocomplete ng-model="infoHotel.DireccionComun" options="options1" details="details1" />
-                                            </md-input-container>                                                                                        
+                                <div layout="row">
+                                    <div flex="100">
+                                        <md-input-container>
+                                            <ng-md-icon icon="place" size="35" style="fill:#000000"></ng-md-icon>
+                                            <input class="md-input" type="text" ng-autocomplete ng-model="infoHotel.DireccionComun" options="options1" details="details1" />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div layout="row">
+                                    <md-input-container layout="row" layout-align="center end" flex="50">
+                                        <ng-md-icon icon="local_post_office" size="35" style="fill:darkblue"></ng-md-icon>
+                                        <div flex>
+                                            <label>Codigo Postal</label>
+                                            <input type="text" ng-model="infoHotel.CodPostal" placeholder="4200">
                                         </div>
                                     </md-input-container>
-                                    <md-input-container layout="row" layout-align="center end" flex>
+                                    <md-input-container layout="row" layout-align="center end" flex="grow">
                                         <ng-md-icon icon="local_phone" size="35" style="fill:darkblue"></ng-md-icon>
                                         <div flex>
                                             <label>Telefono</label>
                                             <input type="text" ng-model="infoHotel.Telefono" placeholder="(0385) 4 999999">
                                         </div>
                                     </md-input-container>
-                                </md-content>
+                                </div>
                                 <md-content>
                                     <md-input-container layout="row" layout-align="center end" flex="30">
                                         <ng-md-icon icon="email" size="35" style="fill:#808080"></ng-md-icon>

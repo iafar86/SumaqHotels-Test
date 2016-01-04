@@ -1,7 +1,7 @@
 ﻿sumaqHotelsApp.factory('tiposHabDataFactory', function ($http, $q) {
     //fpaz: url del web api de cuentas de usuario, cambiar por el de produccion una vez implementado
-    var urlApi = "http://localhost:33140"; //desarrollo
-    //var urlApi = "http://vlaboralapi.azurewebsites.net"; //azure
+    //var urlApi = "http://localhost:33140"; //desarrollo
+    var urlApi = "http://sumaqhotelsapi.azurewebsites.net/"; //azure
     var tiposHabDataFactory = {};    
 
     var _getTiposHab = function (prmIdHotel) { //devuelve todos los tipos de habitaciones de un hotel en particular

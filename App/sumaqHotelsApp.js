@@ -117,8 +117,8 @@
                 data: { title: 'Info Hotel' },
                 resolve: {
                     hotelesDataFactory: 'hotelesDataFactory',
-                    infoHotel: function () {
-                        return { value: [] };
+                    infoHotel: function (hotelesDataFactory) {
+                        return hotelesDataFactory.getHotel(1);
                     },
                     tiposHotelesDataFactory: 'tiposHotelesDataFactory',
                     listadoTiposHoteles: function (tiposHotelesDataFactory) {

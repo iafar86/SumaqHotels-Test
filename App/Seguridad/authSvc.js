@@ -32,7 +32,8 @@
         
         var deferred = $q.defer();
 
-        $http.post('http://localhost:33140/' + 'oauth/token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded'} }).success(function (response) {
+        //$http.post('http://localhost:33140/' + 'oauth/token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded'} }).success(function (response) {
+        $http.post('http://sumaqhotelsapi.azurewebsites.net/' + 'oauth/token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).success(function (response) {
 
             localStorageService.set('authorizationData', { token: response.access_token, userName: loginData.userName });
 

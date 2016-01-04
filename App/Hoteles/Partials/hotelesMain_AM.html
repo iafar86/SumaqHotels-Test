@@ -5,7 +5,7 @@
              active-icon="mdi-content-clear" resting-icon="mdi-content-add"
              toggling-method="hover">
             <button mfb-button icon="mdi-image-edit" label="Editar Datos"></button>
-            <button mfb-button icon="mdi-content-save" label="Guardar Cambios"></button>
+            <button mfb-button icon="mdi-content-save" label="Guardar Cambios" ng-click="save(infoHotel)"></button>
             <button mfb-button icon="mdi-action-delete" label="Eliminar cambios"></button>
         </nav>
     </div>
@@ -115,14 +115,14 @@
                                         <ng-md-icon icon="email" size="35" style="fill:#808080"></ng-md-icon>
                                         <div flex>
                                             <label>Correo electronico</label>
-                                            <input ng-model="infoEmpleador.Mail" type="email" placeholder="Email (requerido)" ng-required="true">
+                                            <input ng-model="infoHotel.Mail" type="email" placeholder="Email (requerido)" ng-required="true">
                                         </div>
                                     </md-input-container>
                                     <md-input-container layout="row" layout-align="center end" flex="30">
                                         <ng-md-icon icon="language" size="35" style="fill:#808080"></ng-md-icon>
                                         <div flex>
                                             <label>Web</label>
-                                            <input type="text" ng-model="Hotel.UrlWeb" placeholder="www.SumaqHotels.com.ar">
+                                            <input type="text" ng-model="infoHotel.UrlWeb" placeholder="www.SumaqHotels.com.ar">
                                         </div>
                                     </md-input-container>
                                 </md-content>

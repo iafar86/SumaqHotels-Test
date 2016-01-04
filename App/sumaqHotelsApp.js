@@ -1,6 +1,6 @@
 ﻿var sumaqHotelsApp = angular.module('sumaqHotelsApp', ['ngResource', 'ngMdIcons', 'ui.router', 'ngCookies', 'ngTable',
   'ngSanitize', 'ngAnimate', 'ngAria', 'ct.ui.router.extras', 'angular-loading-bar', 'daypilot', 'LocalStorageModule', 'angular-jwt', 'ngMaterial',
-  'oc.lazyLoad', 'ng-mfb', 'angular-input-stars', 'ngAutocomplete']) 
+  'oc.lazyLoad', 'ng-mfb', 'angular-input-stars', 'ngAutocomplete', 'vAccordion', 'ui.select'])
     .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $stickyStateProvider, cfpLoadingBarProvider) {
 
         cfpLoadingBarProvider.includeSpinner = true;
@@ -160,7 +160,7 @@
                 resolve: {
                     tiposHabDataFactory: 'tiposHabDataFactory',
                     listadoTiposHab: function (tiposHabDataFactory) {
-                        return tiposHabDataFactory.query();
+                        return tiposHabDataFactory.getTiposHab(1);
                     },
                     tiposCamasDataFactory: 'tiposCamasDataFactory',
                     listadoTiposCamas: function (tiposCamasDataFactory) {

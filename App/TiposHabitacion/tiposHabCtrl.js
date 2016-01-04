@@ -7,13 +7,6 @@
     $scope.tipoHabSelec = {}; // var que va a tener la cama seleccionada
     $scope.tipoHabSelec.selected = {};
 
-    $scope.editValue = false; // variable que voya usar para activar y desactivar los modos de edicion 
-    $scope.addValue = true; //para activar el alta de Campos
-    $scope.showCamasCollapse = false; //var para hacer el collapse de la seccion de Camas Adicionales
-    $scope.activarCama = function () {
-        $scope.showCamasCollapse = !$scope.showCamasCollapse
-    }
-
     $scope.listHabitaciones = []; // array de habitaciones de un tipo determinado. Se llena al elegir el tipo de habitacion
 
     $scope.tiposCamas = listadoTiposCamas; // listado con el tipo de camas que se pueden agregar
@@ -44,21 +37,9 @@
     $scope.previous = function () {
         $scope.data.selectedIndex = Math.max($scope.data.selectedIndex - 1, 0);
     };
-
-    var tabs = [
-      { title: 'One', content: "Tabs will become paginated if there isn't enough room for them." },
-      { title: 'Two', content: "You can swipe left and right on a mobile device to change tabs." },
-      { title: 'Three', content: "You can bind the selected tab via the selected attribute on the md-tabs element." },     
-    ];
-
-    $scope.tabs = tabs;
+    
     $scope.selectedIndex = 2;
-
-    $scope.addTab = function (title, view) {
-        view = view || title + " Content View";
-        tabs.push({ title: title, content: view, disabled: false });
-    };
-
+       
     $scope.removeTab = function (tab) {
         for (var j = 0; j < tabs.length; j++) {
             if (tab.title == tabs[j].title) {
@@ -73,18 +54,30 @@
 
     //fpaz: funcion para agregar un nuevo tab con los datos para el alta de tipo de habitacion
     $scope.addTabTipoHab = function () {
-        tabs.push({ title:'Nuevo Tab', content: 'Contenido de Prueba', disabled: false });
+        var infoTipoHab = {};
+        infoTipoHab.Nombre = "Nuevo Tipo de Habitacion";
+        $scope.listTiposHab.push(infoTipoHab);
     }
     
-    $scope.obtenerTiposHab = function () {
-        $scope.listTiposHab = tiposHabDataFactory.query();
+    $scope.obtenerTiposHab = function () { // funcion para devolver todos los tipos de habitacion de un hotel        
+        tiposHabDataFactory.getTiposHab(1).then(function (response) {
+            console.log(response);
+            $scope.listTiposHab = response;
+            //$scope.limpiar();
+        },
+         function (err) {
+             if (err) {
+                 $scope.error = err;
+                 alert("Error: " + $scope.error.Message);
+             }
+         });
     };
     
-    $scope.addTipoHabitacion = function (infoTipoHab) {
+    $scope.addTipoHabitacion = function (infoTipoHab) { // funcion para armar y guardar en la bd el objeto con el tipo de habitacion
 
         var tipoHab = {};
         tipoHab = infoTipoHab;
-        tipoHab.HotelId = 2;
+        tipoHab.HotelId = 1;
         tipoHab.ServiciosDeHabitacion = [];
         tipoHab.CamasAdicionales = [];
         
@@ -93,7 +86,7 @@
             
             camaAdicional.Cantidad = $scope.listCamasAdicionales[i].cantidad;
             camaAdicional.PrecioAdicional = $scope.listCamasAdicionales[i].precioAdicional;
-            camaAdicional.TipoCamaId = $scope.listCamasAdicionales[i].tipoCama.Id;
+            camaAdicional.TipoCamaId = $scope.listCamasAdicionales[i].tipoCama[0].Id;
 
             tipoHab.CamasAdicionales.push(camaAdicional);
         }
@@ -105,19 +98,18 @@
             tipoHab.ServiciosDeHabitacion.push(servicio);
 
         }
-
-        tiposHabDataFactory.save(tipoHab).$promise.then(
-            function () {
-                $scope.obtenerTiposHab();
-                $scope.infoCampoProg = null;
-                alert('Nuevo Tipo de Habitacion Guardado');
-                $scope.clear();
-
-            },
-            function (response) {
-                $scope.errors = response.data;
-                alert('Error al guardar el Tipo de Habitacion Programatico');
-            });
+        
+        tiposHabDataFactory.postTipoHab(tipoHab).then(function (response) {            
+            alert("Nuevo Tipo de Habitacion Guardado");
+            $scope.limpiar();
+            $scope.obtenerTiposHab();            
+        },
+         function (err) {
+             if (err) {
+                 $scope.error = err;
+                 alert("Error al Guardar El Tipo de Habitacion: " + $scope.error.Message);                 
+             }
+         });
     };
 
     $scope.agregarCamaAdicional = function (tipoCamaAgregada) {
@@ -137,40 +129,65 @@
 
 
     //#endregion
-
-    // fpaz: carga el listado de lineas de accion correspondite al campo prog para su seleccion
-    $scope.mostrarInfoTipoHab = function (item, model) {
-        $scope.infoTipoHab = tiposHabDataFactory.get({ id: model.Id });
-    };
+    
     //#region alta de Habitaciones
-    //#region ventana modal de Busqueda de insumos    
-
-    $scope.openHabitaciones = function () {
-
-        var modalInstance = $modal.open({
-            templateUrl: '/Scripts/App/Habitaciones/Partials/habitacionesDetail.html',
-            controller: 'habitacionesCtrl',
-            size: 'lg',
-            windowClass: 'bs-example-modal-lg',
-            resolve: {
+    $scope.AbrirParaAgregar = function (ev) {
+        $mdDialog.show({
+            controller: DialogController,
+            templateUrl: 'App/Habitaciones/Partials/AgregarHabitacion.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose: true,
+            resolve: {                
                 prmTipoHab: function () {
-                    return $scope.infoTipoHab;
+                    return $scope.listTiposHab[$scope.selectedIndex];
                 }
-
             }
-        });
+        })
+            .then(function (habitacion) {
+                $scope.listTiposHab[$scope.selectedIndex].Habitaciones.push(habitacion);
+            }, function () {
+                //alert('Error Al Guardar La Nueva Habitacion');
 
-        modalInstance.result.then(function () {            
-            $scope.listHabitaciones = habitacionesDataFactory.query({ prmIdTipoHab: $scope.infoTipoHab.Id });
-        });
-
+            });
     };
+
+    function DialogController($scope, $mdDialog, prmTipoHab, habitacionesDataFactory) { // controlador del dialog que devuelve los datos
+        //#region fpaz: inicializacion de variables de scope en el modal        
+        $scope.infoHab = {};
+        $scope.tipoHab = prmTipoHab;
+        //#endregion
+
+        $scope.hide = function () {
+            $mdDialog.hide();
+        };
+        $scope.cancel = function () {
+            $mdDialog.cancel();
+        };
+
+        $scope.resul = {};
+        //fpaz: carga de puestos en la oferta
+        $scope.habitacionAdd = function (hab) {
+            hab.TipoHabitacionId = $scope.tipoHab.Id;
+            habitacionesDataFactory.postHabitacion(hab).then(function (response) {
+                alert("Nueva Habitacion Guardada");
+                $mdDialog.hide(hab);
+            },
+         function (err) {
+             if (err) {
+                 $scope.error = err;
+                 alert("Error al Guardar LA Nueva Habitacion: " + $scope.error.Message);
+             }
+         });          
+        };
+    };
+
     //#endregion
 
     //#region limpieza
 
     // limpia los campos de admin. y los deja listo para agregar un nuevo registro o limpiar los datos q actualmente estoy escribiendo
-    $scope.clear = function () {
+    $scope.limpiar = function () {
         $scope.infoTipoHab = {};
 
         $scope.tipoHabSelec = {};
@@ -187,12 +204,22 @@
         $scope.servicios = listadoServicios; // lista de servicios disponibles
         $scope.servicioSeleccionado = [];
         $scope.servicioSeleccionado.selected = {};
-
-        if (!$scope.addValue) {
-            $scope.editValue = false;
-            $scope.addValue = true;
-        }
     };
 
+    //fpaz: funcion para cancelar una modificacion u otra operacion y traer los datos originales del tipo de habitacion        
+    $scope.cancel = function () {         
+        tiposHabDataFactory.getTipoHab(1,$scope.infoTipoHab.Id).then(function (response) {
+            $scope.infoTipoHab = response.data;
+            $scope.editValue = false;
+        },
+         function (err) {
+             if (err) {
+                 $scope.error = err;
+                 //$scope.cancel();
+                 alert("Error" + $scope.error.Message);
+             }
+         });
+    };
     //#endregion
+    
 });

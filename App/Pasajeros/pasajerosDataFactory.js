@@ -1,6 +1,6 @@
 ﻿sumaqHotelsApp.factory('pasajerosDataFactory', function ($http, $q) {
-    var urlApi = "http://localhost:33140"; //desarrollo
-    //var urlApi = "http://vlaboralapi.azurewebsites.net"; //azure
+    //var urlApi = "http://localhost:33140"; //desarrollo
+    var urlApi = "http://sumaqhotelsapi.azurewebsites.net"; //azure
     var pasajerosDataFactory = {};
 
     var _postPasajero = function (data) { //alta de un pasajero en particular

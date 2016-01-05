@@ -1,7 +1,7 @@
-﻿sumaqHotelsApp.controller('pasajerosCtrl', function ($scope, $stateParams, $state, $filter, ngTableParams, pasajerosDataFactory) {   //, listadoPasajeros, infoPasajero
+﻿sumaqHotelsApp.controller('pasajerosCtrl', function ($scope, $stateParams, $state, $filter, ngTableParams, pasajerosDataFactory, listadoPasajeros) {   //, listadoPasajeros, infoPasajero
     //#region inicializacion de variables
     $scope.pasajero = [];
-    
+    $scope.pasajeros = listadoPasajeros;
     $scope.tipoDocumento = [
        'DNI',
        'Pasaporte',

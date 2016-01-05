@@ -240,6 +240,10 @@
                 controller: 'pasajerosCtrl',
                 data: { title: 'Listado de Pasajeros' },
                 resolve: {
+                    pasajerosDataFactory: "pasajerosDataFactory",
+                    listadoPasajeros: function (pasajerosDataFactory) {
+                        return pasajerosDataFactory.getPasajeros();
+                    },
                     loadPasajerosCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load(['App/Pasajeros/pasajerosCtrl.js']);
                     }]
@@ -252,6 +256,9 @@
              controller: 'pasajerosCtrl',
              data: { title: 'Alta de Pasajeros' },
              resolve: {
+                 listadoPasajeros: function () {
+                     return { value: [] };
+                 },
                  loadPasajerosCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                      return $ocLazyLoad.load(['App/Pasajeros/pasajerosCtrl.js']);
                  }]

@@ -12,7 +12,7 @@
             </h3>
             <span flex></span>
         </div>
-        <md-tabs md-stretch-tabs md-selected="data.selectedIndex">
+        <!--<md-tabs md-stretch-tabs md-selected="data.selectedIndex">
             <md-tab id="tab1" estado="PENDIENTE" aria-controls="tab1-content" clickcatcher>
                 Pendientes
             </md-tab>
@@ -27,240 +27,63 @@
                 Terminadas
             </md-tab>
 
-        </md-tabs>
+        </md-tabs>-->
     </md-toolbar>
     <!--#endregion-->
     <!--#region Panel de resultados-->
     <md-content style="background-color:#eee" flex>
         <ui-view layout="column" layout-fill layout-padding>
             <div class="inset" hide-sm></div>
-            <ng-switch on="data.selectedIndex" class="tabpanel-container">
-                <!--#region panel Ofertas Pendientes-->
-                <div role="tabpanel"
-                     id="tab1-content"
-                     aria-labelledby="tab1"
-                     ng-switch-when="0"
-                     md-swipe-left="next()"
-                     md-swipe-right="previous()"
-                     layout="row" layout-align="center center">
-                    <div flex-gt-sm="90" flex-gt-md="80">
-                        <md-card>
-                            <br />
-                            <div class="md-toolbar-tools" flex>
-                                <span flex="5"></span>
-                                <md-input-container flex>
-                                    <label class="md-title">Buscar</label>
-                                    <input ng-model="search">
-                                </md-input-container>
-                                <ng-md-icon icon="search"></ng-md-icon>
-                            </div>
-                            <br />
-                            <md-list>
-                                <md-list-item class="md-3-line" ng-repeat="oferta in ofertas | ofertaFilter:search:estado">
-                                    <!--<md-list-item class="md-3-line" ng-repeat="oferta in ofertas | ofertaFilter:search:estado">-->
-                                    <md-button class="inline-block animate-show" layout="row" ng-click="prueba(oferta.Nombre)" flex>
-                                        <div layout="row">
-                                            <div flex="15">
-                                                <ng-md-icon icon="visibility_off" style="fill: #353434" size="50" flex="10"></ng-md-icon>
-                                                <h6>{{oferta.FechaInicioConvocatoria | date:'longDate'}}</h6>
-                                                <h6>{{oferta.FechaFinConvocatoria | date:'longDate'}}</h6>
-                                            </div>
-                                            <div class="md-list-item-text text-left " flex="85">
-                                                <h1 class="">{{oferta.Nombre}}</h1>
-                                                <p>{{oferta.Descripcion}}</p>
-                                            </div>
-                                        </div>
-
-                                        <md-divider md-inset hide-sm ng-if="!$last"></md-divider>
-                                        <md-divider hide-gt-sm ng-if="!$last"></md-divider>
-                                    </md-button>
-                                </md-list-item>
-                                <div class="text-center text-accent animate-show" ng-show="(ofertas | ofertaFilter:search:estado).length == 0">
-                                    <h4>No se encontraron ofertas</h4>
-                                </div>
-                                <md-divider></md-divider>
-                                <md-list-item>
-                                    <md-button class="md-primary">
-
-                                        <span>More</span>
-                                    </md-button>
-                                </md-list-item>
-                            </md-list>
-                        </md-card>
+            <div flex-gt-sm="90" flex-gt-md="80">
+                <md-card>
+                    <br />
+                    <div class="md-toolbar-tools" flex>
+                        <span flex="5"></span>
+                        <md-input-container flex>
+                            <label class="md-title">Buscar</label>
+                            <input ng-model="searchText">
+                        </md-input-container>
+                        <ng-md-icon icon="search"></ng-md-icon>
                     </div>
-
-                </div>
-                <!--#endregion-->
-                <!--#region panel Ofertas Publicadas-->
-                <div role="tabpanel"
-                     id="tab2-content"
-                     aria-labelledby="tab2"
-                     ng-switch-when="1"
-                     md-swipe-left="next()"
-                     md-swipe-right="previous()"
-                     layout="row" layout-align="center center">
-                    <div flex-gt-sm="90" flex-gt-md="80">
-                        <md-card>
-                            <br />
-                            <div class="md-toolbar-tools" flex>
-                                <span flex="5"></span>
-                                <md-input-container flex>
-                                    <label class="md-title">Buscar</label>
-                                    <input ng-model="search">
-                                </md-input-container>
-                                <ng-md-icon icon="search"></ng-md-icon>
-                            </div>
-                            <br />
-                            <md-list>
-                                <md-list-item class="md-3-line" ng-repeat="oferta in ofertas | ofertaFilter:search:estado">
-                                    <md-button class="inline-block" layout="row" flex>
-                                        <div layout="row">
-                                            <div flex="15">
-                                                <ng-md-icon icon="visibility" style="fill: #00670d" size="50" flex="10"></ng-md-icon>
-                                                <h6>{{oferta.FechaInicioConvocatoria | date:'longDate'}}</h6>
-                                                <h6>{{oferta.FechaFinConvocatoria | date:'longDate'}}</h6>
-                                            </div>
-                                            <div class="md-list-item-text text-left " flex="85">
-                                                <h1 class="">{{oferta.Nombre}}</h1>
-                                                <p>{{oferta.Descripcion}}</p>
-                                            </div>
-                                        </div>
-
-
-                                        <md-divider md-inset hide-sm ng-if="!$last"></md-divider>
-                                        <md-divider hide-gt-sm ng-if="!$last"></md-divider>
-                                    </md-button>
-                                </md-list-item>
-                                <div class="text-center text-accent animate-show" ng-show="(ofertas | ofertaFilter:search:estado).length == 0">
-                                    <h4>No se encontraron ofertas</h4>
+                    <br />
+                    <md-list>
+                        <md-list-item class="md-3-line" ng-repeat="pasajero in pasajeros | filter:searchText">
+                            <!--ofertaFilter:search:estado-->
+                            <!--<md-list-item class="md-3-line" ng-repeat="oferta in ofertas | ofertaFilter:search:estado">-->
+                            <md-button class="inline-block animate-show" layout="row" ng-click="prueba(oferta.Nombre)" flex>
+                                <div layout="row" layout-fill>
+                                    <div flex="15" class="md-whiteframe-z3">
+                                        <ng-md-icon icon="location_history" style="fill: #0026ff" size="50" flex="10"></ng-md-icon>
+                                        <h5>{{pasajero.NomApe}}</h5>
+                                        <h6>Sexo:{{pasajero.Sexo}}</h6>
+                                        <h6>Estado Civil:{{pasajero.ECivil}}</h6>
+                                    </div>
+                                    <div flex="85" class="bg-primary" layout-align="center" layout-padding>
+                                        <!--class="md-list-item-text text-left top-left "-->
+                                        <p class="md-body-2">{{pasajero.TipoDoc}}: {{pasajero.NumDoc}}</p>
+                                        <p class="md-body-1">Direccion: {{pasajero.Dir}}</p>
+                                        <p class="md-body-1">Tel/Cel:{{pasajero.Tel}}-{{pasajero.Cel}}</p>
+                                        <p class="md-body-1">EMail:{{pasajero.EMail}}</p>
+                                    </div>
                                 </div>
-                                <md-divider></md-divider>
-                                <md-list-item>
-                                    <md-button class="md-primary">
 
-                                        <span>More</span>
-                                    </md-button>
-                                </md-list-item>
-                            </md-list>
-                        </md-card>
-                    </div>
+                                <md-divider md-inset hide-sm ng-if="!$last"></md-divider>
+                                <md-divider hide-gt-sm ng-if="!$last"></md-divider>
+                            </md-button>
+                        </md-list-item>
+                        <div class="text-center text-accent animate-show" ng-show="(pasajeros | filter:searchText).length == 0">
+                            <h4>No se encontraron resultados</h4>
+                        </div>
+                        <md-divider></md-divider>
+                        <md-list-item>
+                            <md-button class="md-primary">
 
-                </div>
-                <!--#endregion-->
-                <!--#region panel Ofertas en Curso-->
-                <div role="tabpanel"
-                     id="tab3-content"
-                     aria-labelledby="tab3"
-                     ng-switch-when="2"
-                     md-swipe-left="next()"
-                     md-swipe-right="previous()"
-                     layout="row" layout-align="center center">
-                    <div flex-gt-sm="90" flex-gt-md="80">
-                        <md-card>
-                            <br />
-                            <div class="md-toolbar-tools" flex>
-                                <span flex="5"></span>
-                                <!--<h2 class="md-title inset">Buscar</h2>-->
-                                <md-input-container flex>
-                                    <label class="md-title">Buscar</label>
-                                    <input ng-model="search">
-                                </md-input-container>
-                                <ng-md-icon icon="search"></ng-md-icon>
-                            </div>
-                            <br />
-                            <md-list>
-
-                                <md-list-item class="md-3-line" ng-repeat="oferta in ofertas | ofertaFilter:search:estado">
-                                    <md-button class="inline-block" layout="row" flex>
-                                        <div layout="row">
-                                            <div flex="15">
-                                                <ng-md-icon icon="assignment" style="fill: #0094ff" size="50"></ng-md-icon>
-                                                <h6>{{oferta.FechaInicioConvocatoria | date:'longDate'}}</h6>
-                                                <h6>{{oferta.FechaFinConvocatoria | date:'longDate'}}</h6>
-                                            </div>
-                                            <div class="md-list-item-text text-left " flex="85">
-                                                <h1 class="">{{oferta.Nombre}}</h1>
-                                                <p>{{oferta.Descripcion}}</p>
-                                            </div>
-                                        </div>
-
-                                        <md-divider md-inset hide-sm ng-if="!$last"></md-divider>
-                                        <md-divider hide-gt-sm ng-if="!$last"></md-divider>
-                                    </md-button>
-
-                                </md-list-item>
-                                <div class="text-center text-accent animate-show" ng-show="(ofertas | ofertaFilter:search:estado).length == 0">
-                                    <h4>No se encontraron ofertas</h4>
-                                </div>
-                                <md-divider></md-divider>
-                                <md-list-item>
-                                    <md-button class="md-primary">
-                                        <span>More</span>
-                                    </md-button>
-                                </md-list-item>
-                            </md-list>
-                        </md-card>
-                    </div>
-                </div>
-                <!--#endregion-->
-                <!--#region panel Ofertas Finalizadas-->
-                <div role="tabpanel"
-                     id="tab4-content"
-                     aria-labelledby="tab4"
-                     ng-switch-when="3"
-                     md-swipe-left="next()"
-                     md-swipe-right="previous()"
-                     layout="row" layout-align="center center">
-                    <div flex-gt-sm="90" flex-gt-md="80">
-
-                        <md-card>
-                            <br />
-                            <div class="md-toolbar-tools" flex>
-                                <span flex="5"></span>
-                                <md-input-container flex>
-                                    <label class="md-title">Buscar</label>
-                                    <input ng-model="search">
-                                </md-input-container>
-                                <ng-md-icon icon="search"></ng-md-icon>
-                            </div>
-                            <br />
-                            <md-list>
-                                <md-list-item class="md-3-line" ng-repeat="oferta in ofertas | ofertaFilter:search:estado">
-                                    <md-button class="inline-block" layout="row" flex>
-                                        <div layout="row">
-                                            <div flex="15">
-                                                <ng-md-icon icon="assignment_turned_in" style="fill: #0026ff" size="50" flex="10"></ng-md-icon>
-                                                <h6>{{oferta.FechaInicioConvocatoria | date:'longDate'}}</h6>
-                                                <h6>{{oferta.FechaFinConvocatoria | date:'longDate'}}</h6>
-                                            </div>
-                                            <div class="md-list-item-text text-left " flex="85">
-                                                <h1 class="">{{oferta.Nombre}}</h1>
-                                                <p>{{oferta.Descripcion}}</p>
-                                            </div>
-                                        </div>
-
-                                        <md-divider md-inset hide-sm ng-if="!$last"></md-divider>
-                                        <md-divider hide-gt-sm ng-if="!$last"></md-divider>
-                                    </md-button>
-                                </md-list-item>
-                                <div class="text-center text-accent animate-show" ng-show="(ofertas | ofertaFilter:search:estado).length == 0">
-                                    <h4>No se encontraron ofertas</h4>
-                                </div>
-                                <md-divider></md-divider>
-                                <md-list-item>
-                                    <md-button class="md-primary">
-
-                                        <span>More</span>
-                                    </md-button>
-                                </md-list-item>
-                            </md-list>
-                        </md-card>
-                    </div>
-
-                </div>
-                <!--#endregion-->
-
-            </ng-switch>
+                                <span>More</span>
+                            </md-button>
+                        </md-list-item>
+                    </md-list>
+                </md-card>
+            </div>
         </ui-view>
     </md-content>
     <!--#endregion-->

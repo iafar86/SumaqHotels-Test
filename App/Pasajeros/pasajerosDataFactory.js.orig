@@ -1,13 +1,8 @@
+<<<<<<< HEAD
 ﻿sumaqHotelsApp.factory('pasajerosDataFactory', function ($http, $q) {
-    //var urlApi = "http://localhost:33140"; //desarrollo
-    var urlApi = "http://sumaqhotelsapi.azurewebsites.net"; //azure
+    var urlApi = "http://localhost:33140"; //desarrollo
+    //var urlApi = "http://vlaboralapi.azurewebsites.net"; //azure
     var pasajerosDataFactory = {};
-
-    var _getPasajeros = function () { // trae todos las ofertas
-        return $http.get(urlApi + '/api/Pasajero').then(function (response) {
-            return response.data;
-        });
-    };
 
     var _postPasajero = function (data) { //alta de un pasajero en particular
         var deferred = $q.defer();
@@ -35,10 +30,18 @@
         return deferred.promise;
     };
 
-    pasajerosDataFactory.getPasajeros = _getPasajeros;
     pasajerosDataFactory.putPasajero = _putPasajero;
     pasajerosDataFactory.postPasajero = _postPasajero;
     //hotelesDataFactory.postTipoHab = _postTipoHab;
 
     return pasajerosDataFactory;
+=======
+﻿sumaqHotelsApp.factory('pasajerosDataFactory', function ($resource) {
+    //var urlApi = "http://localhost:33140"; //fpaz: url del web api de cuentas de usuario, cambiar por el de produccion una vez implementado
+    var urlApi = "http://sumaqhotelsapi.azurewebsites.net/"; //azure
+    return $resource(urlApi + '/api/Pasajeros/:id',
+           { id: '@id' },
+           { 'update': { method: 'PUT' } }
+        );
+>>>>>>> 9c9a94bedb45a3cf4f19ae46eee7a809d4f6ea93
 });

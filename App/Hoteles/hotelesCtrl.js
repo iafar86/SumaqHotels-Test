@@ -97,10 +97,9 @@
         $scope.editValue = true;
     };
 
-    $scope.save = function (infoHotel) {//fpaz: guarda los cambios y llama a la funcion put de la api  
-        infoHotel.Id = 1;
+    $scope.save = function (infoHotel) {//fpaz: guarda los cambios y llama a la funcion put de la api          
         infoHotel.CategoriaId = 1;
-        hotelesDataFactory.putHotel(1, infoHotel).then(function (response) {
+        hotelesDataFactory.putHotel(infoHotel).then(function (response) {
             $scope.editValue = false;
             alert("Cambios Guardados Correctamente");
         },

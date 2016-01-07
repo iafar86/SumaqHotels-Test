@@ -118,7 +118,7 @@
                 resolve: {
                     hotelesDataFactory: 'hotelesDataFactory',
                     infoHotel: function (hotelesDataFactory) {
-                        return hotelesDataFactory.getHotel(1);
+                        return hotelesDataFactory.getHotel();
                     },
                     tiposHotelesDataFactory: 'tiposHotelesDataFactory',
                     listadoTiposHoteles: function (tiposHotelesDataFactory) {
@@ -160,7 +160,7 @@
                 resolve: {
                     tiposHabDataFactory: 'tiposHabDataFactory',
                     listadoTiposHab: function (tiposHabDataFactory) {
-                        return tiposHabDataFactory.getTiposHab(1);
+                        return tiposHabDataFactory.getTiposHab();
                     },
                     tiposCamasDataFactory: 'tiposCamasDataFactory',
                     listadoTiposCamas: function (tiposCamasDataFactory) {

@@ -1,11 +1,12 @@
-﻿sumaqHotelsApp.factory('tiposHabDataFactory', function ($http, $q) {
+﻿sumaqHotelsApp.factory('tiposHabDataFactory', function ($http, $q, authSvc) {
     //fpaz: url del web api de cuentas de usuario, cambiar por el de produccion una vez implementado
     //var urlApi = "http://localhost:33140"; //desarrollo
     var urlApi = "http://sumaqhotelsapi.azurewebsites.net"; //azure
     var tiposHabDataFactory = {};    
 
-    var _getTiposHab = function (prmIdHotel) { //devuelve todos los tipos de habitaciones de un hotel en particular
-        var deferred = $q.defer();
+    var _getTiposHab = function () { //devuelve todos los tipos de habitaciones de un hotel en particular
+        var prmIdHotel = authSvc.authentication.hotelId; // fpaz: variable que va a tener el id del hotel relacionado al usuario logueado
+        var deferred = $q.defer();        
         $http.get(urlApi + '/api/TiposHabitaciones/', { params: { prmIdHotel: prmIdHotel } }).then(
             function (response) {                
                 console.log(response.data);
@@ -17,8 +18,9 @@
         return deferred.promise;
     };
 
-    var _getTipoHab = function (prmIdHotel, prmIdTipoHab) { //devuelve un tipo de habitacione de un hotel en particular
+    var _getTipoHab = function (prmIdTipoHab) { //devuelve un tipo de habitacion de un hotel en particular
         var deferred = $q.defer();
+        var prmIdHotel = authSvc.authentication.hotelId; // fpaz: variable que va a tener el id del hotel relacionado al usuario logueado
         $http.get(urlApi + '/api/TiposHabitaciones/',       
             {
                 params: {
@@ -35,10 +37,10 @@
         return deferred.promise;
     };
 
-    var _putTipoHab = function (prmId, data) { //modificacion de un tipo de habitacion en particular
+    var _putTipoHab = function (prmIdTipoHab, data) { //modificacion de un tipo de habitacion en particular
         var deferred = $q.defer();
 
-        $http.put(urlApi + '/api/TiposHabitaciones/' + prmId, data).then(
+        $http.put(urlApi + '/api/TiposHabitaciones/' + prmIdTipoHab, data).then(
             function (response) {
                 deferred.resolve(response);
             },

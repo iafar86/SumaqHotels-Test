@@ -1,8 +1,8 @@
-﻿sumaqHotelsApp.factory('hotelesDataFactory', function ($http, $q) {
+﻿sumaqHotelsApp.factory('hotelesDataFactory', function ($http, $q, authSvc) {
     //fpaz: url del web api de cuentas de usuario, cambiar por el de produccion una vez implementado
     //var urlApi = "http://localhost:33140"; //desarrollo
     var urlApi = "http://sumaqhotelsapi.azurewebsites.net"; //azure
-    var hotelesDataFactory = {};
+    var hotelesDataFactory = {};    
 
     //var _getTiposHab = function (prmIdHotel) { //devuelve todos los tipos de habitaciones de un hotel en particular
     //    var deferred = $q.defer();
@@ -17,8 +17,9 @@
     //    return deferred.promise;
     //};
 
-    var _getHotel = function (prmIdHotel) { //devuelve un tipo de habitacione de un hotel en particular
-        var deferred = $q.defer();
+    var _getHotel = function () { //devuelve la informacion de un Hotel en Particular
+        var prmIdHotel = authSvc.authentication.hotelId; // fpaz: variable que va a tener el id del hotel relacionado al usuario logueado
+        var deferred = $q.defer();        
         $http.get(urlApi + '/api/Hoteles/' + prmIdHotel).then(
             function (response) {
                 deferred.resolve(response.data);
@@ -29,10 +30,10 @@
         return deferred.promise;
     };
 
-    var _putHotel = function (prmId, data) { //modificacion de un tipo de habitacion en particular
+    var _putHotel = function (data) { //modificacion de un tipo de habitacion en particular
         var deferred = $q.defer();
-
-        $http.put(urlApi + '/api/Hoteles/' + prmId, data).then(
+        var prmIdHotel = authSvc.authentication.hotelId; // fpaz: variable que va a tener el id del hotel relacionado al usuario logueado
+        $http.put(urlApi + '/api/Hoteles/' + prmIdHotel, data).then(
             function (response) {
                 deferred.resolve(response);
             },

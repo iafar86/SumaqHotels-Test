@@ -35,13 +35,14 @@
         //$http.post('http://localhost:33140/' + 'oauth/token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded'} }).success(function (response) {
         $http.post('http://sumaqhotelsapi.azurewebsites.net/' + 'oauth/token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).success(function (response) {
 
-            localStorageService.set('authorizationData', { token: response.access_token, userName: loginData.userName });
+            var tokenPayload = jwtHelper.decodeToken(response.access_token); //fpaz: decodifico el token para obener los roles y los claims que se hayan definido
+
+            localStorageService.set('authorizationData', { token: response.access_token, userName: loginData.userName, roles: tokenPayload.role, hotelId: tokenPayload.HotelId });
 
             //fpaz: seteo en el servicio las credenciales del usuario logueado, para que pueda acceder a esta info desde cualquier parte de la app usando la funcion authSvc.authentication
             // que devuelve todo el objeto con la info del usuario logueado
             _authentication.isAuth = true;
-            _authentication.userName = loginData.userName;
-            var tokenPayload = jwtHelper.decodeToken(response.access_token); //fpaz: decodifico el token para obener los roles y los claims que se hayan definido
+            _authentication.userName = loginData.userName;            
             _authentication.roles = tokenPayload.role;
             _authentication.hotelId = tokenPayload.HotelId;
 

@@ -1,5 +1,5 @@
 ﻿sumaqHotelsApp.controller('tiposHabCtrl', function ($scope, $stateParams, $state, $filter, ngTableParams, $mdDialog,authSvc, tiposHabDataFactory,
-    listadoTiposHab, listadoTiposCamas, listadoServicios, habitacionesDataFactory) {
+    listadoTiposHab, listadoTiposCamas, listadoServicios, habitacionesDataFactory, authSvc) {
 
     //#region Inicializacion de variables de Scope
     $scope.listTiposHab = listadoTiposHab; // var donde voy a guardar todos los Tipos de Habitacion ya sea cuando se cargue la pagina o cuando agregue una nueva
@@ -60,7 +60,7 @@
     }
     
     $scope.obtenerTiposHab = function () { // funcion para devolver todos los tipos de habitacion de un hotel        
-        tiposHabDataFactory.getTiposHab(1).then(function (response) {
+        tiposHabDataFactory.getTiposHab().then(function (response) {
             console.log(response);
             $scope.listTiposHab = response;
             //$scope.limpiar();
@@ -77,7 +77,7 @@
 
         var tipoHab = {};
         tipoHab = infoTipoHab;
-        tipoHab.HotelId = 1;
+        tipoHab.HotelId = authSvc.authentication.hotelId;
         tipoHab.ServiciosDeHabitacion = [];
         tipoHab.CamasAdicionales = [];
         
@@ -208,7 +208,7 @@
 
     //fpaz: funcion para cancelar una modificacion u otra operacion y traer los datos originales del tipo de habitacion        
     $scope.cancel = function () {         
-        tiposHabDataFactory.getTipoHab(1,$scope.infoTipoHab.Id).then(function (response) {
+        tiposHabDataFactory.getTipoHab($scope.infoTipoHab.Id).then(function (response) {
             $scope.infoTipoHab = response.data;
             $scope.editValue = false;
         },

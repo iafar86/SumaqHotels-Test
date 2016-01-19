@@ -22,61 +22,81 @@
                                                     <md-input-container layout="row" flex="grow">
                                                         <div flex>
                                                             <label>Nombre del Tipo de Habitacion</label>
-                                                            <input class="form-control md-input" ng-model="th.Nombre">
+                                                            <input class="form-control md-input" ng-model="th.Nombre" ng-disabled="!th.editValue">
                                                         </div>
                                                     </md-input-container>
                                                 </div>
                                                 <div layout="row">
-
-                                                    <md-input-container layout="row" layout-align="center end" flex="30">
+                                                    <md-input-container layout="row" layout-align="center end" flex>
                                                         <div flex>
                                                             <label>Servicios que Incluyen las Habtitaciones</label>
                                                         </div>
-
                                                     </md-input-container>
+                                                </div>
+                                                <div layout="row">                                                    
                                                     <md-input-container layout="row" layout-align="center end" flex="grow">
                                                         <div flex>
-                                                            <ui-select multiple ng-model="servicioSeleccionado.selected" theme="bootstrap" ng-disabled="disabled">
+                                                            <md-chips ng-model="th.ServiciosDeHabitacion" readonly="!th.editValue ? true : false">
+                                                                <md-chip-template>
+                                                                    <span>
+                                                                        <strong>{{$chip.Nombre}}</strong>
+                                                                    </span>
+                                                                </md-chip-template>                                                                
+                                                            </md-chips>                                                            
+                                                        </div>
+                                                    </md-input-container>                                                    
+                                                </div>
+                                                <div layout="row">
+                                                    <md-input-container layout="row" layout-align="center end" flex="grow">
+                                                        <div flex>
+                                                            <ui-select ng-model="servicioSeleccionado.selected" theme="bootstrap" ng-disabled="disabled" ng-show="th.editValue"
+                                                                       on-select="agregarServicio($item, $model)">
                                                                 <ui-select-match placeholder="Seleccione el servicio...">{{$item.Nombre}}</ui-select-match>
                                                                 <ui-select-choices repeat="servicio in servicios | propsFilter: {Nombre: $select.search}">
                                                                     <div ng-bind-html="servicio.Nombre | highlight: $select.search"></div>
                                                                 </ui-select-choices>
                                                             </ui-select>
+
                                                         </div>
                                                     </md-input-container>
-                                                </div>
+                                                    <!--<md-input-container>
+                                                        <md-select multiple ng-model="th.ServiciosDeHabitacion" placeholder="Seleccionar Servicios">                                                            
+                                                            <md-option ng-value="servicio" ng-repeat="servicio in servicios">{{ servicio.Nombre }}</md-option>
+                                                        </md-select>
+                                                    </md-input-container>-->
+                                                </div>                                                
                                                 <div layout="row">
                                                     <md-input-container layout="row" layout-align="center end" flex="70">
                                                         <div flex>
                                                             <label>Duermen (Base) :</label>
-                                                            <input type="number" ng-model="th.PlazasBase" class="form-control" min="0">
+                                                            <input type="number" ng-model="th.PlazasBase" class="form-control" min="0" ng-disabled="!th.editValue">
                                                         </div>
                                                     </md-input-container>
                                                     <md-input-container layout="row" layout-align="center end" flex="30">
                                                         <div flex>
                                                             <label>Precio (Rack) $ :</label>
-                                                            <input ng-model="th.PrecioBase" class="form-control" type="text">
+                                                            <input ng-model="th.PrecioBase" class="form-control" type="text" ng-disabled="!th.editValue">
                                                         </div>
                                                     </md-input-container>
                                                 </div>
                                                 <div layout="row">
                                                     <md-input-container layout="row" layout-align="center end" flex="70">
                                                         <div flex>
-                                                            <md-checkbox ng-model="camasAdicionales.Habilitado" ng-change="accordion.toggle(0)">
+                                                            <md-checkbox ng-model="camasAdicionales.Habilitado" ng-init="camasAdicionales.Habilitado=(th.CamasAdicionales.length > 0 ? true : false)" ng-change="accordion.toggle(0)" ng-disabled="!th.editValue">
                                                                 Permite Camas Adicionales
                                                             </md-checkbox>
                                                         </div>
                                                     </md-input-container>
-                                                    <md-input-container layout="row" layout-align="center end" flex="30">
+                                                    <!--<md-input-container layout="row" layout-align="center end" flex="30">
                                                         <div flex>
                                                             <label>Cantidad Maxima</label>
-                                                            <input ng-model="camasAdicionales.Cantidad" class="form-control" type="number" min="0">
+                                                            <input ng-model="camasAdicionales.Cantidad" class="form-control" type="number" min="0" ng-disabled="!th.editValue">
                                                         </div>
-                                                    </md-input-container>
+                                                    </md-input-container>-->
                                                 </div>
                                                 <div layout="row">
                                                     <v-accordion class="vAccordion--default" multiple control="accordion">
-                                                        <v-pane id="accordionCamas">
+                                                        <v-pane id="accordionCamas" expanded="camasAdicionales.Habilitado">
                                                             <v-pane-header>
                                                                 Camas Adiconales
                                                             </v-pane-header>
@@ -84,13 +104,13 @@
                                                             <v-pane-content>
                                                                 <div class="panel-body">
                                                                     <!--#region Carga de camas adicioanels-->
-                                                                    <div class="row">
+                                                                    <div class="row" ng-show="th.editValue">
                                                                         <div class="col-lg-8">
                                                                             <label class="control-label col-lg-3">Tipo Cama</label>
                                                                             <label class="control-label col-lg-1">&nbsp;</label>
                                                                             <div class="col-lg-8">
-                                                                                <ui-select multiple ng-model="tipoCamaSeleccionada.selected" theme="bootstrap" ng-disabled="disabled">
-                                                                                    <ui-select-match placeholder="Busque por Nombre...">{{$item.Nombre}}</ui-select-match>
+                                                                                <ui-select ng-model="tipoCamaSeleccionada.selected" theme="bootstrap" ng-disabled="disabled">
+                                                                                    <ui-select-match placeholder="Busque por Nombre...">{{$select.selected.Nombre}}</ui-select-match>
                                                                                     <ui-select-choices repeat="cama in tiposCamas | propsFilter: {Nombre: $select.search}">
                                                                                         <div ng-bind-html="cama.Nombre | highlight: $select.search"></div>
                                                                                     </ui-select-choices>
@@ -122,23 +142,28 @@
                                                                             <div class="col-lg-12">
                                                                                 <label class="control-label col-lg-4">Tarifas de Camas Adiciones</label>
                                                                             </div>
-                                                                            <div class="col-lg-12">
+                                                                            <div class="col-lg-12" ng-disabled="!th.editValue">
                                                                                 <table ng-table="tableParams" class="table ng-table-responsive">
-                                                                                    <tr ng-repeat="cama in listCamasAdicionales">
+                                                                                    <!--<tr ng-repeat="cama in listCamasAdicionales">-->
+                                                                                    <tr ng-repeat="cama in th.CamasAdicionales" ng-init="aux=false; precioOrig = cama.PrecioAdicional; cantidadOrig = cama.Cantidad ">
                                                                                         <td data-title="'Tipo'">
-                                                                                            {{cama.tipoCama[0].Nombre}}
+                                                                                            {{cama.TipoCama.Nombre}}
                                                                                         </td>
                                                                                         <td data-title="'Cantidad'">
-                                                                                            {{cama.cantidad}}
+                                                                                            <!--{{cama.Cantidad}}-->
+                                                                                            <input ng-model="cama.Cantidad" class="form-control" type="number" ng-disabled="!aux" style="width:100%">
                                                                                         </td>
                                                                                         <td data-title="'precio unitario'">
-                                                                                            {{cama.precioAdicional}}
+                                                                                            <!--{{cama.PrecioAdicional}}-->
+                                                                                            <input ng-model="cama.PrecioAdicional" class="form-control" type="text" ng-disabled="!aux">                                                                                            
                                                                                         </td>
                                                                                         <td>
-                                                                                            <button>Editar</button>
+                                                                                            <button ng-disabled="!th.editValue" ng-click="aux = true" ng-show="!aux">Editar</button>
+                                                                                            <button ng-disabled="!th.editValue" ng-click="aux = false; precioOrig = cama.PrecioAdicional; cantidadOrig = cama.Cantidad" ng-show="aux">Guardar</button>
                                                                                         </td>
                                                                                         <td>
-                                                                                            <button>Eliminar</button>
+                                                                                            <button ng-disabled="!th.editValue" ng-click="removeCamaAd(cama)" ng-show="!aux">Eliminar</button>
+                                                                                            <button ng-disabled="!th.editValue" ng-click="aux = false; cama.PrecioAdicional=precioOrig; cama.Cantidad = cantidadOrig " ng-show="aux">Cancelar</button>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </table>
@@ -155,7 +180,7 @@
                                                     <md-input-container layout="row" layout-align="center end" flex="grow">
                                                         <div flex>
                                                             <label>Descripcion Del Tipo de Habitacion</label>
-                                                            <textarea ng-model="th.Descripcion" columns="1" md-maxlength="150"></textarea>
+                                                            <textarea ng-model="th.Descripcion" columns="1" md-maxlength="150" ng-disabled="!th.editValue"></textarea>
                                                         </div>
                                                     </md-input-container>
                                                 </div>
@@ -221,9 +246,9 @@
                  active-icon="mdi-content-clear" resting-icon="mdi-content-add"
                  toggling-method="hover">
                 <button mfb-button icon="mdi-social-person-add" label="Agregar Tipo de Habitacion" ng-click="addTabTipoHab()"></button>
-                <button mfb-button icon="mdi-image-edit" label="Editar Tipo de Habitacion"></button>
-                <button mfb-button icon="mdi-content-save" label="Guardar Cambios" ng-click="addTipoHabitacion(listTiposHab[selectedIndex])"></button>
-                <button mfb-button icon="mdi-action-delete" label="Eliminar Tipo de Habitacion"></button>
+                <button mfb-button icon="mdi-image-edit" label="Editar Tipo de Habitacion" ng-click="edit()"></button>
+                <button mfb-button icon="mdi-content-save" label="Guardar Cambios" ng-click="listTiposHab[selectedIndex].Id > 0 ? save(listTiposHab[selectedIndex]) : addTipoHabitacion(listTiposHab[selectedIndex])"></button>
+                <button mfb-button icon="mdi-action-delete" label="Cancelar Cambios" ng-click="cancel()"></button>
             </nav>
         </div>
         <!--#endregion-->

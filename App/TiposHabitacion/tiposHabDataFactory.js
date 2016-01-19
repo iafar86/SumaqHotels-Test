@@ -9,8 +9,19 @@
         var deferred = $q.defer();        
         $http.get(urlApi + '/api/TiposHabitaciones/', { params: { prmIdHotel: prmIdHotel } }).then(
             function (response) {                
-                console.log(response.data);
-                deferred.resolve(response.data);
+                
+                // fpaz: agrego a cada objeto del array el campo editValue para manejar la actualizacion de datos desde el controler, en los tabs de tipos de habitacion
+                var data = response.data;
+                var list = [];
+                for (var i = 0; i < data.length; i++) {
+                    var aux = {};
+                    aux = data[i];
+                    aux.editValue = false;
+
+                    list.push(aux);
+                }
+                deferred.resolve(list);
+                //deferred.resolve(response.data);
             },
             function (response) {
                 deferred.reject(response.data);         
@@ -29,7 +40,9 @@
                 }
             }).then(
             function (response) {
-                deferred.resolve(response);
+                var result = response.data;
+                result.editValue = false;
+                deferred.resolve(result);
             },
             function (response) {
                 deferred.reject(response.data);                

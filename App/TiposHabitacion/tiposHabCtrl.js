@@ -3,6 +3,7 @@
 
     //#region Inicializacion de variables de Scope
     $scope.listTiposHab = listadoTiposHab; // var donde voy a guardar todos los Tipos de Habitacion ya sea cuando se cargue la pagina o cuando agregue una nueva
+   
     $scope.infoTipoHab = {}; // var que voy a usar para el abm y para tener informacion sobre un tipo de habitacion en particular
     $scope.tipoHabSelec = {}; // var que va a tener la cama seleccionada
     $scope.tipoHabSelec.selected = {};
@@ -20,6 +21,7 @@
     $scope.servicioSeleccionado = [];
     $scope.servicioSeleccionado.selected = {};
 
+    $scope.editValue = false; // variable que voy a usarpara activar y desactivar los modos de edicion para hacer el update de la info
     
     //#endregion
 
@@ -38,7 +40,7 @@
         $scope.data.selectedIndex = Math.max($scope.data.selectedIndex - 1, 0);
     };
     
-    $scope.selectedIndex = 2;
+    $scope.selectedIndex = 0;
        
     $scope.removeTab = function (tab) {
         for (var j = 0; j < tabs.length; j++) {
@@ -56,12 +58,16 @@
     $scope.addTabTipoHab = function () {
         var infoTipoHab = {};
         infoTipoHab.Nombre = "Nuevo Tipo de Habitacion";
+        infoTipoHab.editValue = true;
+        infoTipoHab.CamasAdicionales = [];
+        infoTipoHab.ServiciosDeHabitacion = [];
+        
+
         $scope.listTiposHab.push(infoTipoHab);
     }
     
     $scope.obtenerTiposHab = function () { // funcion para devolver todos los tipos de habitacion de un hotel        
-        tiposHabDataFactory.getTiposHab().then(function (response) {
-            console.log(response);
+        tiposHabDataFactory.getTiposHab().then(function (response) {            
             $scope.listTiposHab = response;
             //$scope.limpiar();
         },
@@ -74,30 +80,25 @@
     };
     
     $scope.addTipoHabitacion = function (infoTipoHab) { // funcion para armar y guardar en la bd el objeto con el tipo de habitacion
-
+        
         var tipoHab = {};
         tipoHab = infoTipoHab;
-        tipoHab.HotelId = authSvc.authentication.hotelId;
-        tipoHab.ServiciosDeHabitacion = [];
-        tipoHab.CamasAdicionales = [];
         
-        for (var i in $scope.listCamasAdicionales) { // for para armar el array de Camas Adicionales con el formato necesario para el api controller
+        tipoHab.HotelId = authSvc.authentication.hotelId;
+        //tipoHab.ServiciosDeHabitacion = [];
+        
+        //#region armado de array de camas adicionales
+        var listCamasAdicionales = [];
+        for (var i in infoTipoHab.CamasAdicionales) { // for para armar el array de Camas Adicionales con el formato necesario para el api controller
             var camaAdicional = {};          
             
-            camaAdicional.Cantidad = $scope.listCamasAdicionales[i].cantidad;
-            camaAdicional.PrecioAdicional = $scope.listCamasAdicionales[i].precioAdicional;
-            camaAdicional.TipoCamaId = $scope.listCamasAdicionales[i].tipoCama[0].Id;
-
-            tipoHab.CamasAdicionales.push(camaAdicional);
+            camaAdicional.Cantidad = infoTipoHab.CamasAdicionales[i].Cantidad;
+            camaAdicional.PrecioAdicional = infoTipoHab.CamasAdicionales[i].PrecioAdicional;
+            camaAdicional.TipoCamaId = infoTipoHab.CamasAdicionales[i].TipoCama.Id;
+            listCamasAdicionales.push(camaAdicional);
         }
-
-        for (var i in $scope.servicioSeleccionado.selected) {
-            var servicio = {};
-            servicio.Id = $scope.servicioSeleccionado.selected[i].Id;
-
-            tipoHab.ServiciosDeHabitacion.push(servicio);
-
-        }
+        tipoHab.CamasAdicionales = listCamasAdicionales;
+        //#endregion
         
         tiposHabDataFactory.postTipoHab(tipoHab).then(function (response) {            
             alert("Nuevo Tipo de Habitacion Guardado");
@@ -114,11 +115,13 @@
 
     $scope.agregarCamaAdicional = function (tipoCamaAgregada) {
         var camaAgregada = {}; // var con la info que se va a mostrar en la tabla
-        camaAgregada.tipoCama = $scope.tipoCamaSeleccionada.selected;
-        camaAgregada.cantidad = tipoCamaAgregada.cantidad;
-        camaAgregada.precioAdicional = tipoCamaAgregada.precio;
+        camaAgregada.TipoCama = $scope.tipoCamaSeleccionada.selected;
+        camaAgregada.Cantidad = tipoCamaAgregada.cantidad;
+        camaAgregada.PrecioAdicional = tipoCamaAgregada.precio;
 
-        $scope.listCamasAdicionales.push(camaAgregada); // array con el que se va a llenar la tabla        
+        //$scope.listCamasAdicionales.push(camaAgregada); // array con el que se va a llenar la tabla        
+
+        $scope.listTiposHab[$scope.selectedIndex].CamasAdicionales.push(camaAgregada); // array con el que se va a llenar la tabla        
         
         $scope.tipoCamaSeleccionada = {};
         $scope.tipoCamaSeleccionada.selected = {};
@@ -126,9 +129,51 @@
         $scope.tipoCamaAgregada = {};
     }
 
-
-
     //#endregion
+
+    //#region modificacion de tipos de habitaciones
+    $scope.edit = function () {//fpaz: activa el modo de edicion de los campos        
+        $scope.listTiposHab[$scope.selectedIndex].editValue = true;
+    };
+
+    $scope.save = function (infoTipoHab) {//fpaz: guarda los cambios y llama a la funcion put de la api        
+        tiposHabDataFactory.putTipoHab(infoTipoHab.Id, infoTipoHab).then(function (response) {
+            $scope.listTiposHab[$scope.selectedIndex].editValue = false;
+            alert("Cambios Guardados Correctamente");
+        },
+         function (err) {
+             if (err) {
+                 $scope.error = err;
+                 $scope.cancel();
+                 alert("Error al Modificar la Información: " + $scope.error.Message);
+                 //$scope.message = err.error_description;
+             }
+         });
+    };
+
+    $scope.removeCamaAd = function (camaAd) { // elimina una cama adicional
+        var index = $scope.listTiposHab[$scope.selectedIndex].CamasAdicionales.indexOf(camaAd);
+        $scope.listTiposHab[$scope.selectedIndex].CamasAdicionales.splice(index, 1);
+        alert('Cama Removida');
+    }
+
+    $scope.agregarServicio = function (item, model) { // agrega un nuevo servicio si es que no existe
+        var noExiste = true;
+        for (var i = 0; i < $scope.listTiposHab[$scope.selectedIndex].ServiciosDeHabitacion.length; i++) {
+            if ($scope.listTiposHab[$scope.selectedIndex].ServiciosDeHabitacion[i].Id == model.Id) {
+                alert("Servicio Actualmente Incluido");
+                noExiste = false;
+                break;
+            }
+
+        }
+
+        if (noExiste) {
+            $scope.listTiposHab[$scope.selectedIndex].ServiciosDeHabitacion.push(model)
+        }
+    };
+    //#endregion
+
     
     //#region alta de Habitaciones
     $scope.AbrirParaAgregar = function (ev) {
@@ -207,19 +252,12 @@
     };
 
     //fpaz: funcion para cancelar una modificacion u otra operacion y traer los datos originales del tipo de habitacion        
-    $scope.cancel = function () {         
-        tiposHabDataFactory.getTipoHab($scope.infoTipoHab.Id).then(function (response) {
-            $scope.infoTipoHab = response.data;
-            $scope.editValue = false;
-        },
-         function (err) {
-             if (err) {
-                 $scope.error = err;
-                 //$scope.cancel();
-                 alert("Error" + $scope.error.Message);
-             }
-         });
+    $scope.cancel = function () {        
+        $scope.limpiar();
+        $scope.obtenerTiposHab();        
     };
     //#endregion
+
+    
     
 });

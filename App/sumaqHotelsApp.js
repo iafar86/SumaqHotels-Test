@@ -10,6 +10,7 @@
         $urlRouterProvider.otherwise("/seguridad/login");
 
         $stateProvider //fpaz: defino los states que van a guiar el ruteo de las vistas parciales de la app       
+
             //#region Seguridad
             .state('seguridad', {
                 abstract: true,

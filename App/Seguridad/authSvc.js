@@ -32,8 +32,8 @@
         
         var deferred = $q.defer();
 
-        //$http.post('http://localhost:33140/' + 'oauth/token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded'} }).success(function (response) {
-        $http.post('http://sumaqhotelsapi.azurewebsites.net/' + 'oauth/token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).success(function (response) {
+        $http.post('http://localhost:33140/' + 'oauth/token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded'} }).success(function (response) {
+        //$http.post('http://sumaqhotelsapi.azurewebsites.net/' + 'oauth/token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).success(function (response) {
 
             var tokenPayload = jwtHelper.decodeToken(response.access_token); //fpaz: decodifico el token para obener los roles y los claims que se hayan definido
 

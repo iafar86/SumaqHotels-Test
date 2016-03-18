@@ -1,7 +1,7 @@
 ﻿sumaqHotelsApp.factory('hotelesDataFactory', function ($http, $q, authSvc) {
     //fpaz: url del web api de cuentas de usuario, cambiar por el de produccion una vez implementado
-    //var urlApi = "http://localhost:33140"; //desarrollo
-    var urlApi = "http://sumaqhotelsapi.azurewebsites.net"; //azure
+    var urlApi = "http://localhost:33140"; //desarrollo
+    //var urlApi = "http://sumaqhotelsapi.azurewebsites.net"; //azure
     var hotelesDataFactory = {};    
 
     //var _getTiposHab = function (prmIdHotel) { //devuelve todos los tipos de habitaciones de un hotel en particular
@@ -22,6 +22,7 @@
         var deferred = $q.defer();        
         $http.get(urlApi + '/api/Hoteles/' + prmIdHotel).then(
             function (response) {
+                //debugger;
                 deferred.resolve(response.data);
             },
             function (response) {

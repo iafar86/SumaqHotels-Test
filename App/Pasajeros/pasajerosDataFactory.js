@@ -1,6 +1,6 @@
-﻿sumaqHotelsApp.factory('pasajerosDataFactory', function ($http, $q) {
-    //var urlApi = "http://localhost:33140"; //desarrollo
-    var urlApi = "http://sumaqhotelsapi.azurewebsites.net"; //azure
+﻿sumaqHotelsApp.factory('pasajerosDataFactory', function ($http, $q, configSvc) {
+    //fpaz: url del web api 
+    var urlApi = configSvc.urlApi;
     var pasajerosDataFactory = {};
 
     var _getPasajeros = function () { // trae todos las ofertas

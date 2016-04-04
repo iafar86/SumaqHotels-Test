@@ -78,26 +78,32 @@
                              layout="row" layout-align="center center">
                             <div flex-gt-sm="90" flex-gt-md="80">
                                 <md-content layout="row">
-                                    <md-input-container class="md-block" layout="row" layout-align="center end" flex="60">
-                                        <ng-md-icon icon="create" size="35" style="fill:green"></ng-md-icon>
-                                        <div flex>
-                                            <label>Nombre</label>
-                                            <input type="text" ng-model="infoHotel.Nombre" placeholder="Ingrese el nombre de su hotel">
-                                        </div>
+                                    <div flex="5">
+                                        <ng-md-icon icon="create" size="35" style="fill:green; align-items:center"></ng-md-icon>
+                                    </div>
+                                    <md-input-container flex="60">
+                                        <label>Nombre</label>
+                                        <input type="text" ng-model="infoHotel.Nombre" placeholder="Ingrese el nombre de su hotel">
+                                    </md-input-container>     <!--placeholder="Ingrese el nombre de su hotel"-->
+                                    <!--<div flex="5"></div>-->
+                                    <md-input-container flex>
+                                        <label>Tipo de hotel</label>
+                                        <md-select ng-model="infoHotel.TipoHotel" ng-model-options="{trackBy: '$value.Id'}">
+                                            <md-option ng-value="tipoHotel" ng-repeat="tipoHotel in listTiposHoteles" style="min-width: 200px;">{{tipoHotel.Nombre}}</md-option>
+                                        </md-select>
                                     </md-input-container>
-                                    <div flex="5"></div>
-                                    <md-select placeholder="Tipo de Hotel" ng-model="infoHotel.TipoHotel" ng-model-options="{trackBy: '$value.Id'}" layout-fill>
-                                       
-                                        <md-option ng-value="tipoHotel" ng-repeat="tipoHotel in listTiposHoteles" style="min-width: 200px;">{{tipoHotel.Nombre}}</md-option>
-                                    </md-select>
+
                                 </md-content>
                                 <div layout="row">
-                                    <div flex="100">
-                                        <md-input-container>
-                                            <ng-md-icon icon="place" size="35" style="fill:#000000"></ng-md-icon>
-                                            <input class="md-input" type="text" ng-autocomplete ng-model="infoHotel.DireccionComun" options="options1" details="details1" />
-                                        </md-input-container>
+                                    <div flex="5">
+                                        <ng-md-icon icon="place" size="35" style="fill:#000000"></ng-md-icon>
                                     </div>
+                                   
+                                    <md-input-container flex>
+                                        <label>Ubicacion</label>
+                                        <input class="md-input" type="text" placeholder="Ingrese una ubicacion" ng-autocomplete ng-model="infoHotel.DireccionComun" options="options1" details="details1" />
+                                    </md-input-container>
+
                                 </div>
                                 <div layout="row">
                                     <md-input-container layout="row" layout-align="center end" flex="50">
@@ -144,42 +150,42 @@
                              md-swipe-right="previous()"
                              layout="row" layout-align="center center">
                             <div flex-gt-sm="90" flex-gt-md="80">
-                               
 
-                                    <!--#region carousel -->
-                                    <div set-ng-animate="false">
-                                        
-                                        index : <input type="number" class="tiny" ng-model="carouselIndex">
-                                        <ul rn-carousel rn-carousel-controls rn-carousel-index="carouselIndex" rn-carousel-buffered class="carousel1">
-                                            <li ng-repeat="slide in slides track by slide.id" ng-class="'id-' + slide.id">
-                                                <div ng-style="{'background-image': 'url(' + slide.img + ')'}" class="bgimage">
-                                                    #{{ slide.id }}
-                                                </div>
-                                            </li>
-                                        </ul>
 
-                                        <ul rn-carousel class="image">
-                                            <li ng-repeat="image in sportImages">
-                                                <div class="layer">{{ image }}</div>
-                                            </li>
-                                        </ul>
-                                        <!--<carousel interval="myInterval">
-                                            <slide ng-repeat="slide in slides">
-                                                <img ng-src="{{slide.image}}" class="img-full">
-                                                <div class="carousel-caption">
-                                                    <h4>Slide {{$index}}</h4>
-                                                    <p>{{slide.text}}</p>
-                                                </div>
-                                            </slide>
-                                        </carousel>
-                                        <div class="panel-footer">
-                                            <button type="button" class="btn btn-default m-r">Add Slide</button>
-                                            Interval: <input type="number" class="form-control w-auto inline" ng-model="myInterval"> ms
-                                        </div>-->
-                                    </div>
-                                    <!-- #endregion-->      
+                                <!--#region carousel -->
+                                <div set-ng-animate="false">
 
-                              
+                                    index : <input type="number" class="tiny" ng-model="carouselIndex">
+                                    <ul rn-carousel rn-carousel-controls rn-carousel-index="carouselIndex" rn-carousel-buffered class="carousel1">
+                                        <li ng-repeat="slide in slides track by slide.id" ng-class="'id-' + slide.id">
+                                            <div ng-style="{'background-image': 'url(' + slide.img + ')'}" class="bgimage">
+                                                #{{ slide.id }}
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                    <ul rn-carousel class="image">
+                                        <li ng-repeat="image in sportImages">
+                                            <div class="layer">{{ image }}</div>
+                                        </li>
+                                    </ul>
+                                    <!--<carousel interval="myInterval">
+                                        <slide ng-repeat="slide in slides">
+                                            <img ng-src="{{slide.image}}" class="img-full">
+                                            <div class="carousel-caption">
+                                                <h4>Slide {{$index}}</h4>
+                                                <p>{{slide.text}}</p>
+                                            </div>
+                                        </slide>
+                                    </carousel>
+                                    <div class="panel-footer">
+                                        <button type="button" class="btn btn-default m-r">Add Slide</button>
+                                        Interval: <input type="number" class="form-control w-auto inline" ng-model="myInterval"> ms
+                                    </div>-->
+                                </div>
+                                <!-- #endregion-->
+
+
                             </div>
 
                         </div>
@@ -188,7 +194,7 @@
                     </ng-switch>
                 </ui-view>
 
-             
+
 
 
 

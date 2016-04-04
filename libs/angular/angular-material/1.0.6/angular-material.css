@@ -7,7 +7,8 @@
 html, body {
   height: 100%;
   color: rgba(0, 0, 0, 0.87);
-  background: white;
+  /*fpaz: saco el background para que quede trasnparente y se puedan ver los cards*/
+  /*background: white;*/
   position: relative; }
 
 body {

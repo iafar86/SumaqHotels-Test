@@ -23,9 +23,10 @@
 
     $scope.editValue = false; // variable que voy a usarpara activar y desactivar los modos de edicion para hacer el update de la info
     
-    //#endregion
+    //#endregion    
 
-    //#region fpaz: administracion de tabs
+    //#region fpaz: administracion de tabs    
+
     $scope.data = {
         selectedIndex: 0,
         secondLocked: true,

@@ -7,7 +7,7 @@
             </div>
             <div class="card-divider"></div>
             <div layout="row" layout-align="center center" flex>
-                <div flex="80">                    
+                <div flex="80">
                     <div class="profile-content">
                         <md-tabs md-selected="selectedIndex" flex>
                             <md-tab ng-repeat="th in listTiposHab"
@@ -33,7 +33,7 @@
                                                         </div>
                                                     </md-input-container>
                                                 </div>
-                                                <div layout="row">                                                    
+                                                <div layout="row">
                                                     <md-input-container layout="row" layout-align="center end" flex="grow">
                                                         <div flex>
                                                             <md-chips ng-model="th.ServiciosDeHabitacion" readonly="!th.editValue ? true : false">
@@ -41,10 +41,10 @@
                                                                     <span>
                                                                         <strong>{{$chip.Nombre}}</strong>
                                                                     </span>
-                                                                </md-chip-template>                                                                
-                                                            </md-chips>                                                            
+                                                                </md-chip-template>
+                                                            </md-chips>
                                                         </div>
-                                                    </md-input-container>                                                    
+                                                    </md-input-container>
                                                 </div>
                                                 <div layout="row">
                                                     <md-input-container layout="row" layout-align="center end" flex="grow">
@@ -60,11 +60,11 @@
                                                         </div>
                                                     </md-input-container>
                                                     <!--<md-input-container>
-                                                        <md-select multiple ng-model="th.ServiciosDeHabitacion" placeholder="Seleccionar Servicios">                                                            
+                                                        <md-select multiple ng-model="th.ServiciosDeHabitacion" placeholder="Seleccionar Servicios">
                                                             <md-option ng-value="servicio" ng-repeat="servicio in servicios">{{ servicio.Nombre }}</md-option>
                                                         </md-select>
                                                     </md-input-container>-->
-                                                </div>                                                
+                                                </div>
                                                 <div layout="row">
                                                     <md-input-container layout="row" layout-align="center end" flex="70">
                                                         <div flex>
@@ -155,7 +155,7 @@
                                                                                         </td>
                                                                                         <td data-title="'precio unitario'">
                                                                                             <!--{{cama.PrecioAdicional}}-->
-                                                                                            <input ng-model="cama.PrecioAdicional" class="form-control" type="text" ng-disabled="!aux">                                                                                            
+                                                                                            <input ng-model="cama.PrecioAdicional" class="form-control" type="text" ng-disabled="!aux">
                                                                                         </td>
                                                                                         <td>
                                                                                             <button ng-disabled="!th.editValue" ng-click="aux = true" ng-show="!aux">Editar</button>
@@ -232,24 +232,24 @@
                     </md-input-container>
                 </div>
             </div>
-            
-            
-        </div>
-    </div>
-        <!--#endregion-->
-        <!--#region fpaz: menu flotante-->
-        <div layout="row" layout-align="star center">
-            <!--<div flex="60"><h2>Agrega puestos en la oferta</h2></div>
-            <div flex="30"><md-button class="md-fab " aria-label="PuestosAdd" ng-click="AbrirParaAgregar()"><i class="fa fa-plus"></i></md-button> </div>-->
 
-            <nav mfb-menu position="br" effect="zoomin" label="Herramientas"
-                 active-icon="mdi-content-clear" resting-icon="mdi-content-add"
-                 toggling-method="hover">
-                <button mfb-button icon="mdi-social-person-add" label="Agregar Tipo de Habitacion" ng-click="addTabTipoHab()"></button>
-                <button mfb-button icon="mdi-image-edit" label="Editar Tipo de Habitacion" ng-click="edit()"></button>
-                <button mfb-button icon="mdi-content-save" label="Guardar Cambios" ng-click="listTiposHab[selectedIndex].Id > 0 ? save(listTiposHab[selectedIndex]) : addTipoHabitacion(listTiposHab[selectedIndex])"></button>
-                <button mfb-button icon="mdi-action-delete" label="Cancelar Cambios" ng-click="cancel()"></button>
-            </nav>
+
         </div>
-        <!--#endregion-->
     </div>
+    <!--#endregion-->
+    <!--#region fpaz: menu flotante-->
+    <div layout="row" layout-align="star center">
+        <!--<div flex="60"><h2>Agrega puestos en la oferta</h2></div>
+        <div flex="30"><md-button class="md-fab " aria-label="PuestosAdd" ng-click="AbrirParaAgregar()"><i class="fa fa-plus"></i></md-button> </div>-->
+
+        <nav mfb-menu position="br" effect="zoomin" label="Herramientas"
+             active-icon="mdi-content-clear" resting-icon="mdi-content-add"
+             toggling-method="hover">
+            <button mfb-button icon="mdi-social-person-add" label="Agregar Tipo de Habitacion" ng-click="addTabTipoHab()"></button>
+            <button mfb-button icon="mdi-image-edit" label="Editar Tipo de Habitacion" ng-click="edit()"></button>
+            <button mfb-button icon="mdi-content-save" label="Guardar Cambios" ng-click="listTiposHab[selectedIndex].Id > 0 ? save(listTiposHab[selectedIndex]) : addTipoHabitacion(listTiposHab[selectedIndex])"></button>
+            <button mfb-button icon="mdi-action-delete" label="Cancelar Cambios" ng-click="cancel()"></button>
+        </nav>
+    </div>
+    <!--#endregion-->
+</div>

@@ -23,6 +23,11 @@
 
     $scope.editValue = false; // variable que voy a usarpara activar y desactivar los modos de edicion para hacer el update de la info
     
+    $scope.imagenes = [
+        { src: 'images/hab1.jpg' },
+        { src: 'images/hab2.jpg' },
+        { src: 'images/hab3.jpg' }        
+    ];
     //#endregion    
 
     //#region fpaz: administracion de tabs    

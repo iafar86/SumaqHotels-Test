@@ -2,68 +2,26 @@
     hotelesDataFactory, infoHotel, listadoTiposHoteles, listadoCategorias) {
 
     //#region Variables de Scope de Ivan
-    $scope.oneAtATime = true;
     $scope.Hotel = [];
-    $scope.Hotel.Stars = 1;
-    $scope.groups = [
-      {
-          title: 'Dynamic Group Header - 1',
-          content: 'Dynamic Group Body - 1'
-      },
-      {
-          title: 'Dynamic Group Header - 2',
-          content: 'Dynamic Group Body - 2'
-      }
-    ];
+    $scope.infoHotel = infoHotel;
+    $scope.listTiposHoteles = listadoTiposHoteles;
+   //#endregion
 
-    $scope.items = ['Item 1', 'Item 2', 'Item 3'];
 
-    $scope.addItem = function () {
-        var newItemNo = $scope.items.length + 1;
-        $scope.items.push('Item ' + newItemNo);
-    };
-
-    $scope.status = {
-        isFirstOpen: true,
-        isFirstDisabled: false
-    };
-
-    //manejo de Estrellas de Hotel
+    //#region manejo de Estrellas de Hotel
     $scope.hoveringOver = function (value) {
         $scope.overStar = value;
     };
+    //#endregion
 
-    //Manejo de Carrousel
+    //#region Manejo de Carrousel
 
-    $scope.myInterval = 5000;
-    var slides = $scope.slides = [];
-    $scope.addSlide = function (i) {
-        var newWidth = 6 + i;
-        slides.push({
-            //image: 'http://placekitten.com/' + newWidth + '/300',
-            image: 'http://q-ec.bstatic.com/images/hotel/840x460/420/4204142' + newWidth + '.jpg',
-            text: ['Lobby', 'Reception', 'Main', 'Confort'][slides.length % 4] + ' ' +
-              ['Place', 'Bar', 'Rooms', 'Beds'][slides.length % 4]
-        });
-    };
-    for (var i = 0; i < 4; i++) {
-        $scope.addSlide(i);
-    }
+    
     //#endregion
 
     //#region Inicializacion de variables de Scope
-    $scope.infoHotel = infoHotel;
+    
    
-    //#region carga tipo Hotel select
-    $scope.tipoHotel = null;
-    $scope.listTiposHoteles = null;
-    $scope.loadTipoHoteles = function () {
-        // Use timeout to simulate a 650ms request.
-        return $timeout(function () {
-            $scope.listTiposHoteles = listadoTiposHoteles;
-        }, 650);
-    };
-    //#endregion
     $scope.tipoHabSelec = {};
     $scope.tipoHabSelec.selected = {};
 
@@ -99,6 +57,8 @@
 
     $scope.save = function (infoHotel) {//fpaz: guarda los cambios y llama a la funcion put de la api          
         infoHotel.CategoriaId = 1;
+        infoHotel.TipoHotel = null;
+        infoHotel.Categoria = null;
         hotelesDataFactory.putHotel(infoHotel).then(function (response) {
             $scope.editValue = false;
             alert("Cambios Guardados Correctamente");
@@ -127,6 +87,9 @@
         }
     };
     //#endregion
+
+
+  
 
 
 

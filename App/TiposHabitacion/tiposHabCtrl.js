@@ -24,9 +24,9 @@
     $scope.editValue = false; // variable que voy a usarpara activar y desactivar los modos de edicion para hacer el update de la info
     
     $scope.imagenes = [
-        { src: 'images/hab1.jpg' },
-        { src: 'images/hab2.jpg' },
-        { src: 'images/hab3.jpg' }        
+        { thumb: 'images/hab1.jpg', img: 'images/hab1.jpg', description: 'Image 1' },
+        { thumb: 'images/hab2.jpg', img: 'images/hab2.jpg', description: 'Image 2' },
+        { thumb: 'images/hab3.jpg', img: 'images/hab3.jpg', description: 'Image 3' }
     ];
     //#endregion    
 

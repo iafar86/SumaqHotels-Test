@@ -1,7 +1,7 @@
 ﻿var sumaqHotelsApp = angular.module('sumaqHotelsApp', ['ngResource', 'ngMdIcons', 'ui.router', 'ngCookies', 'ngTable',
   'ngSanitize', 'ngAnimate', 'ngAria', 'ct.ui.router.extras', 'angular-loading-bar', 'daypilot', 'LocalStorageModule', 'angular-jwt', 'ngMaterial',
   'oc.lazyLoad', 'ng-mfb', 'angular-input-stars', 'ngAutocomplete', 'vAccordion', 'ui.select', 'ngFileUpload'
-  , 'jkAngularCarousel'])
+  , 'angularSimpleSlider', 'jkuri.gallery'])
     .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $stickyStateProvider, cfpLoadingBarProvider) {
 
         cfpLoadingBarProvider.includeSpinner = true;

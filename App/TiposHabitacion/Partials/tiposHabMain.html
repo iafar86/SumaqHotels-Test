@@ -204,25 +204,24 @@
                         <div flex="100">
                             <br />
                             <!--#region fpaz: Imagenes de la Habitacion-->
-                            <!--<div ngf-drop="" ngf-select="" ng-model="th.ImagenesTipoHabitacion"
+                            <div ngf-drop="" ngf-select="" ng-model="th.ImagenesTipoHabitacion"
                                  class="b-a b-dashed p-lg bg-white text-center m-b"
                                  ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true" accept="image/*" ngf-pattern="'image/*'" ngf-max-size="5MB">
                                 <p ng-show="!th.ImagenesTipoHabitacion">IMAGENES DE LA HABITACION</p>
                             </div>
-                            <div ng-repeat="img in th.ImagenesTipoHabitacion">
+                            <!--<div ng-repeat="img in th.ImagenesTipoHabitacion">
                                 <img ngf-thumbnail="img" class="thumb img-responsive">
                                 <p ng-show="!th.ImagenesTipoHabitacion">IMAGENES DE LA HABITACION</p>
                             </div>-->
                             <div>
-                                <!--<jk-carousel data="th.ImagenesTipoHabitacion" item-template-url="'libs/angular/angular-jk-carousel/itemTemplate.html'"
-                                             auto-slide="true"
-                                             auto-slide-time="2000">
-                                </jk-carousel>-->
-                                <jk-carousel data="imagenes" item-template-url="'libs/angular/angular-jk-carousel/itemTemplate.html'"
-                                             auto-slide="true"
-                                             auto-slide-time="2000"
-                                             style="width:200px">
-                                </jk-carousel>
+                                <ng-gallery images="imagenes">
+                                </ng-gallery>
+                                <simple-slider style="width:612px; height:612px" transition-property="opacity" start-value="0" visible-value="1" end-value="0">
+                                    <div ng-repeat="img in th.ImagenesTipoHabitacion">
+                                        <img ngf-thumbnail="img" class="thumb img-responsive">
+                                        <p ng-show="!th.ImagenesTipoHabitacion">IMAGENES DE LA HABITACION</p>
+                                    </div>
+                                </simple-slider>
                             </div>
                             <i ng-show="myForm.file.$error.maxSize">
                                 File too large
@@ -295,13 +294,6 @@
     <!--#endregion-->
 </div>
 
-<md-card>
-    <h1>hola</h1>
-    <jk-carousel data="imagenes" item-template-url="'libs/angular/angular-jk-carousel/itemTemplate.html'"
-                 auto-slide="true"
-                 auto-slide-time="2000"
-                 style="width:200px">
-    </jk-carousel>
-</md-card>
+
 
 

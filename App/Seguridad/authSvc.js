@@ -1,4 +1,4 @@
-﻿sumaqHotelsApp.service('authSvc', function ($http, $q, cuentaDataFactory, tokenDataFactory, localStorageService, jwtHelper) {
+﻿sumaqHotelsApp.service('authSvc', function ($http, $q, cuentaDataFactory, tokenDataFactory, localStorageService, jwtHelper, configSvc) {
 
     var authServiceFactory = {};
 
@@ -12,11 +12,7 @@
     //#region registracion de usuario
     var _saveRegistration = function (registration) { //funcion para registrar un usuario
 
-        _logOut();
-
-        //return $http.post(serviceBase + 'api/account/register', registration).then(function (response) {
-        //    return response;
-        //});
+        _logOut();       
 
         return cuentaDataFactory.save(registration).$promise.then( //llamo al metodo save para registrar el nuevo usuario
             function (response) {
@@ -26,14 +22,13 @@
     //#endregion
 
     //#region Login y Logout de usuario
-    var _login = function (loginData) { // funcion para hacer el login de usuario y generar el token
-
+    var _login = function (loginData) { // funcion para hacer el login de usuario y generar el token        
         var data = "grant_type=password&username=" + loginData.userName + "&password=" + loginData.password; // defino los datos que voy a pasar como parametros
         
         var deferred = $q.defer();
 
-        //$http.post('http://localhost:33140/' + 'oauth/token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded'} }).success(function (response) {
-        $http.post('http://sumaqhotelsapi.azurewebsites.net/' + 'oauth/token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).success(function (response) {
+        $http.post(configSvc.urlApi + '/oauth/token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded'} }).success(function (response) {
+        //$http.post('http://sumaqhotelsapi.azurewebsites.net/' + 'oauth/token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).success(function (response) {
 
             var tokenPayload = jwtHelper.decodeToken(response.access_token); //fpaz: decodifico el token para obener los roles y los claims que se hayan definido
 
@@ -55,32 +50,7 @@
 
         return deferred.promise;
     };
-
-    //var _login = function (loginData) {  // funcion para hacer el login de usuario y generar el token
-    //    var data = "grant_type=password&username=" + loginData.userName + "&password=" + loginData.password; // defino los datos que voy a pasar como parametros
-    //    var deferred = $q.defer();
-
-    //    $http.post('http://localhost:33140/' + 'oauth/token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(
-    //        function (response) {
-    //            localStorageService.set('authorizationData', { token: response.access_token, userName: loginData.userName });
-    //            var t = response.access_token;
-    //            alert(t);
-    //            //fpaz: seteo en el servicio las credenciales del usuario logueado, para que pueda acceder a esta info desde cualquier parte de la app usando la funcion authSvc.authentication
-    //            // que devuelve todo el objeto con la info del usuario logueado
-    //            _authentication.isAuth = true;
-    //            _authentication.userName = loginData.userName;
-    //            var tokenPayload = jwtHelper.decodeToken(response.access_token); //fpaz: decodifico el token para obener los roles y los claims que se hayan definido
-    //            _authentication.roles = tokenPayload.role;
-    //            _authentication.hotelId = tokenPayload.HotelId;
-    //            deferred.resolve(response);
-    //        },
-    //        function (response) {
-    //            _logOut();
-    //            deferred.reject(response.data);
-    //        });
-    //    return deferred.promise;
-    //};
-
+  
     var _logOut = function () {// funcion para hacer el logout
 
         localStorageService.remove('authorizationData'); //para hacer el logout solamente remuevo del storage del cliente el token obtenido

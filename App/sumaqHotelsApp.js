@@ -1,6 +1,7 @@
 ﻿var sumaqHotelsApp = angular.module('sumaqHotelsApp', ['ngResource', 'ngMdIcons', 'ui.router', 'ngCookies', 'ngTable',
   'ngSanitize', 'ngAnimate', 'ngAria', 'ct.ui.router.extras', 'angular-loading-bar', 'daypilot', 'LocalStorageModule', 'angular-jwt', 'ngMaterial',
-  'oc.lazyLoad', 'ng-mfb', 'angular-input-stars', 'ngAutocomplete', 'vAccordion', 'ui.select'])
+  'oc.lazyLoad', 'ng-mfb', 'angular-input-stars', 'ngAutocomplete', 'vAccordion', 'ui.select', 'ngFileUpload'
+  , 'angularSimpleSlider', 'jkuri.gallery'])
     .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $stickyStateProvider, cfpLoadingBarProvider) {
 
         cfpLoadingBarProvider.includeSpinner = true;
@@ -10,6 +11,7 @@
         $urlRouterProvider.otherwise("/seguridad/login");
 
         $stateProvider //fpaz: defino los states que van a guiar el ruteo de las vistas parciales de la app       
+
             //#region Seguridad
             .state('seguridad', {
                 abstract: true,

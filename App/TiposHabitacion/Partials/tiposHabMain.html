@@ -204,24 +204,39 @@
                         <div flex="100">
                             <br />
                             <!--#region fpaz: Imagenes de la Habitacion-->
-                            <div ngf-drop="" ngf-select="" ng-model="th.ImagenesTipoHabitacion"
-                                 class="b-a b-dashed p-lg bg-white text-center m-b"
-                                 ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true" accept="image/*" ngf-pattern="'image/*'" ngf-max-size="5MB">
-                                <p ng-show="!th.ImagenesTipoHabitacion">IMAGENES DE LA HABITACION</p>
-                            </div>
-                            <!--<div ng-repeat="img in th.ImagenesTipoHabitacion">
-                                <img ngf-thumbnail="img" class="thumb img-responsive">
-                                <p ng-show="!th.ImagenesTipoHabitacion">IMAGENES DE LA HABITACION</p>
-                            </div>-->
-                            <div>
+                            <div ng-show="!editValue">                                
                                 <ng-gallery images="imagenes">
                                 </ng-gallery>
-                                <simple-slider style="width:612px; height:612px" transition-property="opacity" start-value="0" visible-value="1" end-value="0">
-                                    <div ng-repeat="img in th.ImagenesTipoHabitacion">
-                                        <img ngf-thumbnail="img" class="thumb img-responsive">
-                                        <p ng-show="!th.ImagenesTipoHabitacion">IMAGENES DE LA HABITACION</p>
-                                    </div>
-                                </simple-slider>
+                            </div>
+                            <div ngf-drop="" ngf-select="" ng-model="th.ImagenesTipoHabitacion"
+                                 class="b-a b-dashed p-lg bg-white text-center m-b"
+                                 ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true"
+                                 accept="image/*" ngf-pattern="'image/*'" ngf-max-size="5MB"
+                                 ng-show="editValue">
+                                <p ng-show="!th.ImagenesTipoHabitacion">IMAGENES DE LA HABITACION</p>
+                            </div>
+                            <div ng-repeat="img in th.ImagenesTipoHabitacion" ng-show="editValue">
+                                <img ngf-thumbnail="img" class="thumb img-responsive">
+                                <p ng-show="!th.ImagenesTipoHabitacion">IMAGENES DE LA HABITACION</p>
+                            </div>
+                            <div ng-show="editValue">
+                                <table ng-table="tableParams" class="table ng-table-responsive">
+                                    <!--<tr ng-repeat="cama in listCamasAdicionales">-->
+                                    <tr ng-repeat="img in imagenes" ng-init="aux=false">
+                                        <td data-title="'Imagen'">
+                                            <img class="img-thumbnail img-responsive" ng-src="{{img.img}}" width="70" />
+                                            <span><a>{{img.description}}</a> </span>
+                                        </td>
+                                        <td>
+                                            <button ng-disabled="th.editValue" ng-click="aux = true" ng-show="!aux">Editar</button>
+                                        </td>
+                                        <td>
+                                            <button ng-disabled="th.editValue" ng-click="removeCamaAd(cama)" ng-show="aux">Eliminar</button>
+                                            <button ng-disabled="th.editValue" ng-show="aux">Cancelar</button>
+                                        </td>
+                                    </tr>
+                                </table>
+
                             </div>
                             <i ng-show="myForm.file.$error.maxSize">
                                 File too large

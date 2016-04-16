@@ -26,7 +26,17 @@
     $scope.imagenes = [
         { thumb: 'images/hab1.jpg', img: 'images/hab1.jpg', description: 'Image 1' },
         { thumb: 'images/hab2.jpg', img: 'images/hab2.jpg', description: 'Image 2' },
+        { thumb: 'images/hab3.jpg', img: 'images/hab3.jpg', description: 'Image 3' },
+    { thumb: 'images/hab1.jpg', img: 'images/hab1.jpg', description: 'Image 1' },
+        { thumb: 'images/hab2.jpg', img: 'images/hab2.jpg', description: 'Image 2' },
+        { thumb: 'images/hab3.jpg', img: 'images/hab3.jpg', description: 'Image 3' },
+    { thumb: 'images/hab1.jpg', img: 'images/hab1.jpg', description: 'Image 1' },
+        { thumb: 'images/hab2.jpg', img: 'images/hab2.jpg', description: 'Image 2' },
+        { thumb: 'images/hab3.jpg', img: 'images/hab3.jpg', description: 'Image 3' },
+        { thumb: 'images/hab1.jpg', img: 'images/hab1.jpg', description: 'Image 1' },
+        { thumb: 'images/hab2.jpg', img: 'images/hab2.jpg', description: 'Image 2' },
         { thumb: 'images/hab3.jpg', img: 'images/hab3.jpg', description: 'Image 3' }
+
     ];
     //#endregion    
 
@@ -140,6 +150,7 @@
     //#region modificacion de tipos de habitaciones
     $scope.edit = function () {//fpaz: activa el modo de edicion de los campos        
         $scope.listTiposHab[$scope.selectedIndex].editValue = true;
+        $scope.editValue = true;
     };
 
     $scope.save = function (infoTipoHab) {//fpaz: guarda los cambios y llama a la funcion put de la api        
@@ -255,6 +266,7 @@
         $scope.servicios = listadoServicios; // lista de servicios disponibles
         $scope.servicioSeleccionado = [];
         $scope.servicioSeleccionado.selected = {};
+        $scope.editValue = false;
     };
 
     //fpaz: funcion para cancelar una modificacion u otra operacion y traer los datos originales del tipo de habitacion        

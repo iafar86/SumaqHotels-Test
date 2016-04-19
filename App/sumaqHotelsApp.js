@@ -140,7 +140,7 @@
         //#region Tipos Habitacion
             .state('tipoHab', {
                 abstract: true,
-                url: '/TiposHabitaciones',
+                url: '',
                 views: {
                     '': {
                         templateUrl: 'views/layout.html'
@@ -161,6 +161,9 @@
                 data: { title: 'Tipos de Habitaciones' },
                 resolve: {
                     tiposHabDataFactory: 'tiposHabDataFactory',
+                    infoTipoHab: function () {
+                        return { value: [] };
+                    },
                     listadoTiposHab: function (tiposHabDataFactory) {
                         return tiposHabDataFactory.getTiposHab();
                     },
@@ -177,6 +180,97 @@
                     }]
                 }
             })
+            .state('tipoHab.lista.info', {
+                url: '/info/:tipoHabId',
+                templateUrl: '/App/TiposHabitacion/Partials/tiposHabInfo.html',
+                views: {
+                    'info': {
+                        templateUrl: '/App/TiposHabitacion/Partials/tipoHabInfo.html',
+                        controller: 'tiposHabCtrl',
+                        resolve: {
+                            tiposHabDataFactory: 'tiposHabDataFactory',
+                            infoTipoHab: function (tiposHabDataFactory, $stateParams) {
+                                var tipoHabId = $stateParams.tipoHabId;
+                                console.log(tipoHabId);
+                                return tiposHabDataFactory.getTipoHab(tipoHabId);
+                            },
+                            listadoTiposHab: function (tiposHabDataFactory) {
+                                return { value: [] };
+                            },
+                            tiposCamasDataFactory: 'tiposCamasDataFactory',
+                            listadoTiposCamas: function (tiposCamasDataFactory) {
+                                return tiposCamasDataFactory.query();
+                            },
+                            serviciosDataFactory: 'serviciosDataFactory',
+                            listadoServicios: function (serviciosDataFactory) {
+                                return serviciosDataFactory.query();
+                            },
+                            loadTiposHabitacionesCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
+                                return $ocLazyLoad.load(['App/TiposHabitacion/tiposHabCtrl.js']);
+                            }]
+                        }
+                    }
+                }
+            })
+                .state('tipoHab.lista.habitaciones', {
+                    url: '/habitaciones/:tipoHabId',
+                    views: {
+                        'habitaciones': {
+                            templateUrl: '/App/TiposHabitacion/Partials/tipoHabHabitaciones.html',
+                            controller: 'tiposHabCtrl',
+                            resolve: {
+                                tiposHabDataFactory: 'tiposHabDataFactory',
+                                infoTipoHab: function () {
+                                    return { value: [] };
+                                },
+                                listadoTiposHab: function (tiposHabDataFactory) {
+                                    return { value: [] };
+                                },
+                                tiposCamasDataFactory: 'tiposCamasDataFactory',
+                                listadoTiposCamas: function (tiposCamasDataFactory) {
+                                    return { value: [] };
+                                },
+                                serviciosDataFactory: 'serviciosDataFactory',
+                                listadoServicios: function (serviciosDataFactory) {
+                                    return { value: [] };
+                                },
+                                loadTiposHabitacionesCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load(['App/TiposHabitacion/tiposHabCtrl.js']);
+                                }]
+                            }
+                        }
+                    }
+                })
+                .state('tipoHab.lista.imagenes', {
+                    url: '/imagenes/:tipoHabId',
+                    views: {
+                        'imagenes': {
+                            templateUrl: '/App/TiposHabitacion/Partials/tipoHabImagenes.html',
+                            controller: 'tiposHabCtrl',
+                            resolve: {
+                                tiposHabDataFactory: 'tiposHabDataFactory',
+                                infoTipoHab: function () {
+                                    return { value: [] };
+                                },
+                                listadoTiposHab: function (tiposHabDataFactory) {
+                                    return { value: [] };
+                                },
+                                tiposCamasDataFactory: 'tiposCamasDataFactory',
+                                listadoTiposCamas: function (tiposCamasDataFactory) {
+                                    return { value: [] };
+                                },
+                                serviciosDataFactory: 'serviciosDataFactory',
+                                listadoServicios: function (serviciosDataFactory) {
+                                    return { value: [] };
+                                },
+                                loadTiposHabitacionesCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load(['App/TiposHabitacion/tiposHabCtrl.js']);
+                                }]
+                            }
+                        }
+                    }
+                })
+                
         //#endregion  
 
         //#region Habitaciones

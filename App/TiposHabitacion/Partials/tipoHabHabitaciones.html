@@ -1,0 +1,56 @@
+﻿<div flex="grow">
+    <div flex layout="column" class="boxWithHeight">        
+        <!--#region fpaz: listado Habitaciones Cargadas por Tipo de Habitaciones-->
+        <div flex="grow">
+            <div class="panel panel-card">
+                <div class="card-heading">
+                    <h2>Listado de Habitaciones</h2>
+                </div>
+                <div class="card-divider"></div>
+                <div class="card-body">
+                    <div layout="row" layout-align="center center" flex="grow">
+                        <div flex>
+                            <table ng-table="tableParams" class="table ng-table-responsive">
+                                <tr ng-repeat="habitacion in listTiposHab[selectedIndex].Habitaciones">
+                                    <td data-title="'Numero de Habitacion'">
+                                        {{habitacion.NroHab}}
+                                    </td>
+                                    <td data-title="'Descripcion Adicional'">
+                                        {{habitacion.Descripcion}}
+                                    </td>
+                                    <td>
+                                        <button>Editar</button>
+                                    </td>
+                                    <td>
+                                        <button>Eliminar</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div layout="row">
+                        <md-input-container layout="row" flex="grow">
+                            <div flex>
+                                <md-button class="md-raised md-primary btn-fw m-b-sm" ng-click="AbrirParaAgregar()">Agregar Habitacion</md-button>
+                            </div>
+                        </md-input-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--#endregion-->
+    </div>
+</div>
+
+<!--#region fpaz: menu flotante-->
+<div layout="row" layout-align="star center">
+    <nav mfb-menu position="br" effect="zoomin" label="Herramientas"
+         active-icon="mdi-content-clear" resting-icon="mdi-content-add"
+         toggling-method="hover">
+        <button mfb-button icon="mdi-social-person-add" label="Agregar Habitaciones" ng-click="addTabTipoHab()"></button>
+        <button mfb-button icon="mdi-image-edit" label="Editar Habitaciones" ng-click="edit()"></button>
+        <button mfb-button icon="mdi-content-save" label="Guardar Cambios" ng-click="listTiposHab[selectedIndex].Id > 0 ? save(listTiposHab[selectedIndex]) : addTipoHabitacion(listTiposHab[selectedIndex])"></button>
+        <button mfb-button icon="mdi-action-delete" label="Cancelar Cambios" ng-click="cancel()"></button>
+    </nav>
+</div>
+<!--#endregion-->

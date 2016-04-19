@@ -29,13 +29,13 @@
     };
 
     var _getTipoHab = function (prmIdTipoHab) { //devuelve un tipo de habitacion de un hotel en particular
+        console.log(prmIdTipoHab);
         var deferred = $q.defer();
         var prmIdHotel = authSvc.authentication.hotelId; // fpaz: variable que va a tener el id del hotel relacionado al usuario logueado
         $http.get(urlApi + '/api/TiposHabitaciones/',       
             {
-                params: {
-                    prmIdHotel: prmIdHotel,
-                    prmIdTipoHab: prmIdTipoHab
+                params: {                    
+                    prmIdTipoHabitacion: prmIdTipoHab
                 }
             }).then(
             function (response) {

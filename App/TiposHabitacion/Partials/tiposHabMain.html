@@ -1,6 +1,6 @@
 ﻿<div layout="row">
     <!--#region fpaz: Area de Carga de datos de info general de Tipos de Habitaciones-->
-    <div flex="60">
+    <div flex="grow">
         <md-card>
             <md-card-header>                
                 <md-card-header-text>
@@ -9,302 +9,57 @@
             </md-card-header>
             <div class="card-divider"></div>
             <md-card-content layout="row" layout-align="space-between">
-                <div flex="95">
-                    <md-tabs md-selected="selectedIndex" md-dynamic-height md-border-bottom>
-                        <md-tab ng-repeat="th in listTiposHab"
-                                ng-disabled="th.disabled"
-                                label="{{th.Nombre}}">
-                            <md-content class="md-padding">
-                                <div class="b-t" flex>
-                                    <div class="p tab{{$index%4}}" layout="column" layout-align="space-around center">
+                <div flex="grow">
+                    <md-content>
+                        <md-tabs md-selected="selectedIndex" md-dynamic-height md-border-bottom>                            
+                            <md-tab label="+" md-on-select="addTabTipoHab()"></md-tab>
+                            <md-tab ng-repeat="th in listTiposHab"
+                                    ng-disabled="th.disabled"
+                                    label="{{th.Nombre}}"
+                                    md-on-select="obtenerInfoTipoHab(th)">
+                                <md-content class="md-padding">
+                                    <div class="p tab{{$index%4}}">
                                         <md-tab-body>
-                                            <!--#region datos del tipo de habitacion-->
-                                            <form class="form-horizontal">
-                                                <div layout="row">
-                                                    <md-input-container layout="row" flex="grow">
-                                                        <div flex>
-                                                            <label>Nombre del Tipo de Habitacion</label>
-                                                            <input class="form-control md-input" ng-model="th.Nombre" ng-disabled="!th.editValue">
+                                            <div layout="row" flex>
+                                                <!--#region Menu de Tipo de Habitacion Seleccionada-->
+                                                <div flex="20">
+                                                    <div class="panel panel-card">
+                                                        <div class="list-group no-radius no-border">
+                                                            <a class="list-group-item" ui-sref="tipoHab.lista.info({tipoHabId: th.Id})">
+                                                                Informacion General
+                                                            </a>
+                                                            <a class="list-group-item" ui-sref="tipoHab.lista.habitaciones({tipoHabId: th.Id})">
+                                                                Listado de Habitaciones
+                                                            </a>
+                                                            <a class="list-group-item" ui-sref="tipoHab.lista.imagenes({tipoHabId: th.Id})">
+                                                                Listado de Imagenes
+                                                            </a>
                                                         </div>
-                                                    </md-input-container>
+                                                    </div>
                                                 </div>
-                                                <div layout="row">
-                                                    <md-input-container layout="row" layout-align="center end" flex>
-                                                        <div flex>
-                                                            <label>Servicios que Incluyen las Habtitaciones</label>
-                                                        </div>
-                                                    </md-input-container>
+                                                <!--#endregion-->
+                                                <div flex="5"></div>
+                                                <div flex="75">
+                                                    <!--#region Info Gral de la Habitacion Seleccionada -->
+                                                    <div ui-view="info"></div>
+                                                    <!--#endregion-->
+                                                    <!--#region Info Gral de la Habitacion Seleccionada -->
+                                                    <div ui-view="habitaciones"></div>
+                                                    <!--#endregion-->
+                                                    <!--#region Info Gral de la Habitacion Seleccionada -->
+                                                    <div ui-view="imagenes"></div>
+                                                    <!--#endregion-->
                                                 </div>
-                                                <div layout="row">
-                                                    <md-input-container layout="row" layout-align="center end" flex="grow">
-                                                        <div flex>
-                                                            <md-chips ng-model="th.ServiciosDeHabitacion" readonly="!th.editValue ? true : false">
-                                                                <md-chip-template>
-                                                                    <span>
-                                                                        <strong>{{$chip.Nombre}}</strong>
-                                                                    </span>
-                                                                </md-chip-template>
-                                                            </md-chips>
-                                                        </div>
-                                                    </md-input-container>
-                                                </div>
-                                                <div layout="row">
-                                                    <md-input-container layout="row" layout-align="center end" flex="grow">
-                                                        <div flex>
-                                                            <ui-select ng-model="servicioSeleccionado.selected" theme="bootstrap" ng-disabled="disabled" ng-show="th.editValue"
-                                                                       on-select="agregarServicio($item, $model)">
-                                                                <ui-select-match placeholder="Seleccione el servicio...">{{$item.Nombre}}</ui-select-match>
-                                                                <ui-select-choices repeat="servicio in servicios | propsFilter: {Nombre: $select.search}">
-                                                                    <div ng-bind-html="servicio.Nombre | highlight: $select.search"></div>
-                                                                </ui-select-choices>
-                                                            </ui-select>
-
-                                                        </div>
-                                                    </md-input-container>                                                 
-                                                </div>
-                                                <div layout="row">
-                                                    <md-input-container layout="row" layout-align="center end" flex="70">
-                                                        <div flex>
-                                                            <label>Duermen (Base) :</label>
-                                                            <input type="number" ng-model="th.PlazasBase" class="form-control" min="0" ng-disabled="!th.editValue">
-                                                        </div>
-                                                    </md-input-container>
-                                                    <md-input-container layout="row" layout-align="center end" flex="30">
-                                                        <div flex>
-                                                            <label>Precio (Rack) $ :</label>
-                                                            <input ng-model="th.PrecioBase" class="form-control" type="text" ng-disabled="!th.editValue">
-                                                        </div>
-                                                    </md-input-container>
-                                                </div>
-                                                <div layout="row">
-                                                    <md-input-container layout="row" layout-align="center end" flex="70">
-                                                        <div flex>
-                                                            <md-checkbox ng-model="camasAdicionales.Habilitado" ng-init="camasAdicionales.Habilitado=(th.CamasAdicionales.length > 0 ? true : false)" ng-change="accordion.toggle(0)" ng-disabled="!th.editValue">
-                                                                Permite Camas Adicionales
-                                                            </md-checkbox>
-                                                        </div>
-                                                    </md-input-container>                                             
-                                                </div>
-                                                <div layout="row">
-                                                    <v-accordion class="vAccordion--default" multiple control="accordion">
-                                                        <v-pane id="accordionCamas" expanded="camasAdicionales.Habilitado">
-                                                            <v-pane-header>
-                                                                Camas Adiconales
-                                                            </v-pane-header>
-
-                                                            <v-pane-content>
-                                                                <div class="panel-body">
-                                                                    <!--#region Carga de camas adicioanels-->
-                                                                    <div class="row" ng-show="th.editValue">
-                                                                        <div class="col-lg-8">
-                                                                            <label class="control-label col-lg-3">Tipo Cama</label>
-                                                                            <label class="control-label col-lg-1">&nbsp;</label>
-                                                                            <div class="col-lg-8">
-                                                                                <ui-select ng-model="tipoCamaSeleccionada.selected" theme="bootstrap" ng-disabled="disabled">
-                                                                                    <ui-select-match placeholder="Busque por Nombre...">{{$select.selected.Nombre}}</ui-select-match>
-                                                                                    <ui-select-choices repeat="cama in tiposCamas | propsFilter: {Nombre: $select.search}">
-                                                                                        <div ng-bind-html="cama.Nombre | highlight: $select.search"></div>
-                                                                                    </ui-select-choices>
-                                                                                </ui-select>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-lg-4">
-                                                                            <label class="control-label col-lg-7">Cantidad </label>
-                                                                            <div class="input-group col-lg-5">
-                                                                                <input ng-model="tipoCamaAgregada.cantidad" class="form-control" type="number">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-lg-4">
-                                                                            <label class="control-label col-lg-5">Precio</label>
-                                                                            <div class="input-group col-lg-7">
-                                                                                <input ng-model="tipoCamaAgregada.precio" class="form-control" type="text">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-lg-2">
-                                                                            <div class="input-group col-lg-3">
-                                                                                <input class="form-control" type="button" value="+" ng-click="agregarCamaAdicional(tipoCamaAgregada)">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--#endregion-->
-                                                                    <!--#region Tarifa de camas adicionales-->
-                                                                    <div class="row">
-                                                                        <div class="form-group form-inline">
-                                                                            <div class="col-lg-12">
-                                                                                <label class="control-label col-lg-4">Tarifas de Camas Adiciones</label>
-                                                                            </div>
-                                                                            <div class="col-lg-12" ng-disabled="!th.editValue">
-                                                                                <table ng-table="tableParams" class="table ng-table-responsive">
-                                                                                    <!--<tr ng-repeat="cama in listCamasAdicionales">-->
-                                                                                    <tr ng-repeat="cama in th.CamasAdicionales" ng-init="aux=false; precioOrig = cama.PrecioAdicional; cantidadOrig = cama.Cantidad ">
-                                                                                        <td data-title="'Tipo'">
-                                                                                            {{cama.TipoCama.Nombre}}
-                                                                                        </td>
-                                                                                        <td data-title="'Cantidad'">
-                                                                                            <!--{{cama.Cantidad}}-->
-                                                                                            <input ng-model="cama.Cantidad" class="form-control" type="number" ng-disabled="!aux" style="width:100%">
-                                                                                        </td>
-                                                                                        <td data-title="'precio unitario'">
-                                                                                            <!--{{cama.PrecioAdicional}}-->
-                                                                                            <input ng-model="cama.PrecioAdicional" class="form-control" type="text" ng-disabled="!aux">
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <button ng-disabled="!th.editValue" ng-click="aux = true" ng-show="!aux">Editar</button>
-                                                                                            <button ng-disabled="!th.editValue" ng-click="aux = false; precioOrig = cama.PrecioAdicional; cantidadOrig = cama.Cantidad" ng-show="aux">Guardar</button>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <button ng-disabled="!th.editValue" ng-click="removeCamaAd(cama)" ng-show="!aux">Eliminar</button>
-                                                                                            <button ng-disabled="!th.editValue" ng-click="aux = false; cama.PrecioAdicional=precioOrig; cama.Cantidad = cantidadOrig " ng-show="aux">Cancelar</button>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </table>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--#endregion-->
-                                                                </div>
-                                                            </v-pane-content>
-                                                        </v-pane>
-                                                    </v-accordion>
-                                                </div>
-                                                <div layout="row">
-                                                    <md-input-container layout="row" layout-align="center end" flex="grow">
-                                                        <div flex>
-                                                            <label>Descripcion Del Tipo de Habitacion</label>
-                                                            <textarea ng-model="th.Descripcion" columns="1" md-maxlength="150" ng-disabled="!th.editValue"></textarea>
-                                                        </div>
-                                                    </md-input-container>
-                                                </div>
-                                            </form>
-                                            <!--#endregion-->
+                                            </div>
                                         </md-tab-body>
                                     </div>
-                                </div>
-                            </md-content>
-                        </md-tab>
-                    </md-tabs>
+                                </md-content>
+                            </md-tab>                            
+                        </md-tabs>
+                    </md-content>                        
                 </div>
             </md-card-content>
         </md-card>
-    </div>
-    <!--#endregion-->
-    <div flex="5"></div>
-    <div flex="35">
-        <div flex layout="column" class="boxWithHeight">
-            <!--#region fpaz: listado de Imagenes Cargadas por Tipo de Habitaciones-->
-            <div flex="35">
-                <md-card>
-                    <md-card-header>
-                        <md-card-header-text>
-                            <span class="md-title">Listado de Imagenes</span>
-                        </md-card-header-text>
-                    </md-card-header>
-                    <div class="card-divider"></div>
-                    <md-card-content layout="row" layout-align="space-between">
-                        <div flex="100">
-                            <br />
-                            <!--#region fpaz: Imagenes de la Habitacion-->
-                            <div ng-show="!editValue">                                
-                                <ng-gallery images="imagenes">
-                                </ng-gallery>
-                            </div>
-                            <div ngf-drop="" ngf-select="" ng-model="th.ImagenesTipoHabitacion"
-                                 class="b-a b-dashed p-lg bg-white text-center m-b"
-                                 ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true"
-                                 accept="image/*" ngf-pattern="'image/*'" ngf-max-size="5MB"
-                                 ng-show="editValue">
-                                <p ng-show="!th.ImagenesTipoHabitacion">IMAGENES DE LA HABITACION</p>
-                            </div>
-                            <div ng-repeat="img in th.ImagenesTipoHabitacion" ng-show="editValue">
-                                <img ngf-thumbnail="img" class="thumb img-responsive">
-                                <p ng-show="!th.ImagenesTipoHabitacion">IMAGENES DE LA HABITACION</p>
-                            </div>
-                            <div ng-show="editValue">
-                                <table ng-table="tableParams" class="table ng-table-responsive">
-                                    <!--<tr ng-repeat="cama in listCamasAdicionales">-->
-                                    <tr ng-repeat="img in imagenes" ng-init="aux=false">
-                                        <td data-title="'Imagen'">
-                                            <img class="img-thumbnail img-responsive" ng-src="{{img.img}}" width="70" />
-                                            <span><a>{{img.description}}</a> </span>
-                                        </td>
-                                        <td>
-                                            <button ng-disabled="th.editValue" ng-click="aux = true" ng-show="!aux">Editar</button>
-                                        </td>
-                                        <td>
-                                            <button ng-disabled="th.editValue" ng-click="removeCamaAd(cama)" ng-show="aux">Eliminar</button>
-                                            <button ng-disabled="th.editValue" ng-show="aux">Cancelar</button>
-                                        </td>
-                                    </tr>
-                                </table>
-
-                            </div>
-                            <i ng-show="myForm.file.$error.maxSize">
-                                File too large
-                                {{picFile.size / 1000000|number:1}}MB: max 5M
-                            </i>
-                            <!--#endregion-->
-                        </div>
-                    </md-card-content>
-                </md-card>
-            </div>
-            <!--#endregion-->
-            <!--#region fpaz: listado Habitaciones Cargadas por Tipo de Habitaciones-->
-            <div flex="35">
-                <div class="panel panel-card">
-                    <div class="card-heading">
-                        <h2>Listado de Habitaciones</h2>
-                    </div>
-                    <div class="card-divider"></div>
-                    <div class="card-body">
-                        <div layout="row" layout-align="center center" flex="grow">
-                            <div flex>
-                                <table ng-table="tableParams" class="table ng-table-responsive">
-                                    <tr ng-repeat="habitacion in listTiposHab[selectedIndex].Habitaciones">
-                                        <td data-title="'Numero de Habitacion'">
-                                            {{habitacion.NroHab}}
-                                        </td>
-                                        <td data-title="'Descripcion Adicional'">
-                                            {{habitacion.Descripcion}}
-                                        </td>
-                                        <td>
-                                            <button>Editar</button>
-                                        </td>
-                                        <td>
-                                            <button>Eliminar</button>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                        <div layout="row">
-                            <md-input-container layout="row" flex="grow">
-                                <div flex>
-                                    <md-button class="md-raised md-primary btn-fw m-b-sm" ng-click="AbrirParaAgregar()">Agregar Habitacion</md-button>
-                                </div>
-                            </md-input-container>
-                        </div>
-                    </div>
-
-
-                </div>
-            </div>
-            <!--#endregion-->
-        </div>
-    </div>
-    
-    <!--#region fpaz: menu flotante-->
-    <div layout="row" layout-align="star center">
-        <!--<div flex="60"><h2>Agrega puestos en la oferta</h2></div>
-        <div flex="30"><md-button class="md-fab " aria-label="PuestosAdd" ng-click="AbrirParaAgregar()"><i class="fa fa-plus"></i></md-button> </div>-->
-
-        <nav mfb-menu position="br" effect="zoomin" label="Herramientas"
-             active-icon="mdi-content-clear" resting-icon="mdi-content-add"
-             toggling-method="hover">
-            <button mfb-button icon="mdi-social-person-add" label="Agregar Tipo de Habitacion" ng-click="addTabTipoHab()"></button>
-            <button mfb-button icon="mdi-image-edit" label="Editar Tipo de Habitacion" ng-click="edit()"></button>
-            <button mfb-button icon="mdi-content-save" label="Guardar Cambios" ng-click="listTiposHab[selectedIndex].Id > 0 ? save(listTiposHab[selectedIndex]) : addTipoHabitacion(listTiposHab[selectedIndex])"></button>
-            <button mfb-button icon="mdi-action-delete" label="Cancelar Cambios" ng-click="cancel()"></button>
-        </nav>
     </div>
     <!--#endregion-->
 </div>

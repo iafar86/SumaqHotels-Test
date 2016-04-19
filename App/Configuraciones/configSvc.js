@@ -4,7 +4,7 @@
     var configSvc = {};
 
     //#region fpaz: url del web api desde el que se consumen los datos
-    var _urlApi = "http://localhost:33140"; // para desarrollo
+    var _urlApi = "http://localhost:33141"; // para desarrollo
     //var _urlApi = "http://sumaqhotelsapi.azurewebsites.net"; // para produccion en azure
     
     //#endregion

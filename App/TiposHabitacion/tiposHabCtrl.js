@@ -1,10 +1,10 @@
 ﻿sumaqHotelsApp.controller('tiposHabCtrl', function ($scope, $stateParams, $state, $filter, ngTableParams, $mdDialog,authSvc, tiposHabDataFactory,
-    listadoTiposHab, listadoTiposCamas, listadoServicios, habitacionesDataFactory, authSvc) {
+    listadoTiposHab, listadoTiposCamas, listadoServicios, habitacionesDataFactory, authSvc, infoTipoHab) {
 
     //#region Inicializacion de variables de Scope
     $scope.listTiposHab = listadoTiposHab; // var donde voy a guardar todos los Tipos de Habitacion ya sea cuando se cargue la pagina o cuando agregue una nueva
    
-    $scope.infoTipoHab = {}; // var que voy a usar para el abm y para tener informacion sobre un tipo de habitacion en particular
+    $scope.infoTipoHab = infoTipoHab; // var que voy a usar para el abm y para tener informacion sobre un tipo de habitacion en particular
     $scope.tipoHabSelec = {}; // var que va a tener la cama seleccionada
     $scope.tipoHabSelec.selected = {};
 
@@ -38,6 +38,7 @@
         { thumb: 'images/hab3.jpg', img: 'images/hab3.jpg', description: 'Image 3' }
 
     ];
+    
     //#endregion    
 
     //#region fpaz: administracion de tabs    
@@ -66,6 +67,18 @@
             }
         }
     };
+
+    $scope.obtenerInfoTipoHab = function (th) {
+        tiposHabDataFactory.getTipoHab(th.Id).then(function (response) {
+            $scope.infoTipoHab = response;            
+        },
+         function (err) {
+             if (err) {
+                 $scope.error = err;
+                 alert("Error: " + $scope.error.Message);
+             }
+         });        
+    }
     //#endregion
 
     //#region Alta de Tipos de Habitaciones

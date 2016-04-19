@@ -1,0 +1,74 @@
+﻿<div flex="grow">
+    <div flex layout="column" class="boxWithHeight">
+        <!--#region fpaz: listado de Imagenes Cargadas por Tipo de Habitaciones-->
+        <div flex="grow">
+            <md-card>
+                <md-card-header>
+                    <md-card-header-text>
+                        <span class="md-title">Listado de Imagenes</span>
+                    </md-card-header-text>
+                </md-card-header>
+                <div class="card-divider"></div>
+                <md-card-content layout="row" layout-align="space-between">
+                    <div flex="100">
+                        <br />
+                        <!--#region fpaz: Imagenes de la Habitacion-->
+                        <div ng-show="!editValue">
+                            <ng-gallery images="imagenes">
+                            </ng-gallery>
+                        </div>
+                        <div ngf-drop="" ngf-select="" ng-model="th.ImagenesTipoHabitacion"
+                             class="b-a b-dashed p-lg bg-white text-center m-b"
+                             ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true"
+                             accept="image/*" ngf-pattern="'image/*'" ngf-max-size="5MB"
+                             ng-show="editValue">
+                            <p ng-show="!th.ImagenesTipoHabitacion">IMAGENES DE LA HABITACION</p>
+                        </div>
+                        <div ng-repeat="img in th.ImagenesTipoHabitacion" ng-show="editValue">
+                            <img ngf-thumbnail="img" class="thumb img-responsive">
+                            <p ng-show="!th.ImagenesTipoHabitacion">IMAGENES DE LA HABITACION</p>
+                        </div>
+                        <div ng-show="editValue">
+                            <table ng-table="tableParams" class="table ng-table-responsive">
+                                <!--<tr ng-repeat="cama in listCamasAdicionales">-->
+                                <tr ng-repeat="img in imagenes" ng-init="aux=false">
+                                    <td data-title="'Imagen'">
+                                        <img class="img-thumbnail img-responsive" ng-src="{{img.img}}" width="70" />
+                                        <span><a>{{img.description}}</a> </span>
+                                    </td>
+                                    <td>
+                                        <button ng-disabled="th.editValue" ng-click="aux = true" ng-show="!aux">Editar</button>
+                                    </td>
+                                    <td>
+                                        <button ng-disabled="th.editValue" ng-click="removeCamaAd(cama)" ng-show="aux">Eliminar</button>
+                                        <button ng-disabled="th.editValue" ng-show="aux">Cancelar</button>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+                        <i ng-show="myForm.file.$error.maxSize">
+                            File too large
+                            {{picFile.size / 1000000|number:1}}MB: max 5M
+                        </i>
+                        <!--#endregion-->
+                    </div>
+                </md-card-content>
+            </md-card>
+        </div>
+        <!--#endregion-->        
+    </div>
+</div>
+
+<!--#region fpaz: menu flotante-->
+<div layout="row" layout-align="star center">
+    <nav mfb-menu position="br" effect="zoomin" label="Herramientas"
+         active-icon="mdi-content-clear" resting-icon="mdi-content-add"
+         toggling-method="hover">
+        <button mfb-button icon="mdi-social-person-add" label="Agregar Imagenes" ng-click="addTabTipoHab()"></button>
+        <button mfb-button icon="mdi-image-edit" label="Editar Listado de Imagenes" ng-click="edit()"></button>
+        <button mfb-button icon="mdi-content-save" label="Guardar Cambios" ng-click="listTiposHab[selectedIndex].Id > 0 ? save(listTiposHab[selectedIndex]) : addTipoHabitacion(listTiposHab[selectedIndex])"></button>
+        <button mfb-button icon="mdi-action-delete" label="Cancelar Cambios" ng-click="cancel()"></button>
+    </nav>
+</div>
+<!--#endregion-->
